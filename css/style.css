@@ -689,13 +689,13 @@ body * {
     align-items: center;
 }
 
-@media (min-width: 1100px) {
+@media (min-width: 1200px) {
     .cover-img {
         width: 100%;
     }
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1200px) {
     .cover-img {
         width: 1100px;
     }
