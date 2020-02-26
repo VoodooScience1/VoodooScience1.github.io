@@ -689,10 +689,13 @@ body * {
     align-items: center;
 }
 
+/*This media query trick to alter ALL phones, as they have odd "pixel ratios
+    This is beneficial as laptops are 1. Anything over 1.1 (min 1,1) gets
+    caught by this, Iphoine x is 3, pixel 2 is 2.6, pixel 2XL is 3.5, etc*/
 @media only screen 
-    and (min-device-width: 375px) 
-    and (min-device-height: 812px) 
-    and (-webkit-device-pixel-ratio: 3)
+    and (min-device-width: 320px) 
+    and (min-device-height: 568px) 
+    and (-webkit-min-device-pixel-ratio: 1.1)
     and (orientation: portrait) {
         .cover-img {
         height: 70vh;
@@ -761,10 +764,10 @@ body * {
 *  Small image, 2fr text; dynamic
 **********************************************************************/
 
-@media screen and (max-width: 880px) {
+@media screen and (max-width: 1125px) {
     .img-text-div-wrapper {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(562.5px, 1fr));
         grid-gap: 1px;
         background-color: #fff;
         padding: 15px;
@@ -777,7 +780,7 @@ body * {
     }
 }
 
-@media screen and (min-width: 880px) {
+@media screen and (min-width: 1125px) {
     .img-text-div-wrapper {
         display: grid;
         grid-template-columns: 1fr 2fr;
@@ -839,7 +842,7 @@ body * {
 }
 
 
-@media screen and (min-width: 880px) {
+@media screen and (min-width: 1125px) {
     .img-text-div-text {
         padding: 20px;
         margin: 20px;
@@ -850,7 +853,7 @@ body * {
 
 
 
-@media screen and (max-width: 880px) {
+@media screen and (max-width: 1125px) {
     .img-text-div-text {
         padding: 20px;
         margin: 20px;
@@ -864,10 +867,10 @@ body * {
 *  Large Image, small text 1 fr; dynamic
 **********************************************************************/
 
-@media (max-width: 880px) {
+@media (max-width: 1125px) {
     .lrg-img-text-div-wrapper {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(562.5px, 1fr));
         grid-gap: 1px;
         background-color: #fff;
         padding: 15px;
@@ -880,7 +883,7 @@ body * {
     }
 }
 
-@media (min-width: 880px) {
+@media (min-width: 1125px) {
     .lrg-img-text-div-wrapper {
         display: grid;
         grid-template-columns: 1fr 2fr;
@@ -920,7 +923,7 @@ body * {
     margin: 5px;
 }
 
-@media (min-width: 880px) {
+@media (min-width: 1125px) {
     .lrg-img-text-div-text {
         padding: 20px;
         margin: 20px;
@@ -929,7 +932,7 @@ body * {
     }
 }
 
-@media (max-width: 880px) {
+@media (max-width: 1125px) {
     .lrg-img-text-div-text {
         padding: 20px;
         margin: 20px;
@@ -945,10 +948,10 @@ body * {
 *  2 text columns
 **********************************************************************/
 
-@media (max-width: 880px) {
+@media (max-width: 1125px) {
     .two-text-columns-wrapper {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(562.5px, 1fr));
         grid-gap: 1px;
         background-color: #fff;
         padding: 15px;
@@ -961,7 +964,7 @@ body * {
     }
 }
 
-@media (min-width: 880px) {
+@media (min-width: 1125px) {
     .two-text-columns-wrapper {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -977,7 +980,7 @@ body * {
     }
 }
 
-@media (min-width: 880px) {
+@media (min-width: 1125px) {
     .two-text-columns-text-left {
         padding: 20px;
         margin: 20px;
@@ -987,7 +990,7 @@ body * {
     }
 }
 
-@media (max-width: 880px) {
+@media (max-width: 1125px) {
     .two-text-columns-text-left {
         padding: 20px;
         margin: 20px;
@@ -997,7 +1000,7 @@ body * {
     }
 }
 
-@media (min-width: 880px) {
+@media (min-width: 1125px) {
     .two-text-columns-text-right {
         padding: 20px;
         margin: 20px;
@@ -1006,7 +1009,7 @@ body * {
     }
 }
 
-@media (max-width: 880px) {
+@media (max-width: 1125px) {
     .two-text-columns-text-right {
         padding: 20px;
         margin: 20px;
