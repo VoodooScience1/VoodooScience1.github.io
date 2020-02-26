@@ -689,25 +689,29 @@ body * {
     align-items: center;
 }
 
-@media (min-width: 1200px) {
+@media only screen 
+    and (min-device-width: 375px) 
+    and (min-device-height: 812px) 
+    and (-webkit-device-pixel-ratio: 3)
+    and (orientation: portrait) {
+        .cover-img {
+        height: 70vh;
+        }
+}
+
+@media screen and (min-width: 880px) {
     .cover-img {
         width: 100%;
     }
 }
 
-@media (max-width: 1200px) {
+@media screen and (max-width: 880px) {
     .cover-img {
-        width: 1200px;
+        width: 880px;
     }
 }
 
-@media only screen 
-    and (width : 375px) 
-    and (height : 812px) 
-    and (-webkit-device-pixel-ratio : 3)
-    and (orientation : portrait) {
-        width: 1px;
-}
+
 
 
 /***********************************************************************
@@ -757,7 +761,7 @@ body * {
 *  Small image, 2fr text; dynamic
 **********************************************************************/
 
-@media (max-width: 880px) {
+@media screen and (max-width: 880px) {
     .img-text-div-wrapper {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
@@ -773,7 +777,7 @@ body * {
     }
 }
 
-@media (min-width: 880px) {
+@media screen and (min-width: 880px) {
     .img-text-div-wrapper {
         display: grid;
         grid-template-columns: 1fr 2fr;
@@ -788,6 +792,27 @@ body * {
         box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
 }
+
+/* This is for iphone - needs work
+@media only screen
+    and (min-device-width: 375px) 
+    and (min-device-height: 812px) 
+    and (-webkit-device-pixel-ratio: 3)
+    and (orientation: portrait)  {
+    .img-text-div-wrapper {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
+        grid-gap: 1px;
+        background-color: #fff;
+        padding: 15px;
+        margin: 20px;
+        text-align: center;
+        -webkit-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -moz-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -o-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+}*/
 
 
 .img-text-div-img {
@@ -814,7 +839,7 @@ body * {
 }
 
 
-@media (min-width: 880px) {
+@media screen and (min-width: 880px) {
     .img-text-div-text {
         padding: 20px;
         margin: 20px;
@@ -825,7 +850,7 @@ body * {
 
 
 
-@media (max-width: 880px) {
+@media screen and (max-width: 880px) {
     .img-text-div-text {
         padding: 20px;
         margin: 20px;
