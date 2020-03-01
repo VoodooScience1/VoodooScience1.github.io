@@ -1058,8 +1058,8 @@ box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
 /* Create four equal columns that floats next to eachother */
 .column {
-    float: left;
-    width: 10%;
+    display: inline-flex;
+    width: 8%;
 }
 
 
@@ -1070,6 +1070,7 @@ box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     display: none;
     position: fixed;
     height: 100%;
+    width: 100%;
     z-index: 3;
     left: 0;
     top: 0;
@@ -1110,13 +1111,26 @@ box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
 /* Hide the slides by default */
 .mySlides {
-    display: block;
+    display: inline-block;
+}
+
+/* Fix for phones, which have a weird viewport */
+@media only screen 
+    and (min-device-width: 320px) 
+    and (min-device-height: 568px) 
+    and (-webkit-min-device-pixel-ratio: 1.1)
+    and (orientation: portrait) {
+        .mySlides {
+            position: fixed;
+            top: 35%;
+            left: 25%;
+        }
 }
 
 .mySlides>img {
     max-height:90%;
     max-width:90%;
-    transition: all 500ms ease-out
+    margin: 0 auto;
 }
 
 /* Next & previous buttons */
@@ -1161,19 +1175,35 @@ box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     padding: 8px 12px;
     position: absolute;
     top: 0;
+    z-index: 901;
 }
 
 /* Caption text */
 .caption-container {
     text-align: center;
     background-color: black;
-    padding: 2px 16px;
+    padding: 0px 0px;
     margin: 0;
     color: white;
 }
 
 .column > img {
-    width: 20%;
+    height:90%;
+    width:90%;
+}
+
+.caption-container>p {
+    margin: 0;
+    padding: 0;
+}
+
+.modal-nav {
+    position: absolute;
+    bottom: 0;
+}
+
+.thumb {
+    height: 60px;
 }
 
 img.thumb {
