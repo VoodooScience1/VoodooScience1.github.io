@@ -3,7 +3,10 @@
     <head>
         <title>Project Management Degree Apprenticeship</title>
         <link rel="stylesheet" type="text/css" href="./css/style.css">
-        <script type="text/javascript" src="./script/modal.js"></script>
+        <script type="text/javascript" src="./script/modal.js">
+        </script>
+        <!--<script type="text/javascript" src="./script/accordion.js">
+</script>-->
 
     </head>
     <body>
@@ -113,6 +116,53 @@
             </div>
         </div>
 
+        <div class="div-wrapper">
+            <div class="flex-accordion-wrapper">
+                <div class="flex-accordion-box">
+                    <h1>Heading for This Too I Guess?</h1>
+                    <div class="tab">
+                        <input type="checkbox" id="chck1">
+                        <label class="tab-label" for="chck1">Item 1</label>
+                        <div class="tab-content">
+                            <p>Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello </p>
+                        </div>
+                    </div>
+                    <div class="tab">
+                        <input type="checkbox" id="chck2">
+                        <label class="tab-label" for="chck2">Item 2</label>
+                        <div class="tab-content">
+                            <p>Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello </p>
+                        </div>
+                    </div>
+                    <div class="tab">
+                        <input type="checkbox" id="chck3">
+                        <label class="tab-label" for="chck3">Item 1</label>
+                        <div class="tab-content">
+                            <p>Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+acc[i].addEventListener("click", function() {
+this.classList.toggle("active");
+var panel = this.nextElementSibling;
+if (panel.style.maxHeight) {
+panel.style.maxHeight = null;
+} else {
+panel.style.maxHeight = panel.scrollHeight + "px";
+} 
+});
+}
+</script>
+-->
+
         <!-- The Modal/Lightbox -->
         <div id="myModal" class="modal">
             <div class="cursor close" onclick="closeModal()">&times;</div>
@@ -171,51 +221,51 @@
                 <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
                 <div class="modal-nav">
-                <!-- Caption text -->
-                <div class="caption-container">
-                    <p id="caption"></p>
-                </div>
+                    <!-- Caption text -->
+                    <div class="caption-container">
+                        <p id="caption"></p>
+                    </div>
 
-                <!-- Thumbnail image controls -->
-                <div class="column">
-                    <img class="thumb" src="./img/twitter.png" onclick="currentSlide(1)" alt="Twitter 1">
-                </div>
+                    <!-- Thumbnail image controls -->
+                    <div class="column">
+                        <img class="thumb" src="./img/twitter.png" onclick="currentSlide(1)" alt="Twitter 1">
+                    </div>
 
-                <div class="column">
-                    <img class="thumb" src="./img/youtube.png" onclick="currentSlide(2)" alt="YouTube">
-                </div>
+                    <div class="column">
+                        <img class="thumb" src="./img/youtube.png" onclick="currentSlide(2)" alt="YouTube">
+                    </div>
 
-                <div class="column">
-                    <img class="thumb" src="./img/linkedin.png" onclick="currentSlide(3)" alt="LinkedIn">
-                </div>
+                    <div class="column">
+                        <img class="thumb" src="./img/linkedin.png" onclick="currentSlide(3)" alt="LinkedIn">
+                    </div>
 
-                <div class="column">
-                    <img class="thumb" src="./img/instagram.png" onclick="currentSlide(4)" alt="Instagram">
-                </div>
+                    <div class="column">
+                        <img class="thumb" src="./img/instagram.png" onclick="currentSlide(4)" alt="Instagram">
+                    </div>
 
-                <div class="column">
-                    <img class="thumb" src="./img/facebook.png" onclick="currentSlide(5)" alt="Facebook">
-                </div>
-                <div class="column">
-                    <img class="thumb" src="./img/twitter.png" onclick="currentSlide(6)" alt="Twitter 1">
-                </div>
+                    <div class="column">
+                        <img class="thumb" src="./img/facebook.png" onclick="currentSlide(5)" alt="Facebook">
+                    </div>
+                    <div class="column">
+                        <img class="thumb" src="./img/twitter.png" onclick="currentSlide(6)" alt="Twitter 1">
+                    </div>
 
-                <div class="column">
-                    <img class="thumb" src="./img/youtube.png" onclick="currentSlide(7)" alt="YouTube">
-                </div>
+                    <div class="column">
+                        <img class="thumb" src="./img/youtube.png" onclick="currentSlide(7)" alt="YouTube">
+                    </div>
 
-                <div class="column">
-                    <img class="thumb" src="./img/linkedin.png" onclick="currentSlide(8)" alt="LinkedIn">
-                </div>
+                    <div class="column">
+                        <img class="thumb" src="./img/linkedin.png" onclick="currentSlide(8)" alt="LinkedIn">
+                    </div>
 
-                <div class="column">
-                    <img class="thumb" src="./img/instagram.png" onclick="currentSlide(9)" alt="Instagram">
-                </div>
+                    <div class="column">
+                        <img class="thumb" src="./img/instagram.png" onclick="currentSlide(9)" alt="Instagram">
+                    </div>
 
-                <div class="column">
-                    <img class="thumb" src="./img/facebook.png" onclick="currentSlide(10)" alt="Facebook">
+                    <div class="column">
+                        <img class="thumb" src="./img/facebook.png" onclick="currentSlide(10)" alt="Facebook">
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
 
