@@ -784,7 +784,8 @@ caught by this, Iphoine x is 3, pixel 2 is 2.6, pixel 2XL is 3.5, etc*/
 .box-img > img {
     min-width: 100%;
     min-height: 100%;
-    overflow: hidden;
+    display: block;
+    overflow: visible;
 }
 
 /***********************************************************************
