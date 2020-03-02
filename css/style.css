@@ -1199,6 +1199,7 @@ box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .tab-content {
+    text-align: left;
     max-height: 0;
     padding: 10 1em;
     color: #2c3e50;
@@ -1227,6 +1228,10 @@ box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     background: #1a252f;
 }
 
+.tab-content > li {
+    padding: 1em;
+}
+
 input:checked + .tab-label {
     background: #1a252f;
 }
@@ -1237,7 +1242,7 @@ input:checked + .tab-label::after {
 }
 
 input:checked ~ .tab-content {
-    max-height: 100vh;
+    max-height: 100%;
     padding: 1em;
 }
 
