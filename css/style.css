@@ -36,6 +36,17 @@ h1 {
     letter-spacing: 0.15em;
 }
 
+h2 {
+    font-size: 20px;
+    text-decoration: underline;
+    text-decoration-color: darkred;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-weight: bold;
+    letter-spacing: 0.15em;
+}
+
+
 /***********************************************************************
 *  Nav Bar main
 **********************************************************************/
@@ -851,17 +862,44 @@ caught by this, Iphoine x is 3, pixel 2 is 2.6, pixel 2XL is 3.5, etc*/
 .box-img {
     padding: 0px;
     overflow: hidden;
+    height: 150px;
+    align-content: center;
 }
 
 .box-img > img {
     object-fit: cover;
-    width: 100%;
+    min-width: 100%;
+    min-height: 100%;
     display: block;
 }
 
 /***********************************************************************
-*  Custom Divs
+*  Default Div
 **********************************************************************/
+
+.default-div-wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 1px;
+    background-color: #fff;
+    padding: 15px;
+    margin: 20px;
+    text-align: center;
+    -webkit-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -o-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.default-div-wrapper > p {
+    text-align: center;
+    padding: 5px;
+    margin: 5px;
+}
+
+.default-div-wrapper > h1 {
+    padding-bottom: 0px;
+}
 
 
 
@@ -1004,7 +1042,6 @@ box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
 }
 
-
 .lrg-img-text-div-img {
     padding: 0px;
     margin: 0px;
@@ -1046,8 +1083,17 @@ box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
 }
 
+.sml > a > img {
+    width: 32px;
+    height: 42px;
+    padding: 0;
+    padding-top: 10px;
+    margin: 0;
+}
 
-
+.sml > a {
+   padding-bottom: 32px;
+}
 
 /***********************************************************************
 *  2 text columns
@@ -1264,7 +1310,7 @@ input:checked ~ .tab-content {
 /* Create four equal columns that floats next to eachother */
 .column {
     display: inline-flex;
-    width: 8%;
+    width: 6%;
 }
 
 
@@ -1333,7 +1379,7 @@ input:checked ~ .tab-content {
 }
 
 .mySlides>img {
-    max-height:90%;
+    max-height:500px;
     max-width:90%;
     margin: 0 auto;
 }
@@ -1398,7 +1444,6 @@ input:checked ~ .tab-content {
 /* Caption text */
 .caption-container {
     text-align: center;
-    background-color: black;
     padding: 0px 0px;
     margin: 0;
     color: white;
