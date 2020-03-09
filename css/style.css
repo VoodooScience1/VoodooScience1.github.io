@@ -46,6 +46,16 @@ h2 {
     letter-spacing: 0.15em;
 }
 
+h3 {
+    font-size: 15px;
+    text-decoration: underline;
+    text-decoration-color: darkred;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-weight: bold;
+    letter-spacing: 0.15em;
+}
+
 
 /***********************************************************************
 *  Nav Bar main
@@ -1323,7 +1333,6 @@ input:checked ~ .tab-content {
     max-height: 100%;
     padding: 1em;
 }
-
 
 /***********************************************************************
 *  Modal Formatting
