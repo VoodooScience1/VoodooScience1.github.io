@@ -13,14 +13,14 @@
         <div id="nav-placeholder"></div>
 
         <script>
-        fetch("/partials/nav.html")
-            .then(res => res.text())
-            .then(html => {
-            document.getElementById("nav-placeholder").innerHTML = html;
-            })
-            .catch(err => console.error("Nav load failed:", err));
+            fetch("/partials/nav.html")
+                .then(res => res.text())
+                .then(html => {
+                document.getElementById("nav-placeholder").innerHTML = html;
+                })
+                .catch(err => console.error("Nav load failed:", err));
         </script>
-        
+
         <div class="container">
             <div><img class="cover-img" src="./img/coverPhoto4.jpg"></div>
         </div>
