@@ -10,46 +10,17 @@
 
     </head>
     <body>
-        <nav class="main-nav sticky">
-            <ol>
-                <li class="active"><a href="index.html">Home</a></li>
+        <div id="nav-placeholder"></div>
 
-                <li class=""><a href="about.html">About</a></li>
-
-                <li class="">
-                    <a href="portfolio.html">Portfolio</a>
-                    <ol class="sub-menu">
-                        <li><a href="tacsa.html">TacSA (Flagship)</a></li>
-                        <li><a href="dashboard.html">Dashboards</a></li>
-                        <li><a href="case-studies.html">Case Studies</a></li>
-                    </ol>
-                </li>
-
-                <li class="">
-                    <a href="architecture-notes.html">Architecture Notes</a>
-                    <ol class="sub-menu">
-                        <li><a href="architecture-notes.html#cost">Cost control</a></li>
-                        <li><a href="architecture-notes.html#security">Security & identity</a></li>
-                        <li><a href="architecture-notes.html#deployment">Deployment modes</a></li>
-                        <li><a href="architecture-notes.html#ops">Ops & reliability</a></li>
-                    </ol>
-                </li>
-
-                <li class=""><a href="cv.html">CV</a></li>
-
-                <li class=""><a href="contact.html">Contact</a></li>
-
-                <li class="">
-                    <a href="archive.html">Archive</a>
-                    <ol class="sub-menu">
-                        <li><a href="archive-degree/Level-4.html">Degree – Level 4</a></li>
-                        <li><a href="archive-degree/Level-5.html">Degree – Level 5</a></li>
-                        <li><a href="archive-degree/Level-6.html">Degree – Level 6</a></li>
-                        <li><a href="archive-degree/EPA.html">Degree – EPA</a></li>
-                    </ol>   
-                </li>
-            </ol>
-        </nav>
+        <script>
+        fetch("/partials/nav.html")
+            .then(res => res.text())
+            .then(html => {
+            document.getElementById("nav-placeholder").innerHTML = html;
+            })
+            .catch(err => console.error("Nav load failed:", err));
+        </script>
+        
         <div class="container">
             <div><img class="cover-img" src="./img/coverPhoto4.jpg"></div>
         </div>
