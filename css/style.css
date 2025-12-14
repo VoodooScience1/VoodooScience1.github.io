@@ -60,7 +60,7 @@ h3 {
     height: 80px;
     padding: 0px;
     margin: 0px;
-    overflow: hidden;
+    /*overflow: hidden;*/
     font-family: 'Nanum Gothic', sans-serif;
     perspective: 200px;
     transform-style: preserve-3d;
@@ -179,7 +179,7 @@ h3 {
         left: 0;
         z-index: -1;
         transition: all 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        transform: translateY(-100%) rotate(-5deg);
+        transform: translateY(-125%) rotate(-5deg);
     }
     .main-nav ol li:nth-of-type(2):hover a {
         color: #222;
@@ -200,7 +200,7 @@ h3 {
         left: 0;
         z-index: -1;
         transition: all 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        transform: translateY(-100%) rotate(-5deg);
+        transform: translateY(-125%) rotate(-5deg);
     }
     .main-nav ol li:nth-of-type(3):hover a {
         color: #222;
@@ -221,7 +221,7 @@ h3 {
         left: 0;
         z-index: -1;
         transition: all 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        transform: translateY(-100%) rotate(-5deg);
+        transform: translateY(-125%) rotate(-5deg);
     }
     .main-nav ol li:nth-of-type(4):hover a {
         color: #222;
@@ -242,7 +242,7 @@ h3 {
         left: 0;
         z-index: -1;
         transition: all 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        transform: translateY(-100%) rotate(-5deg);
+        transform: translateY(-125%) rotate(-5deg);
     }
     .main-nav ol li:nth-of-type(5):hover a {
         color: #222;
@@ -263,7 +263,7 @@ h3 {
         left: 0;
         z-index: -1;
         transition: all 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        transform: translateY(-100%) rotate(-5deg);
+        transform: translateY(-125%) rotate(-5deg);
     }
     .main-nav ol li:nth-of-type(6):hover a {
         color: #222;
@@ -284,7 +284,7 @@ h3 {
         left: 0;
         z-index: -1;
         transition: all 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        transform: translateY(-100%) rotate(-5deg);
+        transform: translateY(-125%) rotate(-5deg);
     }
     .main-nav ol li:nth-of-type(7):hover a {
         color: #222;
@@ -305,7 +305,7 @@ h3 {
         left: 0;
         z-index: -1;
         transition: all 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        transform: translateY(-100%) rotate(-5deg);
+        transform: translateY(-125%) rotate(-5deg);
     }
     .main-nav ol li:nth-of-type(8):hover a {
         color: #222;
@@ -326,7 +326,7 @@ h3 {
         left: 0;
         z-index: -1;
         transition: all 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        transform: translateY(-100%) rotate(-5deg);
+        transform: translateY(-125%) rotate(-5deg);
     }
     .main-nav ol li:nth-of-type(9):hover a {
         color: #222;
@@ -347,7 +347,7 @@ h3 {
         left: 0;
         z-index: -1;
         transition: all 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        transform: translateY(-100%) rotate(-5deg);
+        transform: translateY(-125%) rotate(-5deg);
     }
     .main-nav ol li:nth-of-type(10):hover a {
         color: #222;
@@ -368,7 +368,7 @@ h3 {
         left: 0;
         z-index: -1;
         transition: all 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        transform: translateY(-100%) rotate(-5deg);
+        transform: translateY(-125%) rotate(-5deg);
     }
     .main-nav ol li:hover ol {
         transform: translateY(0) translateZ(-1px);
@@ -395,7 +395,7 @@ h3 {
         display: block;
         position: absolute;
         top: 100%;
-        transform: translateY(-100%) translateZ(-5px);
+        transform: translateY(-125%) translateZ(-5px);
         transform-origin: top right;
         z-index: -1;
         width: 120%;
@@ -644,7 +644,7 @@ h3 {
         display: table;
         left: 0;
         margin: 0px;
-        transform: translateY(calc(-100% - 45px)) translateZ(-1px);
+        transform: translateY(calc(-125% - 45px)) translateZ(-1px);
         text-align: center;
         transition: all 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
         background: #000;
@@ -713,6 +713,11 @@ h3 {
     position: fixed;
     top: 0;
     width: 100%;
+}
+
+@media (min-width: 880px) {
+  .main-nav ol li > .sub-menu li { display: none; margin: 0; }
+  .main-nav ol li:hover > .sub-menu li { display: block; margin: 20px 0; }
 }
 
 /***********************************************************************
