@@ -1550,10 +1550,6 @@ footer ol li img {
     width: 25px;
 }
 
-/* Ensure nav always sits above the cover image */
-.main-nav.sticky {
-  z-index: 9999;
-}
 
 /* Stop global 3D stacking rules messing with nav layering */
 .main-nav,
@@ -1561,13 +1557,6 @@ footer ol li img {
   transform-style: flat;
 }
 
-/* Keep the cover below the nav */
-.container,
-.cover,
-.cover-img {
-  position: relative;
-  z-index: 1;
-}
 
 /* Hide dropdowns by default (prevents the "partially visible animated strips") */
 @media (min-width: 880px) {
@@ -1587,4 +1576,21 @@ footer ol li img {
 @media (min-width: 880px) {
   .main-nav .sub-menu { display: none; }
   .main-nav ol li:hover > .sub-menu { display: block; }
+}
+
+/* --- HARD OVERRIDE: nav must always sit on top --- */
+.main-nav.sticky {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 999999 !important;
+}
+
+/* Keep the cover below the nav no matter what stacking contexts exist */
+.container,
+.cover,
+.cover-img {
+  position: relative !important;
+  z-index: 0 !important;
 }
