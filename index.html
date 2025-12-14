@@ -16,8 +16,7 @@
             fetch("/partials/nav.html")
                 .then(res => res.text())
                 .then(html => {
-                document.getElementById("nav-placeholder").innerHTML = html;
-                })
+                document.getElementById("nav-placeholder").innerHTML = html;})
                 .catch(err => console.error("Nav load failed:", err));
         </script>
 
