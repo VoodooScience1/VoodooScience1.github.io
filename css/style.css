@@ -24,7 +24,7 @@ body {
 
 body * {
     box-sizing: border-box;
-    transform-style: preserve-3d;
+    /*transform-style: preserve-3d;*/
 }
 
 h2 {
@@ -63,6 +63,7 @@ h3 {
     /*overflow: hidden;*/
     font-family: 'Nanum Gothic', sans-serif;
     perspective: 200px;
+    transform-style: preserve-3d;
 }
 
 /***********************************************************************
