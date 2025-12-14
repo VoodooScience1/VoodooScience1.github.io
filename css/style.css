@@ -1582,3 +1582,8 @@ footer ol li img {
     pointer-events: auto;
   }
 }
+
+@media (min-width: 880px) {
+  .main-nav .sub-menu { display: none; }
+  .main-nav ol li:hover > .sub-menu { display: block; }
+}
