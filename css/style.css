@@ -724,6 +724,7 @@ h3 {
 }
 
 .cover {
+    margin-top: 0;
     background-color: white;
     align-items: center;
 }
