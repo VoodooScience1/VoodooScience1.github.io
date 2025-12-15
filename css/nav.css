@@ -174,6 +174,7 @@
     .main-nav ol li:hover ol li:nth-of-type(1n) {
         transform: none;
         margin: 0px;
+        padding: 30px;
     }
 
     /* Submenu hover overlay (restores “hovered item highlight”) */
@@ -441,8 +442,8 @@
 *  Nav Bar final tid-bits
 **********************************************************************/
 .active {
-    border-bottom: 5px solid white;
-    color: white;
+    border-bottom: 5px solid var(--accent);
+    color: var(--accent);
     padding-bottom: 1px;
 }
 
@@ -461,5 +462,33 @@
     .main-nav ol li:hover > .sub-menu li {
         display: block;
         margin: 20px 0;
+    }
+}
+
+/* Make the whole coloured nav slot clickable (desktop) */
+@media (min-width: 880px) {
+  .main-nav > ol > li { position: relative; }
+
+  .main-nav > ol > li > a{
+    position: absolute;
+    inset: 0;                 /* fill entire li box */
+    display: flex;
+    align-items: center;
+    justify-content: center;  /* keep text centred */
+    z-index: 1;               /* stay above li::before */
+  }
+}
+
+/* Same idea for submenu “buttons” (desktop) */
+@media (min-width: 880px) {
+  .main-nav ol li ol li { position: relative; }
+
+  .main-nav ol li ol li > a{
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;  
     }
 }

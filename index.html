@@ -1,793 +1,283 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Project Management Degree Apprenticeship</title>
-        <link rel="stylesheet" type="text/css" href="./css/style.css">
-        <script type="text/javascript" src="./script/modal.js">
-        </script>
-        <!--<script type="text/javascript" src="./script/accordion.js">
-</script>-->
+  <head>
+    <title>Phil Cook - Engineering Manager, Developing Solutions Architect</title>
 
-    </head>
-    <body>
-        <div id="nav-placeholder"></div>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/accordian.css">
+    <link rel="stylesheet" href="/css/grid-panel.css">
+    <link rel="stylesheet" href="/css/nav.css">
+    <link rel="stylesheet" href="/css/modal.css">
+    <script type="text/javascript" src="/script/sections.js" defer></script>
+    <script type="text/javascript" src="/script/nav-marker.js" defer></script>
+    <script type="text/javascript" src="/script/lightbox.js" defer></script>
+  </head>
 
-        <script>
-            fetch("/partials/nav.html")
-                .then(res => res.text())
-                .then(html => {
-                document.getElementById("nav-placeholder").innerHTML = html;})
-                .catch(err => console.error("Nav load failed:", err));
-        </script>
+  <body>
+    <!-- Placeholders MUST exist before fetch runs -->
+    <div id="nav-placeholder"></div>
+    <div id="lightbox-placeholder"></div>
 
-        <div class="container">
-            <div><img class="cover-img" src="./img/cover-photo.png"></div>
-        </div>
-        
-        <div class="div-wrapper">
-            <div class="default-div-wrapper">
-                <h1 style="text-align: center;">Phil Cook</h1>
-                <p style="text-align: center;">Engineering Manager | Developing Solutions Architect | Complex Systems | Programme & Project Leadership | DDQ&M</p>
+    <script>
+      // Load partials AFTER the DOM exists (safe on all browsers)
+      window.addEventListener("DOMContentLoaded", () => {
+        fetch("/partials/nav.html")
+          .then(r => r.text())
+          .then(html => {
+              document.getElementById("nav-placeholder").innerHTML = html;
+              window.setActiveNav(); // run AFTER nav is injected
+          })
+          .catch(err => console.error("Nav load failed:", err));
+
+        fetch("/partials/lightbox.html")
+          .then(r => r.text())
+          .then(html => { document.getElementById("lightbox-placeholder").innerHTML = html; })
+          .catch(err => console.error("Lightbox load failed:", err));
+      });
+    </script>
+
+    <div class="container">
+      <div><img class="cover-img" src="/img/cover-photo.png" alt="Cover"></div>
+    </div>
+
+    <!-- Standard container, nothing fancy at all, one column -->
+    <div class="div-wrapper">
+      <div class="default-div-wrapper">
+        <h1 style="text-align: center">Plain, Wide, Container</h1>
+        <p style="text-align: center">With some limited words iside it</p>
+      </div>
+    </div>
+
+    <!-- 1 row of 3 off hover-cards (click image opens lightbox) -->
+    <div class="grid-wrapper grid-wrapper--row">
+        <div class="content box box-img">
+            <div class="content-overlay"></div>
+            <!-- js-lightbox + alt -->
+            <img class="content-image js-lightbox"
+                src="/img/cover-photo-old-2.png"
+                alt="img1">
+            <!-- Animation + text for overlay -->
+            <div class="content-details fadeIn-bottom">
+                <h3 class="content-title">IMG1</h3>
+                <p class="content-text">Click to view</p>
             </div>
         </div>
 
-        <div class="div-wrapper">
-            <div class="img-text-div-wrapper">
-                <div class="img-text-div-img">
-                    <img style="cursor: pointer;" onclick="openModal();currentSlide(14)" src="img/Me.jpeg">
-                    <p>A younger me...</p>
-                </div>
-                <div class="img-text-div-text">
-                    <h1 style="text-align: center;">Space</h1>
-                    <p>
-                        space
-                    </p>
-                    <div class="flex-accordion-box">
-                        <h1 style="text-align: center;">Space</h1>
-                        <div class="tab">
-                            <input type="checkbox" id="chck1">
-                            <label class="tab-label" for="chck1">Check</label>
-                            <div class="tab-content">
-                                <li>
-                                    space
-                                </li>
-                            </div>
-                        </div>
-                        <div class="tab">
-                            <input type="checkbox" id="chck2">
-                            <label class="tab-label" for="chck2">Check</label>
-                            <div class="tab-content">
-                                <li>
-                                    space
-                                </li>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="content box box-img">
+            <div class="content-overlay"></div>
+                <img class="content-image js-lightbox"
+                    src="/img/cover-photo-old-2.png"
+                    alt="Twitter">
+            <div class="content-details fadeIn-bottom">
+                <h3 class="content-title">Twitter</h3>
+                <p class="content-text">Click to view</p>
             </div>
         </div>
 
-        <div class="grid-wrapper">
-            <div class="content box box-img" onclick="openModal();currentSlide(1)">
+        <div class="content box box-img">
+            <div class="content-overlay"></div>
+                <img class="content-image js-lightbox"
+                    src="/img/cover-photo-old-2.png"
+                    alt="Twitter">
+            <div class="content-details fadeIn-bottom">
+                <h3 class="content-title">Twitter</h3>
+                <p class="content-text">Click to view</p>
+            </div>
+        </div>
+        <!-- ...more cards... -->
+    </div>
+
+    <!-- Normal content... -->
+    <!-- Note: throughout, there's options you can mod
+      data-type="imgText" --- block type
+      data-img-pos="right" --- image position (left / right)
+      data-img="/img/cover-photo-old-2.png" --- source image
+      data-caption="hi" --- the figure/caption that appears below the image
+      data-lightbox="true" --- decide whether to add to the lightbox/modal or not
+    -->
+    <!-- Note: There's block for images (for a clean lok), but you can still add
+      inline images if you so with, and tehy can still be aded to the lightbox/modal
+      you just call js-lightbox class as seen in the example below:
+          <img class="js-lightbox" src="/img/twitter.png" alt="Twitter">
+      
+      Note: alt is handled by "caption"
+    -->
+
+    <!-- Small image, large text; Image on left (default) -->
+    <div class="section"
+            data-type="imgText"
+            data-img="/img/cover-photo-old-2.png"
+            data-caption="left-side-image"
+            data-lightbox="true">
+        <h2>Small image w/ big text block to the right</h2>
+        <p>With text inside</p>
+    </div>
+
+    <!-- Small image, large text; Image on Right (explicit request) -->
+    <div class="section"
+            data-type="imgText"
+            data-img-pos="right"
+            data-img="/img/cover-photo-old-2.png"
+            data-caption="right-side-image"
+            data-lightbox="true">
+        <h2>big text block / small img</h2>
+        <p>With text inside</p>
+    </div>
+
+    <!-- 50/50 split of page; can choose to have images, or not -->
+    <!-- Left side image (default) -->
+    <div class="section"
+            data-type="split50"
+            data-img="/img/cover-photo-old-2.png"
+            data-caption="left-side-image"
+            data-lightbox="true">
+        <h2>50/50 Split, Image left</h2>
+        <p>With text inside</p>
+    </div>
+
+    <!-- 50/50 split of page; can choose to have images, or not -->
+    <!-- Right side image (explicit request) -->
+    <div class="section"
+            data-type="split50"
+            data-img-pos="right"
+            data-img="/img/cover-photo-old-2.png"
+            data-caption="Same but image-right"
+            data-lightbox="true">
+        <h2>50/50 split, image right</h2>
+        <p>With text inside</p>
+    </div>
+
+    <!-- If you know you have no image block requirement, and it's text/inline images only -->
+    <!-- Use twoCol below -->
+    <div class="section" data-type="twoCol">
+        <div data-col="left">
+            <h2>Left column</h2>
+            <div class="img-text-div-img">
+              <img src="/img/pablo.PNG" alt="Pablo">
+            </div>
+           
+            <p>Keeping it simple, and not adding it to the Lightbox</p>
+        </div>
+
+        <!-- You can add it polaroid style if you want -->
+        <div data-col="right">
+            <h2>Left column</h2>
+            <div class="img-text-div-img">
+              <div class="content content--full">
                 <div class="content-overlay"></div>
-                <img class="content-image" src="./img/img1.jpg">
+                  <img class="content-image js-lightbox" src="/img/miguel.jpeg" alt="Miguel">
                 <div class="content-details fadeIn-bottom">
-                    <h3 class="content-title">img1</h3>
-                    <p class="content-text">img2</p>
+                  <h3 class="content-title">Miguel</h3>
+                  <p class="content-text">Click to view</p>
                 </div>
-            </div>
-
-            <div class="content box box-img" onclick="openModal();currentSlide(2)">
-                <div class="content-overlay"></div>
-                <img class="content-image" img src="./img/img2.png">
-                <div class="content-details fadeIn-bottom">
-                    <h3 class="content-title">img2</h3>
-                    <p class="content-text">img2</p>
-                </div>
-            </div>
-
-            <div class="content box box-img" onclick="openModal();currentSlide(3)">
-                <div class="content-overlay"></div>
-                <img class="content-image" src="./img/img3.png">
-                <div class="content-details fadeIn-bottom">
-                    <h3 class="content-title">img3</h3>
-                    <p class="content-text">img3</p>
-                </div>
-            </div>
-
-            <div class="content box box-img" onclick="openModal();currentSlide(4)">
-                <div class="content-overlay"></div>
-                <img class="content-image" src="./img/img4.png">
-                <div class="content-details fadeIn-bottom">
-                    <h3 class="content-title">img4</h3>
-                    <p class="content-text">img4</p>
-                </div>
-            </div>
-
-            <div class="content box box-img" onclick="openModal();currentSlide(5)">
-                <div class="content-overlay"></div>
-                <img class="content-image" img src="./img/img5.jpg">
-                <div class="content-details fadeIn-bottom">
-                    <h3 class="content-title">img5</h3>
-                    <p class="content-text">img5</p>
-                </div>
+              </div>
+              <p>Optional Polaroid Style, added to lightbox</p>
             </div>
         </div>
+      </div>
 
-        <div class="div-wrapper">
-            <div class="lrg-img-text-div-wrapper">
-                <div class="lrg-img-text-div-text">
-                    <h1 style="text-align: center;">Space</h1>
-                    <p>
-                        Space
-                    </p>
-                </div>
-                <div class="lrg-img-text-div-img">
-                    <img onclick="openModal();currentSlide(6)" src="img/img6.jpg" style="cursor: pointer;">
-                    <p>img6</p>
-                </div>
-            </div>
+    <!-- Or twoCol for just text -->
+    <div class="section" data-type="twoCol">
+        <div data-col="left">
+            <h2>Left column</h2>
+            <p>It could be basic like this, just words</p>
+            <ol>
+              <li>Maybe a list?</li>
+            </ol>
+            <ul>
+              <li>Perhaps bullets?</li>
+            </ul>
         </div>
 
-        <div class="div-wrapper">
-            <div class="flex-accordion-wrapper">
-                <div class="flex-accordion-box">
-                    <h1 style="text-align: center;">Space</h1>
-                    <p>
-                        Space
-                    <div class="lrg-img-text-div-img">
-                        <img onclick="openModal();currentSlide(7)" src="img/img7.png" style="cursor: pointer;">
-                        <p>img7</p>
-                    </div>
-                    <div style="text-align: left;">
-                        <div class="tab">
-                            <input type="checkbox" id="chck6">
-                            <label class="tab-label" for="chck6">Space</label>
-                            <div class="tab-content">
-                                <h2>h2</h2>
-                                <li>
-                                    Space
-                                </li>
-                            </div>
-                        </div>
-                        <div class="tab">
-                            <input type="checkbox" id="chck7">
-                            <label class="tab-label" for="chck7">space</label>
-                            <div class="tab-content">
-                                <h2>space</h2>
-                                <li>
-                                    space
-                                </li>
-                            </div>
-                        </div>
+        <!-- Make sure you change the id's i.e. id="acc-1" -->
+        <!-- Mthis is page wide and handles hich asset is animated -->
+        <div data-col="right">
+            <h2>Right column</h2>
+            <p>Or maybe even add yourself an accordian? Firstly, in-line</p>
+            <!-- This is the in-line simple implementation -->
+            <div class="tab">
+              <input type="checkbox" id="acc-1">
+              <label class="tab-label" for="acc-1">Item 1</label>
+              <div class="tab-content">
+                <ul>
+                  <li>Point A</li>
+                  <li>Point B</li>
+                </ul>
+              </div>
+            </div>
 
-                        <div class="tab">
-                            <input type="checkbox" id="chck8">
-                            <label class="tab-label" for="chck8">Space</label>
-                            <div class="tab-content">
-                                <h2>h2</h2>
-                                <li>
-                                    space
-                                </li>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="tab">
+              <input type="checkbox" id="acc-2">
+              <label class="tab-label" for="acc-2">Item 2</label>
+              <div class="tab-content">
+                <ul>
+                  <li>Thing 1</li>
+                  <li>Thing 2</li>
+                </ul>
+              </div>
             </div>
         </div>
+    </div>
 
-        <div class="grid-wrapper">
-            <div class="content box box-img" onclick="openModal();currentSlide(8)">
-                <div class="content-overlay"></div>
-                <img class="content-image" src="./img/img8.png">
-                <div class="content-details fadeIn-bottom">
-                    <h3 class="content-title">h3</h3>
-                    <p class="content-text">space</p>
-                </div>
+    <!-- Full-width accordian example using standard container -->
+    <!-- see here how I've changed the accordin id = important for animation -->
+    <div class="div-wrapper">
+      <div class="default-div-wrapper">
+        <h1>Accordians can also be full width, and fancy</h1>
+        <p>If you wanted, you could wrap them so they get headers, etc. too.</p>
+        <!-- This time, with a wrapper -->
+        <div class="flex-accordion-wrapper">
+          <div class="flex-accordion-box">
+            <h2>Accordion title</h2>
+            <p>Optional intro text…</p>
+            <div class="tab">
+              <input type="checkbox" id="acc-3">
+              <label class="tab-label" for="acc-3">Item 1</label>
+              <div class="tab-content">
+                <ul>
+                  <li>Point A</li>
+                  <li>Point B</li>
+                </ul>
+              </div>
+            </div>
+            <div class="tab">
+              <input type="checkbox" id="acc-4">
+              <label class="tab-label" for="acc-4">Item 2</label>
+              <div class="tab-content">
+                <ul>
+                  <li>Thing 1</li>
+                  <li>Thing 2</li>
+                </ul>
+              </div>
             </div>
 
-            <div class="content box box-img" onclick="openModal();currentSlide(9)">
-                <div class="content-overlay"></div>
-                <img class="content-image" img src="./img/img9.png">
-                <div class="content-details fadeIn-bottom">
-                    <h3 class="content-title">h3</h3>
-                    <p class="content-text">space</p>
-                </div>
-            </div>
-
-            <div class="content box box-img" onclick="openModal();currentSlide(10)">
-                <div class="content-overlay"></div>
-                <img class="content-image" src="./img/img10.png">
-                <div class="content-details fadeIn-bottom">
-                    <h3 class="content-title">h3</h3>
-                    <p class="content-text">space</p>
-                </div>
-            </div>
-
-            <div class="content box box-img" onclick="openModal();currentSlide(11)">
-                <div class="content-overlay"></div>
-                <img class="content-image" src="./img/img11.png">
-                <div class="content-details fadeIn-bottom">
-                    <h3 class="content-title">h3</h3>
-                    <p class="content-text">space</p>
-                </div>
-            </div>
-
-            <div class="content box box-img" onclick="openModal();currentSlide(12)">
-                <div class="content-overlay"></div>
-                <img class="content-image" img src="./img/img12.png">
-                <div class="content-details fadeIn-bottom">
-                    <h3 class="content-title">h3</h3>
-                    <p class="content-text">space</p>
-                </div>
-            </div>  
+          </div>
         </div>
+      </div>
+    </div>
 
-        <div class="div-wrapper">
-            <div class="two-text-columns-wrapper">
-                <div class="two-text-columns-text-left">
-                    <h1 style="text-align: center;">space</h1>
-                    <div class="img-text-div-img" onclick="openModal();currentSlide(13)" style="cursor: pointer">
-                        <img src="img/img13.png">
-                        <p>space</p>
-                    </div>
-                    <div class="lrg-img-text-div-img sml">
-                        <a href="./docs/Philip_Cook_Type%20Dynamics%20Indicator_Type%20at%20Work%20Report.pdf"><img src="./img/pdf.png">
-                            Click here for the full report in PDF format</a>
-                    </div>
-                    <div style="text-align: left;">
-                        <h2>h2</h2>
-                        <p>
-                            space
-                        </p>
-                        <h2>h2</h2>
-                        <p>
-                            Space
-                        </p>
-                        <h2>h2</h2>
-                        <p>
-                            <li>
-                                Enjoy activities where results are tangible and measurable.
-                            </li> 
-                        </p>
-                        <h2>h2</h2>
-                        <p>
-                            <li>
-                                Develop greater flexibility - and avoid being too procedural.
-                            </li>
-                        </p>
-                    </div>
-                </div>
-                <div class="two-text-columns-text-right">
-                    <h1 style="text-align: center;">My profile distribution</h1>
-                    <div class="img-text-div-img" onclick="openModal();currentSlide(14)" style="cursor: pointer">
-                        <img src="img/Profile_Distribution_1.png">
-                        <p>From the above chart above you can see that I am fairly evenly spread across most of the styles</p>
-                    </div>
-                    <div style="text-align: left;">
-                        <h2>What does this mean?</h2>
-                        <p>
-                            All of the elements are fairly even, which means I am fairly adaptable depsite erring towards Inpector. I fall a decent way into "judging - organised and likes a plan".
-                        </p>
-                    </div>
-                    <div class="img-text-div-img" onclick="openModal();currentSlide(15)" style="cursor: pointer">
-                        <img src="img/Profile_Distribution_2.png">
-                        <p>From the above chart above you can see that I am fairly evenly spread across most of the styles</p>
-                    </div>
-                    <div style="text-align: left;">
-                        <h2>What does this mean?</h2>
-                        <p>
-                            Further to the previous, while I have some preference, all of them reside in the "slight" region. This "corridor" type result suggest I am adaptable; I use both styles in my day-to-day life, and adapt the style that is required dependant on the circumstance. However, it could also mean I am unclear, which may cause tension; however this is not soemthing I believe is the case.
-                        </p>
-                        <h2>My thoughts</h2>
-                        <p>
-                            I can see some of myself in these descriptions, the only thing I disagree with is that I believe I am very flexible, and also show great appreciation for others. However, this may be down to the fact that I am a "corridor" preference.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="div-wrapper">
-            <div class="two-text-columns-wrapper">
-                <div class="two-text-columns-text-left">
-                    <h1 style="text-align: center;">What learning style did I come out as?  Answer: Activator / Clarifier</h1>
-                    <div class="img-text-div-img" onclick="openModal();currentSlide(16)" style="cursor: pointer">
-                        <img src="img/Learnining_Style_Clarifier_Activator.png">
-                        <p>Profling for Success suggests that I have the learning style of Activator / Clarifier</p>
-                    </div>
-                    <div class="lrg-img-text-div-img sml">
-                        <a href="./docs/Philip_Cook_The%20Learning%20Styles%20Indicator_Feedback%20Report.pdf"><img src="./img/pdf.png">
-                            Click here for the full report in PDF format</a>
-                    </div>
-                    <div style="text-align: left;">
-                        <h2>What does this mean?</h2>
-                        <p>
-                            This means I sit somewhere between the two, to which I would agree somewhat, so:
-                            <li>
-                                Activator:
-                                <ol>
-                                    Emphasising the practical applications of what is learnt
-                                </ol>
-                                <ol>
-                                    Taking a common-sense and matter-of-fact approach
-                                </ol>
-                                <ol>
-                                    Focussing on action and a realistic appraisal of the situation
-                                </ol>
-                                <ol>
-                                    Organising facts, situations and people in order to deliver results
-                                </ol>
-                                <ol>
-                                    Avoidance of “woolly” thinking and procrastination
-                                </ol>
-                                <ol>
-                                    Attending to immediate and practical issues and details 
-                                </ol>
-                            </li>
-                            <li>
-                                Calrifier:
-                                <ol>
-                                    Learning in a structured and systematic way
-                                </ol>
-                                <ol>
-                                    Paying attention to details and facts
-                                </ol>
-                                <ol>
-                                    Absorbing as much information as possible
-                                </ol>
-                                <ol>
-                                    Learning via an orderly process with milestones
-                                </ol>
-                                <ol>
-                                    Posing questions to clarify what has to be learnt and making sure
-                                    that everything has been considered
-                                </ol>
-                            </li>
-                        </p>
-                        <h2>Why does this mean?</h2>
-                        <p>
-                            With regard to this analysis, this means that I am somewhat unlikely to innovate (something I do disagree with, as I have made a nubmer of new things at my curernt work). I shows that I have a propensity towards these styles however, therefore it would be beneficial to have other team members that are within the alternative learning styles. This would ensure that as much information and knowledge as possible could be utilised.
-                        </p>
-                        <h2>Alternatives - VARK</h2>
-                        <p>
-                            VARK, or Visual-Auditory-Reading-Kinesthetic, is another moteholodgy that suggests styles of learning from a different perspective. The VARK model suggests the following:
-                            <li>
-                                Visual, Learns through seeing
-                            </li> 
-                            <li>
-                                Auditory, learns through hearing and speaking
-                            </li>
-                            <li>
-                                Reading, learns through reading/research 
-                            </li>
-                            <li>
-                                Kinethetic, practical, touching and doing
-                            </li>
-                            <br/>
-                            I would suggest that I err towards the Kinesthetic side, as I learn much quicker by doing and trying; however I am able to use all methods. This ties in with the Activator profile, as it has similarities.
-                        </p>
-                    </div>
-                </div>
-                <div class="two-text-columns-text-right">
-                    <h1 style="text-align: center;">What does the Belbin Teams methodology suggest?  Answer: Monitor / Evaluator</h1>
-                    <div class="img-text-div-img" onclick="openModal();currentSlide(17)" style="cursor: pointer">
-                        <img src="img/Belbin%20Teams.png">
-                        <p>From the above chart above you can see that I am heavily towards the Monitor / Evaluator profile with some teamworker / implementer weighting</p>
-                    </div>
-                    <div class="lrg-img-text-div-img sml">
-                        <a href="./docs/190409%20A3%20-%20Belbin%20Team%20Roles%20Macro%20(3).xlsm"><img src="./img/excel.png">
-                            Click here for the full Belbin Tool in Excel format</a>
-                    </div>
-                    <div style="text-align: left;">
-                        <h2>What does this mean?</h2>
-                        <p>
-                            A successful tema should compromise of a number of different individuals that have different skill sets. You need people to plan, people to investigate, people to come up with ideas, etc. From my test, as a Monitor / Evaluator, I lie in the "thinking" realm; typically I would be best utilised in the planning stages of a project.
-                        </p>
-                    </div>
-                    <div class="img-text-div-img">
-                        <img src="img/Belbin-Teams-Table.png">
-                        <p>The above shows all the roles and their strengths and weaknesses</p>
-                    </div>
-                    <div style="text-align: left;">
-                        <h2>What are my strengths per the Belbin Teams model?</h2>
-                        <p>
-                            <li>
-                                Contributions
-                                <ul>
-                                    Sober, strategic and discerning. Sees all options. Judges accurately.
-                                </ul>
-                            </li>
-                            <li>
-                                Allowable Weaknesses
-                                <ul>
-                                    Lacks drive and ability to inspire others. Overly critical.
-                                </ul>
-                            </li>
-
-
-                        </p>
-                        <h2>My thoughts</h2>
-                        <p>
-                            I believe I am probably more of an activator than suggested, but perhaps my ability to do a wide breadth makes me more versatile. I believe I am a tactile learner, and I'd class myself as Kinesthetic.<br/><br/>
-
-                            With regard to the Belbin Teams model, I believe there is something to be said about the result. I would agree with the strengths, however I am believe I am very ambitious and also highly supportive of my colleagues. This is perhaps something I need to discuss further with my fellow colleageus to determine if that is in fact correct. 
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="div-wrapper">
-            <div class="right">
-                <div class="lrg-img-text-div-text">
-                    <h1 style="text-align: center;">SWOT - Strengths, Weaknesses, Opportunities and Threats</h1>
-                    <div style="text-align: left;">
-                        <p>
-                            SWOT was designed and developed by Albert Humphrey during his post at the Stanford Research Institute between 1960-1970. It is a method that can be used for analysing a variety of thing such as projects, processes and also oneself. Here, I use it for the latter.
-                            <br/><br/>
-
-                            One issue with this is it's entirely self reliant on the person creating it to give honest and accurate accounts. Below, I give what I believe are my SWOTs, those marked with an (I) happen to relate to my traits identified from the personality testing. Those with (Iopp) is where I believe I am the opposite to what my traits suggest.
-                        </p>
-
-                        <h2>
-                            Strengths
-                        </h2>
-                        <li>
-                            Hardworking, efficient and conciencious (I)
-                        </li>
-                        <li>
-                            Excellent analytical skills (I)
-                        </li>
-                        <li>
-                            Team Player (I)
-                        </li>
-                        <li>
-                            Not afraid of a challenge
-                        </li>
-                        <li>
-                            Flexible and adaptive (Iopp)
-                        </li>
-                        <li>
-                            Focus on the finder details, getting things right (I)
-                        </li>
-                        <h2>
-                            Weaknesses
-                        </h2>
-                        <li>
-                            Lack of experience giving and making presentations
-                        </li>
-                        <li>
-                            Confidence (I)
-                        </li>
-                        <li>
-                            Impatient with slow work progress (I)
-                        </li>
-                        <li>
-                            Focus on the finer details, perhaps miss the big picture (I)
-                        </li>
-                        <li>
-                            No professional qualification in PM & basic knowledge
-                        </li>
-                        <h2>
-                            Opportunities
-                        </h2>
-                        <li>
-                            Request, generate and give presentations at work
-                        </li>
-                        <li>
-                            Reflection and speaking out
-                        </li>
-                        <li>
-                            Use study support, read around the subject
-                        </li>
-                        <li>
-                            Maintain sight of big picture & ensure finer details have focus
-                        </li>
-                        <li>
-                            Allow time for the creative process
-                        </li>
-                        <li>
-                            Complete my DA BSc in PM
-                        </li>
-                        <h2>
-                            Threats
-                        </h2>
-                        <li>
-                            Disinterest
-                        </li>
-                        <li>
-                            Procrastination
-                        </li>
-                        <li>
-                            Opportunity
-                        </li>
-                        <li>
-                            Oneself
-                        </li>
-                    </div>
-                </div>
-                <div class="lrg-img-text-div-img">
-                    <img onclick="openModal();currentSlide(9)" src="img/SWOT%20Analysis.png" style="cursor: pointer;">
-                    <p>Newest building at HAL Ltd, the brand new composite facility; with the latest technology; embracing the digital world with high tech monitoring.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="div-wrapper">
-            <div class="img-text-div-wrapper">
-                <div class="img-text-div-img">
-                    <img onclick="openModal();currentSlide(10)" src="img/GROW%20Model.png">
-                    <p>My GROW considerations</p>
-                </div>
-                <div class="img-text-div-text">
-                    <h1 style="text-align: center;">The GROW Model</h1>
-                    <div style="text-align: left;">
-                        <p>
-                            The GROW model was designed and developed in the 1980s by business coaches Graham Alexander, Alan Fine and Sir John Whitmore. It is a simple methodology that gets the individual to critically look at oneself and understand what they want, where they are, what they can do to ge there, and how they'll do it. These are important steps in order to realise self-improvement.<br/><br/>
-
-                            At present I believe there are 6 key goals that would be very beneficial to my success in my career. I have identified the following goals, and below each detailed what the reality is, what my options are, and how I can proceed to achieve the goal:
-                        </p>
-
-                        <div class="tab">
-                            <input type="checkbox" id="chck9">
-                            <label class="tab-label" for="chck9">Degree</label>
-                            <div class="tab-content">
-                                This is an important goal as it ensures that I am both competent in my role as well as respected. Having a degree ensures that other individuals can trust that I have the skill set to make appropriate descisions.
-                                <h3>Reality</h3>
-                                I currently have a HNC in Aeronautical Engineering, which is un-related.
-                                <h3>Options</h3>
-                                My option is to complete the BSc in Project Management that I have been given the opportunity to do.
-                                <h3>Way-Forward</h3>
-                                As above, make the most of the BSc, learn as much as I can, and complete the degree with an excellent grade. I should also ensure that I employ as much as I can back at my workplace to reinforce the learning.
-                            </div>
-                        </div>
-
-                        <div class="tab">
-                            <input type="checkbox" id="chck10">
-                            <label class="tab-label" for="chck10">Excellent Soft-Skills</label>
-                            <div class="tab-content">
-                                Excellent soft skills is a much overlook, but integral part of being a succesful PM. Being able to get people on-side, convince others your descisions are right, and forge strong ralationships of trust are very important if you want people to follow your instructions. 
-                                <h3>Reality</h3>
-                                I have good soft skills currently, but as these are not directly PM based they could do with some additional work.
-                                <h3>Options</h3>
-                                Trying and failing, and imporivng with reflection is a good way to go. So is reading, and practising.
-                                <h3>Way-Forward</h3>
-                                If I continue to learn from colleagues, peers, books and lecurers, this is a good starting point. Going to some events such as the APM events to network will help these skills. It would be beneficial to get some management on a project too to utilise them more directly. 
-                            </div>
-                        </div>
-
-                        <div class="tab">
-                            <input type="checkbox" id="chck11">
-                            <label class="tab-label" for="chck11">Excellent PM Skills</label>
-                            <div class="tab-content">
-                                Excellent PM skills is important to ensure that I am an effective and efficient PM.
-                                <h3>Reality</h3>
-                                Currently my skills are limited, only though what I have learnt from reading around and activities at work.
-                                <h3>Options</h3>
-                                Styfying for my degree is the start, this will give me somew of the skills. It is important to also look to ym colleagues and to gain experiences to reinforce these skills.
-                                <h3>Way-Forward</h3>
-                                Going forward I must ensure that I study hard to gain the skills and go back to work and implement these skills; this will reinforce the learning and ensure that I am effective.
-                            </div>
-                        </div>
-
-                        <div class="tab">
-                            <input type="checkbox" id="chck12">
-                            <label class="tab-label" for="chck12">Success</label>
-                            <div class="tab-content">
-                                Success is difficult to define, but for me success looks like promotions, stability, long-term prospects and respect from others.
-                                <h3>Reality</h3>
-                                Right now I am at the start of my career, and therefore have little in the way of success. I do deem moving to the commercial role I am currently doing a success however. 
-                                <h3>Options</h3>
-                                My options are to work work hard and show my ability; and ultimately gain respect and promotions.
-                                <h3>Way-Forward</h3>
-                                To ensure this happens I must continue what I am doing, working hard and showing ability. I need to go above and beyond my job role to show that I am diverse and innovative, and a great asset to the company; with nothing too much of an ask. But I need to be careful I do not over stretch myself. 
-                            </div>
-                        </div>
-
-                        <div class="tab">
-                            <input type="checkbox" id="chck13">
-                            <label class="tab-label" for="chck13">Excellent Presentation Skills</label>
-                            <div class="tab-content">
-                                As a manager, it is inevitable that you will have to present. Wheter ir be internally metrics to show performace, or to your customers and stakeholders, where issues arise or where innovations are to be made. This is an important skill to have.
-                                <h3>Reality</h3>
-                                Very minimal presentation experience, having only done one in college in the last 4 years.
-                                <h3>Options</h3>
-                                Gain the opportunity to generate and present. Also, I can self-teach ways to present, as well as practice.
-                                <h3>Way-Forward</h3>
-                                Going foreward I will be seeking support from my line manager to present some of our high-level meetings that we have. This will give me visibility to the executives while also developing my skills and attaining feedback to further improve.
-                            </div>
-                        </div>
-
-                        <div class="tab">
-                            <input type="checkbox" id="chck14">
-                            <label class="tab-label" for="chck14">Patience with Creatives</label>
-                            <div class="tab-content">
-                                I like to be effective and efficient. Often, I have been very frustrated with the percieved lack of impetus from others. I need to be more accomodating of these individuals, as its both their style, and part of the creative process.
-                                <h3>Reality</h3>
-                                I have a distinct lack of patience for waffle and what I see as slow progress.
-                                <h3>Options</h3>
-                                Work with the individuals mroe closeley to understand what the process is that they go through and better appreciate the process.
-                                <h3>Way-Forward</h3>
-                                With a new bid on the table currently, I am going to be seeking to work closely with the individuals that are doingn the design and engineering, so I can better appreciate the process.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="div-wrapper">
-            <div class="default-div-wrapper">
-                <h1>My PDP</h1>
-                <p>
-                    From the above you can see that there are a lot of thiongs that I can improve on, and there are a lot of obstacles along the way. I may not be able to avhieve all of these, but I will work to achieve this. Below is my PDP.<br/><br/>
-                    
-                    I have ommited anything that I would not see as pertinent to the APM framework and this course, sucha s webdesign and house renovating. These are things I'm looking to do alongside, but do not need including here.<br/><br/>
-                    
-                    <iframe style ="width: 100%; height: 70vh;" src="./docs/PDP%20and%20PDR.pdf"></iframe>
-                </p>
-            </div>
-        </div>
-
-
-
-
-        <!-- The Modal/Lightbox -->
-        <div id="myModal" class="modal">
-            <div class="cursor close" onclick="closeModal()">&times;</div>
-            <div class="modal-content">
-                <div class="mySlides">
-                    <div class="numbertext">1 / 14</div>
-                    <img src="./img/HAL_Composites_Facility.jpg">
-                </div>
-
-                <div class="mySlides">
-                    <div class="numbertext">2 / 14</div>
-                    <img src="./img/Dash_8_Nacelle.png">
-                </div>
-
-                <div class="mySlides">
-                    <div class="numbertext">3 / 14</div>
-                    <img src="./img/BAE_Hawk_Canopy.png">
-                </div>
-
-                <div class="mySlides">
-                    <div class="numbertext">4 / 14</div>
-                    <img src="./img/BAE_Hawk_Centreline_Tank.png">
-                </div>
-
-                <div class="mySlides">
-                    <div class="numbertext">5 / 14</div>
-                    <img src="./img/Folland_Gnatt.jpg">
-                </div>
-
-                <div class="mySlides">
-                    <div class="numbertext">6 / 14</div>
-                    <img src="./img/Personality_Type_Inspector.png">
-                </div>
-
-                <div class="mySlides">
-                    <div class="numbertext">7 / 14</div>
-                    <img src="./img/Learnining_Style_Clarifier_Activator.png">
-                </div>
-
-                <div class="mySlides">
-                    <div class="numbertext">8 / 14</div>
-                    <img src="./img/Belbin%20Teams.png">
-                </div>
-                
-                <div class="mySlides">
-                    <div class="numbertext">9 / 14</div>
-                    <img src="./img/SWOT%20Analysis.png">
-                </div>
-
-                <div class="mySlides">
-                    <div class="numbertext">10 / 14</div>
-                    <img src="./img/GROW%20Model.png">
-                </div>
-
-                <div class="mySlides">
-                    <div class="numbertext">11 / 14</div>
-                    <img src="./img/Profile_Distribution_1.png">
-                </div>
-
-                <div class="mySlides">
-                    <div class="numbertext">12 / 14</div>
-                    <img src="./img/Profile_Distribution_2.png">
-                </div>
-                
-                <div class="mySlides">
-                    <div class="numbertext">13 / 14</div>
-                    <img src="./img/Pasties!.png">
-                </div>
-                
-                <div class="mySlides">
-                    <div class="numbertext">14 / 14</div>
-                    <img src="./img/Pablo%20my%20Poocho.PNG">
-                </div>
-
-                <!-- Next/previous controls -->
-                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                <a class="next" onclick="plusSlides(1)">&#10095;</a>
-
-                <div class="modal-nav">
-                    <!-- Caption text -->
-                    <div class="caption-container">
-                        <p id="caption"></p>
-                    </div>
-
-                    <!-- Thumbnail image controls -->
-                    <div class="column">
-                        <img class="thumb" src="./img/HAL_Composites_Facility.jpg" onclick="currentSlide(1)" alt="Newest Composites Facility at HAL">
-                    </div>
-
-                    <div class="column">
-                        <img class="thumb" src="./img/Dash_8_Nacelle.png" onclick="currentSlide(2)" alt="Dash 8 Nacelle">
-                    </div>
-
-                    <div class="column">
-                        <img class="thumb" src="./img/BAE_Hawk_Canopy.png" onclick="currentSlide(3)" alt="BAE Hawk Canopy">
-                    </div>
-
-                    <div class="column">
-                        <img class="thumb" src="./img/BAE_Hawk_Centreline_Tank.png" onclick="currentSlide(4)" alt="BAE Hawk Centre Line Tank">
-                    </div>
-
-                    <div class="column">
-                        <img class="thumb" src="./img/Folland_Gnatt.jpg" onclick="currentSlide(5)" alt="Folland Gnatt">
-                    </div>
-
-                    <div class="column">
-                        <img class="thumb" src="./img/Personality_Type_Inspector.png" onclick="currentSlide(6)" alt="Personality Type Indicator - Inspector">
-                    </div>
-
-                    <div class="column">
-                        <img class="thumb" src="./img/Learnining_Style_Clarifier_Activator.png" onclick="currentSlide(7)" alt="Learning Style Indicator">
-                    </div>
-
-                    <div class="column">
-                        <img class="thumb" src="./img/Belbin%20Teams.png" onclick="currentSlide(8)" alt="Belbin Teams Role">
-                    </div>
-
-                    <div class="column">
-                        <img class="thumb" src="./img/SWOT%20Analysis.png" onclick="currentSlide(9)" alt="SWOT Analysis">
-                    </div>
-                    
-                    <div class="column">
-                        <img class="thumb" src="./img/GROW%20Model.png" onclick="currentSlide(10)" alt="My Personal GROW Considerations">
-                    </div>
-
-                    <div class="column">
-                        <img class="thumb" src="./img/Profile_Distribution_1.png" onclick="currentSlide(11)" alt="Personality Type table">
-                    </div>
-
-                    <div class="column">
-                        <img class="thumb" src="./img/Profile_Distribution_2.png" onclick="currentSlide(12)" alt="Personality Type table">
-                    </div>
-                    
-                    <div class="column">
-                        <img class="thumb" src="./img/Pasties!.png" onclick="currentSlide(13)" alt="Pasties are a must for anyone Cornish!">
-                    </div>
-                    
-                    <div class="column">
-                        <img class="thumb" src="./img/Pablo%20my%20Poocho.PNG" onclick="currentSlide(14)" alt="Pablo my Adorable Poochie">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </body>
-    <footer class="">
-        <ol>
-            <li>Please follow me using any of the following:</li>
-            <li>
-                <img src="img/twitter.png"> 
-                <img src="img/facebook.png"> 
-                <img src="img/instagram.png"> 
-                <img src="img/youtube.png"> 
-                <img src="img/linkedin.png">
-            </li>
-        </ol>
+    <!-- A simple footer for referring to my (non-existant) socials -->
+    <footer>
+      <ol>
+        <li>Please follow me using any of the following:</li>
+        <li>
+          <a href="https://www.x.com">
+            <img src="/img/twitter.png" alt="Twitter">
+          </a>
+          <a href="https://www.facebook.com">
+            <img src="/img/facebook.png" alt="Facebook">
+          </a>
+          <a href="https://www.instagram.com">
+            <img src="/img/instagram.png" alt="Instagram">
+          </a>
+          <a href="https://www.youtube.com">
+            <img src="/img/youtube.png" alt="Youtube">
+          </a>
+          <a href="https://www.linkedin.com">
+            <img src="/img/linkedin.png" alt="LinkedIn">
+          </a>
+        </li>
+      </ol>
     </footer>
+  </body>
 </html>

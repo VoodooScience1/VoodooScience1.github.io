@@ -15,7 +15,7 @@
 
   function openAt(i) {
     const modal = qs("#myModal");
-    if (!modal) return;
+    if (!modal) { console.warn("Lightbox: #myModal not found (did lightbox.html load?)"); return;}
 
     rebuildItems();
     if (!items.length) return;

@@ -1,0 +1,330 @@
+/***********************************************************************
+*  Theme + Base
+**********************************************************************/
+
+:root{
+  --bg: #000E2B;
+  --cover-bg: #031143;
+  --card-bg: #fff;
+  --accent: darkred;
+  --shadow: 0 4px 8px rgba(0,0,0,.2), 0 6px 20px rgba(0,0,0,.19);
+
+  --card-pad: 15px;
+  --card-margin: 20px;
+
+  --bp-nav: 880px;
+  --bp-layout: 1125px;
+}
+
+@font-face{
+  font-family: "CustomFont";
+  src: url("../font/CustomFont.woff2") format("woff2"),
+       url("../font/CustomFont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+*{ box-sizing: border-box; }
+
+body{
+  margin: 0;
+  background: var(--bg);
+  font-family: "CustomFont", roboto, sans-serif;
+  line-height: 1.7em;
+  letter-spacing: .1em;
+}
+
+/* Headings (kept as-is, just deduped a bit) */
+h2, h3{
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  font-weight: bold;
+  letter-spacing: .15em;
+  margin: 0;
+}
+
+h2{ font-size: 20px; padding: 15px 0; }
+h3{ font-size: 15px; padding: 5px 0; }
+
+/***********************************************************************
+*  “Card shell” (used everywhere)
+**********************************************************************/
+
+/* One rule that makes your wrappers look like cards */
+.default-div-wrapper,
+.img-text-div-wrapper,
+.lrg-img-text-div-wrapper,
+.two-text-columns-wrapper,
+.flex-accordion-wrapper{
+  background: var(--card-bg);
+  padding: var(--card-pad);
+  margin: var(--card-margin);
+  box-shadow: var(--shadow);
+}
+
+/* Optional utility if you want to use it later */
+.card{
+  background: var(--card-bg);
+  padding: var(--card-pad);
+  margin: var(--card-margin);
+  box-shadow: var(--shadow);
+}
+
+/***********************************************************************
+*  Cover
+**********************************************************************/
+
+.container{
+  margin-top: 90px;
+  height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.cover{
+  background-color: var(--cover-bg);
+  width: 100%;
+}
+
+/* You had 3 identical rules: just one does it */
+.cover-img{
+  max-height: 40vh;
+}
+
+/***********************************************************************
+*  Default Div
+**********************************************************************/
+
+.default-div-wrapper{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 1px;
+  text-align: left;
+}
+
+.default-div-wrapper > p{
+  text-align: left;
+  padding: 5px;
+  margin: 5px;
+}
+
+.default-div-wrapper > h1{
+  padding-bottom: 0;
+  text-align: center;
+}
+
+/***********************************************************************
+*  Small image / big text (img-text-div-wrapper) + “right” variant
+**********************************************************************/
+
+.img-text-div-wrapper{
+  display: grid;
+  grid-gap: 1px;
+}
+
+/* default desktop layout */
+@media (min-width: 1125px){
+  .img-text-div-wrapper{ grid-template-columns: 1fr 2fr; }
+
+  .right{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-gap: 1px;
+    text-align: left;
+  }
+}
+
+/* smaller screens: stack */
+@media (max-width: 1124.98px){
+  .img-text-div-wrapper,
+  .right{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 1px;
+    text-align: center;
+  }
+}
+
+.img-text-div-img{
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  align-self: start;
+  box-shadow: var(--shadow);
+}
+
+.img-text-div-img > img{
+  padding: 10px;
+  width: 100%;
+  display: block;
+}
+
+.img-text-div-img > p{
+  text-align: center;
+  padding: 5px;
+  margin: 5px;
+}
+
+@media (min-width: 1125px){
+  .img-text-div-text{
+    padding: 20px;
+    margin: 20px;
+    text-align: left;
+    border-left: 2px solid var(--accent);
+  }
+}
+
+@media (max-width: 1124.98px){
+  .img-text-div-text{
+    padding: 20px;
+    margin: 20px;
+    text-align: left;
+    border-top: 2px solid var(--accent);
+  }
+}
+
+/***********************************************************************
+*  50/50 image + text (lrg-img-text-div-wrapper)
+**********************************************************************/
+
+.lrg-img-text-div-wrapper{
+  display: grid;
+  grid-gap: 1px;
+  text-align: left;
+}
+
+/* desktop: 50/50 */
+@media (min-width: 1125px){
+  .lrg-img-text-div-wrapper{ grid-template-columns: 1fr 1fr; }
+
+  .lrg-img-text-div-text{
+    padding: 20px;
+    margin: 20px;
+    text-align: left;
+    border-right: 2px solid var(--accent);
+  }
+}
+
+/* smaller: stack */
+@media (max-width: 1124.98px){
+  .lrg-img-text-div-wrapper{ grid-template-columns: 1fr; }
+
+  .lrg-img-text-div-text{
+    padding: 20px;
+    margin: 20px;
+    text-align: left;
+    border-bottom: 2px solid var(--accent);
+  }
+}
+
+.lrg-img-text-div-img{
+  padding: 0;
+  margin: 0;
+  align-self: center;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.lrg-img-text-div-img > img{
+  padding: 10px;
+  width: 100%;
+  display: block;
+}
+
+.lrg-img-text-div-img > p{
+  text-align: center;
+  padding: 5px;
+  margin: 5px;
+}
+
+/* your social mini icons */
+.sml > a > img{
+  width: 32px;
+  height: 42px;
+  padding: 10px 0 0;
+  margin: 0;
+}
+.sml > a{ padding-bottom: 32px; }
+
+/***********************************************************************
+*  Two text columns
+**********************************************************************/
+
+.two-text-columns-wrapper{
+  display: grid;
+  grid-gap: 1px;
+  text-align: left;
+}
+
+@media (min-width: 1125px){
+  .two-text-columns-wrapper{ grid-template-columns: 1fr 1fr; }
+
+  .two-text-columns-text-left{
+    padding: 20px;
+    margin: 20px;
+    margin-right: 0;
+    border-right: 2px solid var(--accent);
+  }
+
+  .two-text-columns-text-right{
+    padding: 20px;
+    margin: 20px;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 1124.98px){
+  .two-text-columns-wrapper{ grid-template-columns: 1fr; }
+
+  .two-text-columns-text-left{
+    padding: 20px;
+    margin: 20px;
+    margin-bottom: 0;
+    border-bottom: 2px solid var(--accent);
+  }
+
+  .two-text-columns-text-right{
+    padding: 20px;
+    margin: 20px;
+    margin-top: 0;
+  }
+}
+
+/***********************************************************************
+*  Card Fiddles
+**********************************************************************/
+
+/* --- patch: make img/text cards behave predictably --- */
+.img-text-div-img { 
+  box-shadow: none;          /* prevents double-card look */
+  background: #fff;          /* nicer if image fails to load */
+}
+
+.img-text-div-img > img{
+  padding: 0;                /* don’t pad the img itself */
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/***********************************************************************
+*  Footer
+**********************************************************************/
+
+footer{
+  text-align: center;
+  background-color: #444;
+  color: #fff;
+  padding: 20px;
+  margin: 20px;
+}
+
+footer ol li{
+  list-style: none;
+  margin-bottom: 10px;
+}
+
+footer ol li img{ width: 25px; }

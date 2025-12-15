@@ -1,0 +1,440 @@
+/***********************************************************************
+*  Custom Font
+**********************************************************************/
+
+@font-face {
+    font-family: 'CustomFont';
+    src: url('../font/CustomFont.woff2') format('woff2'),
+        url('../font/CustomFont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/***********************************************************************
+*  Main Default Styles
+**********************************************************************/
+
+body {
+    margin: 0 auto;
+    background: #000E2B;
+    font-family: 'CustomFont', 'roboto';
+    line-height: 1.7em;
+    letter-spacing: 0.1em;
+}
+
+body * {
+    box-sizing: border-box;
+    /*transform-style: preserve-3d;*/
+}
+
+h2 {
+    font-size: 20px;
+    text-decoration: underline;
+    text-decoration-color: darkred;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-weight: bold;
+    letter-spacing: 0.15em;
+}
+
+h3 {
+    font-size: 15px;
+    text-decoration: underline;
+    text-decoration-color: darkred;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-weight: bold;
+    letter-spacing: 0.15em;
+}
+
+/***********************************************************************
+*  Cover
+**********************************************************************/
+.container {
+    /*show heigh: auto*/
+    margin-top: 90px;
+    height: 40vh; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.cover {
+    background-color: #031143;
+    align-items: center;
+    width: 100%;
+}
+
+/*This media query trick to alter ALL phones, as they have odd "pixel ratios
+This is beneficial as laptops are 1. Anything over 1.1 (min 1,1) gets
+caught by this, Iphoine x is 3, pixel 2 is 2.6, pixel 2XL is 3.5, etc*/
+@media only screen 
+    and (min-device-width: 320px) 
+    and (min-device-height: 568px) 
+    and (-webkit-min-device-pixel-ratio: 1.1)
+    and (orientation: portrait) {
+        .cover-img {
+            max-height: 40vh;
+        }
+}
+
+@media screen and (min-width: 880px) {
+    .cover-img {
+        max-height: 40vh
+    }
+}
+
+@media screen and (max-width: 880px) {
+    .cover-img {
+        max-height: 40vh
+    }
+}
+
+/***********************************************************************
+*  Default Div
+**********************************************************************/
+
+.default-div-wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 1px;
+    background-color: #fff;
+    padding: 15px;
+    margin: 20px;
+    text-align: left;
+    -webkit-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -o-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.default-div-wrapper > p {
+    text-align: left;
+    padding: 5px;
+    margin: 5px;
+}
+
+.default-div-wrapper > h1 {
+    padding-bottom: 0px;
+    text-align: center;
+}
+
+/***********************************************************************
+*  Small image, 2fr text; dynamic
+**********************************************************************/
+
+@media screen and (max-width: 1125px) {
+    .img-text-div-wrapper {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(562.5px, 1fr));
+        grid-gap: 1px;
+        background-color: #fff;
+        padding: 15px;
+        margin: 20px;
+        text-align: center;
+        -webkit-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -moz-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -o-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+}
+
+@media screen and (min-width: 1125px) {
+    .img-text-div-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        grid-gap: 1px;
+        background-color: #fff;
+        padding: 15px;
+        margin: 20px;
+        text-align: center;
+        -webkit-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -moz-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -o-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+}
+
+@media screen and (min-width: 1125px) {
+    .right {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        grid-gap: 1px;
+        background-color: #fff;
+        padding: 15px;
+        margin: 20px;
+        text-align: left;
+        -webkit-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -moz-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -o-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+}
+
+@media screen and (max-width: 1125px) {
+    .right {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(562.5px, 1fr));
+        grid-gap: 1px;
+        background-color: #fff;
+        padding: 15px;
+        margin: 20px;
+        text-align: center;
+        -webkit-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -moz-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -o-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+}
+
+/* This is for iphone - needs work
+@media only screen
+and (min-device-width: 375px) 
+and (min-device-height: 812px) 
+and (-webkit-device-pixel-ratio: 3)
+and (orientation: portrait)  {
+.img-text-div-wrapper {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
+grid-gap: 1px;
+background-color: #fff;
+padding: 15px;
+margin: 20px;
+text-align: center;
+-webkit-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+-moz-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+-o-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+}*/
+
+
+.img-text-div-img {
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+    align-self: center;
+    -webkit-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -o-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.img-text-div-img > img {
+    padding: 10px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.img-text-div-img > p {
+    text-align: center;
+    padding: 5px;
+    margin: 5px;
+}
+
+
+@media screen and (min-width: 1125px) {
+    .img-text-div-text {
+        padding: 20px;
+        margin: 20px;
+        text-align: left;
+        border-left: 2px solid darkred;
+    }
+}
+
+
+
+@media screen and (max-width: 1125px) {
+    .img-text-div-text {
+        padding: 20px;
+        margin: 20px;
+        text-align: left;
+        border-top: 2px solid darkred;
+    }
+}
+
+
+/***********************************************************************
+*  Large Image, small text 1 fr; dynamic
+**********************************************************************/
+
+@media (max-width: 1125px) {
+    .lrg-img-text-div-wrapper {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(562.5px, 1fr));
+        grid-gap: 1px;
+        background-color: #fff;
+        padding: 15px;
+        margin: 20px;
+        text-align: left;
+        -webkit-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -moz-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -o-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+}
+
+@media (min-width: 1125px) {
+    .lrg-img-text-div-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 1px;
+        background-color: #fff;
+        padding: 15px;
+        margin: 20px;
+        text-align: left;
+        -webkit-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -moz-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -o-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+}
+
+.lrg-img-text-div-img {
+    padding: 0px;
+    margin: 0px;
+    align-self: center;
+    text-align: center;
+    -webkit-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -o-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.lrg-img-text-div-img > img {
+    padding: 10px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.lrg-img-text-div-img > p {
+    text-align: center;
+    padding: 5px;
+    margin: 5px;
+}
+
+@media (min-width: 1125px) {
+    .lrg-img-text-div-text {
+        padding: 20px;
+        margin: 20px;
+        text-align: left;
+        border-right: 2px solid darkred;
+    }
+}
+
+@media (max-width: 1125px) {
+    .lrg-img-text-div-text {
+        padding: 20px;
+        margin: 20px;
+        text-align: left;
+        border-bottom: 2px solid darkred;
+    }
+}
+
+.sml > a > img {
+    width: 32px;
+    height: 42px;
+    padding: 0;
+    padding-top: 10px;
+    margin: 0;
+}
+
+.sml > a {
+   padding-bottom: 32px;
+}
+
+/***********************************************************************
+*  2 text columns
+**********************************************************************/
+
+@media (max-width: 1125px) {
+    .two-text-columns-wrapper {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(562.5px, 1fr));
+        grid-gap: 1px;
+        background-color: #fff;
+        padding: 15px;
+        margin: 20px;
+        text-align: left;
+        -webkit-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -moz-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -o-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+}
+
+@media (min-width: 1125px) {
+    .two-text-columns-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 1px;
+        background-color: #fff;
+        padding: 15px;
+        margin: 20px;
+        text-align: left;
+        -webkit-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -moz-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -o-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+}
+
+@media (min-width: 1125px) {
+    .two-text-columns-text-left {
+        padding: 20px;
+        margin: 20px;
+        margin-right: 0px;
+        text-align: left;
+        border-right: 2px solid darkred;
+    }
+}
+
+@media (max-width: 1125px) {
+    .two-text-columns-text-left {
+        padding: 20px;
+        margin: 20px;
+        margin-bottom: 0px;
+        text-align: left;
+        border-bottom: 2px solid darkred;
+    }
+}
+
+@media (min-width: 1125px) {
+    .two-text-columns-text-right {
+        padding: 20px;
+        margin: 20px;
+        margin-left: 0px;
+        text-align: left;
+    }
+}
+
+@media (max-width: 1125px) {
+    .two-text-columns-text-right {
+        padding: 20px;
+        margin: 20px;
+        margin-top: 0px;
+        text-align: left;
+    }
+}
+
+/***********************************************************************
+*  Footer
+**********************************************************************/
+footer {
+    text-align: center;
+    background-color: #444;
+    color: white;
+    padding: 20px;
+    margin: 20px;
+}
+
+footer ol li {
+    list-style: none;
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+
+footer ol li img {
+    width: 25px;
+}
