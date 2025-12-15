@@ -16,7 +16,7 @@
 
 body {
     margin: 0 auto;
-    background: #333;
+    background: #000E2B;
     font-family: 'CustomFont', 'roboto';
     line-height: 1.7em;
     letter-spacing: 0.1em;
@@ -725,17 +725,18 @@ h3 {
 **********************************************************************/
 .container {
     /*show heigh: auto*/
-    height: 70vh; 
+    margin-top: 90px;
+    height: 40vh; 
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow:hidden;
+    overflow: hidden;
 }
 
 .cover {
-    margin-top: 80px;
-    background-color: white;
+    background-color: #031143;
     align-items: center;
+    width: 100%;
 }
 
 /*This media query trick to alter ALL phones, as they have odd "pixel ratios
@@ -747,19 +748,19 @@ caught by this, Iphoine x is 3, pixel 2 is 2.6, pixel 2XL is 3.5, etc*/
     and (-webkit-min-device-pixel-ratio: 1.1)
     and (orientation: portrait) {
         .cover-img {
-            height: 70vh;
+            max-height: 40vh;
         }
 }
 
 @media screen and (min-width: 880px) {
     .cover-img {
-        width: 100%;
+        max-height: 40vh
     }
 }
 
 @media screen and (max-width: 880px) {
     .cover-img {
-        width: 880px;
+        max-height: 40vh
     }
 }
 
@@ -1290,18 +1291,17 @@ box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
 .tab-content {
     text-align: left;
-    max-height: 0;
+    display: none;
     padding: 10 1em;
     color: #2c3e50;
     background: #EEEEEE;
-    -webkit-transition: all .35s;
-    transition: all .35s;
     margin-left: 2em;
     padding-left: 2em;
     margin-right: 2em;
     padding-right: 2em;
     box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+
 
 .tab-close {
     display: -webkit-box;
@@ -1332,8 +1332,7 @@ input:checked + .tab-label::after {
 }
 
 input:checked ~ .tab-content {
-    max-height: 100%;
-    padding: 1em;
+    display: block;
 }
 
 /***********************************************************************

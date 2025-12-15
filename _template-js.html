@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Phil Cook - Engineering Manager, Developing Solutions Architect</title>
+
+    <link rel="stylesheet" href="./css/style-copy-js.css">
+    <link rel="stylesheet" href="./css/accordian.css">
+    <link rel="stylesheet" href="./css/grid-panel-js.css">
+    <link rel="stylesheet" href="./css/nav.css">
+    <link rel="stylesheet" href="./css/sections.css">
+    <script src="./script/sections-old-classes.js" defer></script>
+
+    <!-- NEW lightbox css -->
+    <link rel="stylesheet" href="./css/modal-js.css">
+
+    <!-- NEW lightbox js -->
+    <script src="./script/lightbox.js" defer></script>
+  </head>
+
+  <body>
+    <!-- Placeholders MUST exist before fetch runs -->
+    <div id="nav-placeholder"></div>
+    <div id="lightbox-placeholder"></div>
+
+    <script>
+      // Load partials AFTER the DOM exists (safe on all browsers)
+      window.addEventListener("DOMContentLoaded", () => {
+        fetch("/partials/nav.html")
+          .then(r => r.text())
+          .then(html => { document.getElementById("nav-placeholder").innerHTML = html; })
+          .catch(err => console.error("Nav load failed:", err));
+
+        fetch("/partials/lightbox.html")
+          .then(r => r.text())
+          .then(html => { document.getElementById("lightbox-placeholder").innerHTML = html; })
+          .catch(err => console.error("Lightbox load failed:", err));
+      });
+    </script>
+
+    <div class="container">
+      <div><img class="cover-img" src="./img/cover-photo.png" alt="Cover"></div>
+    </div>
+
+    <div class="div-wrapper">
+      <div class="default-div-wrapper">
+        <h1 style="text-align: center">Plain Container</h1>
+        <p style="text-align: center">with stuff inside</p>
+      </div>
+    </div>
+
+    <!-- row of hover-cards (click image opens lightbox) -->
+    <div class="grid-wrapper grid-wrapper--row">
+        <div class="content box box-img">
+            <div class="content-overlay"></div>
+            <!-- IMPORTANT: js-lightbox + alt -->
+            <img class="content-image js-lightbox"
+                src="./img/cover-photo-old-2.png"
+                alt="IMG1 — img2">
+            <div class="content-details fadeIn-bottom">
+                <h3 class="content-title">IMG1</h3>
+                <p class="content-text">img2</p>
+            </div>
+        </div>
+
+        <div class="content box box-img">
+            <div class="content-overlay"></div>
+                <img class="content-image js-lightbox"
+                    src="./img/cover-photo-old-2.png"
+                    alt="Twitter">
+            <div class="content-details fadeIn-bottom">
+                <h3 class="content-title">Twitter</h3>
+                <p class="content-text">Click to view</p>
+            </div>
+        </div>
+
+        <div class="content box box-img">
+            <div class="content-overlay"></div>
+                <img class="content-image js-lightbox"
+                    src="./img/cover-photo-old-2.png"
+                    alt="Twitter">
+            <div class="content-details fadeIn-bottom">
+                <h3 class="content-title">Twitter</h3>
+                <p class="content-text">Click to view</p>
+            </div>
+        </div>
+
+        <!-- ...more cards... -->
+    </div>
+
+    <!-- your normal content... -->
+    <div class="section"
+            data-type="imgText"
+            data-img="img/cover-photo-old-2.png"
+            data-caption="hi"
+            data-lightbox="true">
+        <h1>small img / big text block</h1>
+        <p>With text inside</p>
+    </div>
+
+    <div class="section"
+            data-type="imgText"
+            data-img-pos="right"
+            data-img="img/cover-photo-old-2.png"
+            data-caption="hi"
+            data-lightbox="true">
+        <h1>big text block / small img</h1>
+        <p>With text inside</p>
+    </div>
+
+    <div class="section"
+            data-type="split50"
+            data-img="img/cover-photo-old-2.png"
+            data-caption="Newest building at HAL Ltd..."
+            data-lightbox="true">
+        <h1>About HAL Ltd</h1>
+        <p>...</p>
+    </div>
+
+    <div class="section"
+            data-type="split50"
+            data-img-pos="left"
+            data-img="img/cover-photo-old-2.png"
+            data-caption="Same but image-left"
+            data-lightbox="true">
+        <h1>About HAL Ltd</h1>
+        <p>...</p>
+    </div>
+
+    <div class="section" data-type="twoCol">
+        <div data-col="left">
+            <h1>Left column</h1>
+            <p>...</p>
+        </div>
+
+        <div data-col="right">
+            <h1>Right column</h1>
+            <p>...</p>
+        </div>
+    </div>
+
+    <!-- Your grid stays INLINE (keep it). Just add class js-lightbox on images you want clickable -->
+    <!-- <div class="grid-wrapper">
+      <div class="box">
+        <img class="js-lightbox" src="./img/twitter.png" alt="Twitter">
+      </div>
+      <div class="box">
+        <img class="js-lightbox" src="./img/youtube.png" alt="YouTube">
+      </div>
+      <div class="box">
+        <img class="js-lightbox" src="./img/linkedin.png" alt="LinkedIn">
+      </div>
+      <div class="box">
+        <img class="js-lightbox" src="./img/instagram.png" alt="Instagram">
+      </div>
+      <div class="box">
+        <img class="js-lightbox" src="./img/facebook.png" alt="Facebook">
+      </div>
+      <div class="box">
+        <img class="js-lightbox" src="./img/temp1.png" alt="Temp">
+      </div>
+    </div> -->
+
+    <footer>
+      <ol>
+        <li>Please follow me using any of the following:</li>
+        <li>
+          <img src="img/twitter.png">
+          <img src="img/facebook.png">
+          <img src="img/instagram.png">
+          <img src="img/youtube.png">
+          <img src="img/linkedin.png">
+        </li>
+      </ol>
+    </footer>
+  </body>
+</html>

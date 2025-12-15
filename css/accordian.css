@@ -1,0 +1,96 @@
+/***********************************************************************
+*  Accordion
+**********************************************************************/
+
+.flex-accordion-wrapper{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: var(--card-bg);
+  padding: 15px;
+  margin: 20px;
+  text-align: left;
+  box-shadow: var(--shadow);
+}
+
+.flex-accordion-box{
+  width: 100%;
+  padding: 20px 0;
+  margin: 0;
+}
+
+/* Hide checkbox */
+.tab > input{
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Accordion shell */
+.tab{
+  width: 100%;
+  overflow: hidden;
+  color: #fff;
+}
+
+/* Label / header */
+.tab-label{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em;
+  background: #2c3e50;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background .2s ease;
+}
+
+.tab-label:hover{
+  background: #1a252f;
+}
+
+.tab-label::after{
+  content: "\276F";
+  transition: transform .35s ease;
+}
+
+/* Content */
+.tab-content{
+  display: none;
+  padding: 1em 2em;
+  background: #eee;
+  color: #2c3e50;
+  margin: 0 2em;
+  box-shadow: var(--shadow);
+}
+
+.tab-content > li{
+  padding: 1em 0;
+}
+
+/* Close row (optional, you already support it) */
+.tab-close{
+  display: flex;
+  justify-content: flex-end;
+  padding: 1em;
+  font-size: .75em;
+  background: #2c3e50;
+  cursor: pointer;
+}
+
+.tab-close:hover{
+  background: #1a252f;
+}
+
+/* Checked state */
+input:checked + .tab-label{
+  background: #1a252f;
+}
+
+input:checked + .tab-label::after{
+  transform: rotate(90deg);
+}
+
+input:checked ~ .tab-content{
+  display: block;
+}
