@@ -66,7 +66,7 @@ h3{ letter-spacing: .10em; }
 **********************************************************************/
 .container{
   margin-top: 90px;
-  height: 40vh;
+  height: 300px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -75,7 +75,18 @@ h3{ letter-spacing: .10em; }
 }
 
 .cover-img{
-  max-height: 40vh;
+  max-height: 100%;
+  max-width: 90%;
+}
+
+@media (max-width: 880px) {
+  .cover-img {
+    margin-top: 45px;
+  }
+
+  .container {
+    margin-top: 55px;
+  }
 }
 
 /***********************************************************************
@@ -132,27 +143,6 @@ h3{ letter-spacing: .10em; }
 
 @media (max-width: 1124.98px){
   .lrg-img-text-div-wrapper{ grid-template-columns: 1fr; }
-}
-
-/***********************************************************************
-*  "right" layout wrapper (SWOT style)
-**********************************************************************/
-@media (min-width: 1125px){
-  .right{
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 1px;
-    text-align: left;
-  }
-}
-
-@media (max-width: 1124.98px){
-  .right{
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1px;
-    text-align: center;
-  }
 }
 
 /***********************************************************************
@@ -392,4 +382,17 @@ footer ol li img {
 }
 footer a {
     text-decoration-line: none;
+}
+
+/* Polaroid contexts: let images size naturally (fixes “disappearing” images) */
+.img-text-div-img .content-image,
+.lrg-img-text-div-img .content-image{
+  height: auto;
+  object-fit: contain; /* or keep 'cover' if you prefer cropping */
+}
+
+/* Optional: keep the polaroid content wrapper from collapsing oddly */
+.img-text-div-img .content,
+.lrg-img-text-div-img .content{
+  height: auto;
 }

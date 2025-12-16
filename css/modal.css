@@ -6,40 +6,40 @@
   position: fixed;
   inset: 0;
   z-index: 9999;
-  padding: 80px 0 20px;
+  padding: 10px;
   background-color: rgba(0,0,0,.95);
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
-.modal.is-open { display: block; }
+.modal.is-open{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .modal-content{
   position: relative;
+  width: 92vw;
+  height: 92vh;
   margin: 0 auto;
-  width: 90%;
-  height: 90%;
+  display: flex;
   text-align: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.close{
-  position: absolute;
-  top: 10px;
-  right: 25px;
-  background: transparent;
-  border: 0;
-  color: #fff;
-  font-size: 50px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.close:hover{ color: #999; }
-
-.lb-main-img{
-  max-height: 70vh;
-  max-width: 92%;
-  margin: 40px auto 0;
-  display: block;
+#lb-main-img{
+  margin: 0;
+  display: block;         /* was flex */
+  flex: 1 1 auto;         /* allow it to take available space */
+  min-height: 0;          /* critical in column flex layouts */
+  width: 100%;
+  max-height: calc(92vh - 170px);
+  object-fit: contain;
+  margin: 0 auto;
 }
 
 .prev,
@@ -47,38 +47,48 @@
   cursor: pointer;
   position: absolute;
   top: 50%;
-  padding: 16px;
-  margin-top: -50px;
+  padding: 18px;
+  margin-top: -34px;
   color: #fff;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 42px;
   user-select: none;
   text-decoration: none;
+  transform: translateY(-50%);
 }
 
 .prev{ left: 0; }
 .next{ right: 0; }
 
 .prev:hover,
+.close:hover,
 .next:hover{
   background-color: rgba(0,0,0,.35);
+  color: #999;
 }
 
 .numbertext{
   position: absolute;
   top: 0;
   left: 0;
-  padding: 8px 12px;
   color: #f2f2f2;
   font-size: 18px;
 }
 
-.modal-nav{
+.close{
   position: absolute;
-  left: 0;
+  top: 0;
   right: 0;
-  bottom: 0;
-  padding: 10px 0 0;
+  background: transparent;
+  border: 0;
+  color: #fff;
+  font-size: 44px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.modal-nav{
+  flex: 0 0 auto;
 }
 
 .caption-container{
@@ -91,14 +101,23 @@
   gap: 10px;
   justify-content: center;
   flex-wrap: wrap;
-  padding: 0 10px 10px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .lb-thumbs img{
-  height: 60px;
+  height: 64px;
+  flex: 0 0 auto;
   opacity: .6;
   cursor: pointer;
 }
 
 .lb-thumbs img.is-active,
 .lb-thumbs img:hover{ opacity: 1; }
+
+html.lb-lock,
+body.lb-lock{
+  overflow: hidden;
+  height: 100%;
+  touch-action: none;
+}

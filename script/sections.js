@@ -9,13 +9,14 @@
 //  - data-type="split50"
 //      data-img="img/..." data-caption="..." data-lightbox="true|false"
 //      data-img-pos="left|right" (default right)
-//  - data-type="right"
-//      data-img="img/..." data-caption="..." data-lightbox="true|false"
-//      data-img-pos="left|right" (default right)
 //  - data-type="twoCol"
 //      expects:
 //        <div data-col="left"> ... </div>
 //        <div data-col="right"> ... </div>
+//
+// Inline image stubs:
+//  - <div class="img-stub" data-img="/img/..." data-caption="..." data-lightbox="true|false"
+//        data-overlay-title="..." data-overlay-text="..." data-size="sml|lrg"></div>
 //
 // Optional hover text (otherwise falls back to caption / “Click to view”):
 //  - data-overlay-title="..."
@@ -60,7 +61,7 @@
     const img = document.createElement("img");
     img.src = imgSrc;
     img.className = "content-image";
-    img.loading = "lazy";
+    img.loading = useLightbox ? "eager" : "lazy";
 
     // IMPORTANT: lightbox + accessibility
     const altText = (caption && caption.trim()) || (overlayTitle && overlayTitle.trim()) || "Image";
@@ -108,6 +109,38 @@
     }
 
     return imgWrap;
+  }
+
+  // --- inline polaroid image stub inserter ---
+  function expandInlineImgStubs(root = document) {
+    root.querySelectorAll(".img-stub[data-img]").forEach((stub) => {
+      const imgSrc = stub.dataset.img || "";
+      const caption = stub.dataset.caption || "";
+      const useLightbox = isTrue(stub.dataset.lightbox);
+      const overlayTitle = stub.dataset.overlayTitle || "";
+      const overlayText = stub.dataset.overlayText || "";
+
+      const size = (stub.dataset.size || "sml").toLowerCase();
+      const className = size === "lrg" ? "lrg-img-text-div-img" : "img-text-div-img";
+
+      const built = buildImgWrap(
+        className,
+        imgSrc,
+        caption,
+        useLightbox,
+        overlayTitle,
+        overlayText
+      );
+
+      // ✅ IMPORTANT: prevent “vanish after scroll” on inline images (esp iOS Safari)
+      const img = built.querySelector("img");
+      if (img) {
+        img.loading = "eager";
+        img.decoding = "async";
+      }
+
+      stub.replaceWith(built);
+    });
   }
 
   // --- small img / big text ---
@@ -219,11 +252,15 @@
   }
 
   function run() {
+    // 1) Build major sections
     document.querySelectorAll(".section[data-type]").forEach((stub) => {
       const built = convertStub(stub);
       if (!built) return;
       stub.parentNode.replaceChild(built, stub);
     });
+
+    // 2) Then expand inline image stubs (works anywhere, including inside twoCol)
+    expandInlineImgStubs(document);
   }
 
   if (document.readyState === "loading") {

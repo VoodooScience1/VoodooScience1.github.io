@@ -12,6 +12,7 @@
     font-family: 'Nanum Gothic', sans-serif;
     perspective: 200px;
     transform-style: preserve-3d;
+    z-index: 9999;
 }
 
 .sub-menu {
@@ -34,7 +35,7 @@
         background: #1e1f24;
         margin: 0px;
         max-width: 100%;
-        z-index: 2;
+        z-index: 9999;
     }
 
     .main-nav ol {
@@ -302,7 +303,7 @@
             left: 0;
             background: #1e1f24;
             width: 100%;
-            z-index: 2;
+            z-index: 9999;
     }
 
     /* Mobile: carry the same colour per slot */
@@ -491,4 +492,57 @@
     justify-content: center;
     z-index: 1;  
     }
+}
+
+/* keep checkbox invisible */
+.nav-toggle{
+  position:absolute;
+  left:-9999px;
+}
+
+@media (max-width: 880px){
+
+  /* IMPORTANT: stop hover/focus-within from opening the menu on mobile */
+  .main-nav:hover ol,
+  .main-nav:focus-within ol{
+    transform: translateY(calc(-125% - 45px)) translateZ(-1px);
+    opacity: 0;
+  }
+
+  /* Top bar tap area (clicking this toggles checkbox open/close) */
+  .main-nav .nav-toggle-hit{
+    position: absolute;
+    inset: 0;            /* fills the whole .main-nav bar */
+    height: 45px;        /* matches your .main-nav height */
+    z-index: 10001;      /* above menu layer */
+    cursor: pointer;
+    background: transparent;
+  }
+
+  /* Keep burger bars above the hit area */
+  .main-nav:before,
+  .main-nav:after{
+    z-index: 10002;
+  }
+
+  /* Menu closed by default */
+  .main-nav ol{
+    pointer-events: none;
+  }
+
+  /* Menu OPEN when checked */
+  .main-nav .nav-toggle:checked ~ ol{
+    transform: translateY(0) translateZ(-1px);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Optional: burger -> X when open (works on modern Safari/Chrome) */
+  .main-nav:has(.nav-toggle:checked):before{
+    transform: rotate(45deg);
+    box-shadow: 0 0 0 0;
+  }
+  .main-nav:has(.nav-toggle:checked):after{
+    transform: rotate(-45deg);
+  }
 }
