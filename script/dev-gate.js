@@ -78,7 +78,7 @@ Investigating further will show otherwise 🙂`;
         alert("Darn! You're a smart one; sadly for you, there's nothing of use in here!");
       } else {
         alert(failMsg);
-        location.replace("/admin.html");
+        location.replace("/index.html");
       }
     })();
   }
