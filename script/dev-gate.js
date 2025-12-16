@@ -69,13 +69,13 @@ Investigating further will show otherwise 🙂`;
       const creds = await askCreds();
       if (!creds) {
         alert(failMsg);
-        location.replace("/admin.html");
+        location.replace("/index.html");
         return;
       }
 
       if (creds.user === USERNAME && creds.pass === PASSWORD) {
         sessionStorage.setItem(KEY, "true");
-        alert("Darn! You're a smart one; sadly for you, there's nothing of use in here!");
+        alert("Darn! You're a smart one; sadly for you, there's nothing of use in here! I'm currently implementing a CloudFlare CMS. Sending you have to Homepage...");
       } else {
         alert(failMsg);
         location.replace("/index.html");
