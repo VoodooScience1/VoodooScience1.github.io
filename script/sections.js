@@ -1,6 +1,6 @@
 // sections-old-classes.js
-// Expands <div class="section" data-type="..."> stubs into your EXISTING div/class structure.
-// Adds hover-overlay inside polaroids (reuses your .content overlay CSS).
+// Expands <div class="section" data-type="..."> stubs into EXISTING div/class structure.
+// Adds hover-overlay inside polaroids (reusing .content overlay CSS).
 //
 // Supported:
 //  - data-type="imgText"
@@ -14,7 +14,7 @@
 //        <div data-col="left"> ... </div>
 //        <div data-col="right"> ... </div>
 //
-// Inline image stubs:
+// Inline image stubs (update):
 //  - <div class="img-stub" data-img="/img/..." data-caption="..." data-lightbox="true|false"
 //        data-overlay-title="..." data-overlay-text="..." data-size="sml|lrg"></div>
 //
@@ -47,12 +47,12 @@
     return outer;
   }
 
-  // Polaroid wrapper stays as .img-text-div-img / .lrg-img-text-div-img
-  // Inside it we add the same hover-overlay structure as your mini cards.
+  // polaroid wrapper stays as .img-text-div-img / .lrg-img-text-div-img
+  // inside it we add the same hover-overlay structure as your mini cards
   function buildImgWrap(className, imgSrc, caption, useLightbox, overlayTitle, overlayText) {
     const imgWrap = el("div", className);
 
-    // If there’s no image, don’t build a broken <img>
+    // if there’s no image, don’t build a broken <img>
     if (!imgSrc) return imgWrap;
 
     const content = el("div", "content content--full"); // <-- class instead of inline styles
@@ -80,7 +80,7 @@
       (overlayText && overlayText.trim()) ||
       (useLightbox ? "Click to view" : "");
 
-    // Only render overlay blocks if we actually have something to show
+    // only render overlay blocks if there's actually something to show
     if (titleText) {
       const h3 = document.createElement("h3");
       h3.className = "content-title";
@@ -101,7 +101,7 @@
 
     imgWrap.appendChild(content);
 
-    // Caption under the polaroid (keep as you had it)
+    // caption under the polaroid
     if (caption) {
       const p = document.createElement("p");
       p.textContent = caption;
@@ -132,7 +132,7 @@
         overlayText
       );
 
-      // ✅ IMPORTANT: prevent “vanish after scroll” on inline images (esp iOS Safari)
+      // IMPORTANT: prevents “vanish after scroll” on inline images (esp iOS Safari)
       const img = built.querySelector("img");
       if (img) {
         img.loading = "eager";
@@ -193,7 +193,7 @@
 
     const grid = el("div", "lrg-img-text-div-wrapper");
 
-    // IMPORTANT: keep your CSS hooks working (mobile separator rules)
+    // IMPORTANT: keeps CSS hooks working (mobile separator rules)
     if (pos === "left") grid.classList.add("img-left");
 
     const imgCol = buildImgWrap(
@@ -252,14 +252,14 @@
   }
 
   function run() {
-    // 1) Build major sections
+    // build major sections
     document.querySelectorAll(".section[data-type]").forEach((stub) => {
       const built = convertStub(stub);
       if (!built) return;
       stub.parentNode.replaceChild(built, stub);
     });
 
-    // 2) Then expand inline image stubs (works anywhere, including inside twoCol)
+    // then expand inline image stubs (works anywhere, including inside twoCol)
     expandInlineImgStubs(document);
   }
 

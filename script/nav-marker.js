@@ -30,7 +30,7 @@
       const href = a.getAttribute("href");
       if (!href || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("http")) return;
 
-      // Your nav uses root-relative hrefs already, but this keeps it robust
+      // the nav uses root-relative hrefs, but this keeps it robust
       const linkPath = normPath(new URL(href, window.location.origin).pathname);
 
       if (linkPath === currentPath) {

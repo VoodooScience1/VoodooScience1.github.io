@@ -128,7 +128,7 @@
         clip-path: polygon(35% 35%, 35% 0, 35% 0, 35% 35%, 0 35%, 0 35%);
     }
 
-    /*this is the little burst animation*/
+    /* This is the little burst animation*/
     @keyframes clipin {
         0% {
             -webkit-clip-path: polygon(35% 35%, 35% 0, 35% 0, 35% 35%, 0 35%, 0 35%);
@@ -171,7 +171,7 @@
         transform: rotate(0deg);
     }
 
-    /*Do not remove, this breaks the animation if you do*/
+    /* Do not remove, this breaks the animation if you do */
     .main-nav ol li:hover ol li:nth-of-type(1n) {
         transform: none;
         margin: 0px;
@@ -355,7 +355,7 @@
     .main-nav ol li:nth-of-type(even) { transform: rotate(-5deg); }
     .main-nav ol li:nth-of-type(odd) { transform: rotate(5deg); }
 
-    /* hack required for slim windows on PC */
+    /* Hack required for slim windows on PC */
     .main-nav:hover ol,
     .main-nav:focus-within ol {
         transform: translateY(0) translateZ(-1px);
@@ -397,7 +397,7 @@
     .main-nav ol li a {
         color: #fff;
         text-decoration: none;
-        display: block;   /* so underline spans the full tap area */
+        display: block;
         width: 100%;
         height: 100%;
     }
@@ -454,7 +454,7 @@
     width: 100%;
 }
 
-/* Forces the nav bar to go invisible, adn then re-apear on hover */
+/* Forces the nav bar to go invisible, and then re-apear on hover */
 @media (min-width: 880px) {
     .main-nav ol li > .sub-menu li {
         display: none;
@@ -472,11 +472,11 @@
 
   .main-nav > ol > li > a{
     position: absolute;
-    inset: 0;                 /* fill entire li box */
+    inset: 0;
     display: flex;
     align-items: center;
-    justify-content: center;  /* keep text centred */
-    z-index: 1;               /* stay above li::before */
+    justify-content: center;
+    z-index: 1;
   }
 }
 
@@ -494,7 +494,7 @@
     }
 }
 
-/* keep checkbox invisible */
+/* Keep checkbox invisible */
 .nav-toggle{
   position:absolute;
   left:-9999px;
@@ -512,9 +512,9 @@
   /* Top bar tap area (clicking this toggles checkbox open/close) */
   .main-nav .nav-toggle-hit{
     position: absolute;
-    inset: 0;            /* fills the whole .main-nav bar */
-    height: 45px;        /* matches your .main-nav height */
-    z-index: 10001;      /* above menu layer */
+    inset: 0;
+    height: 45px;
+    z-index: 10001;
     cursor: pointer;
     background: transparent;
   }
@@ -533,7 +533,7 @@
   /* Menu OPEN when checked */
   .main-nav .nav-toggle:checked ~ ol{
     transform: translateY(0) translateZ(-1px);
-    opacity: 1;
+    opacity: .95;
     pointer-events: auto;
   }
 
@@ -542,7 +542,63 @@
     transform: rotate(45deg);
     box-shadow: 0 0 0 0;
   }
+
   .main-nav:has(.nav-toggle:checked):after{
     transform: rotate(-45deg);
+  }
+
+  /* Bring back broken hover colours and links */
+  .main-nav .nav-toggle:checked ~ ol a{
+    pointer-events: auto;
+  }
+  
+  /* Remove the underline that gets generated */
+  .main-nav ol li.active{
+    border-bottom: none;
+  }
+
+  /* Add a centred “pill” behind the active link text */
+  .main-nav ol li.active > a {
+    position: relative;
+    z-index: 0;
+  }
+
+  /* Colouring for an active link that is on the first line (index, about, etc) */
+  .main-nav ol li.active > a::before{
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -55%);
+    width: min(520px, 86vw);
+    height: 115%;              /* Somewhat hacky, but highest value height that doesn't deform, and covers the line generated next (marker for active page) */
+    border-radius: 999px;
+    background: color-mix(in srgb, #ffb703 14%, transparent);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  /* Small red marker under current page (disappears with hover colours when hovered due to height set above) */
+  .main-nav ol li.active > a::after{
+    content: "";
+    display: block;
+    width: 40px;
+    height: 3px;
+    margin: auto;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+
+  /* If it's a submenu item get a smaller, different coloured pill */
+  .main-nav ol ol li.active > a::before{
+    width: min(420px, 76vw);
+    height: 115%;
+    background: color-mix(in srgb, #ffd166 16%, transparent);
+  }
+
+  /* Makes the burger specifically "unclickable" (drawn with pseudo elements, so hard to utilise) */
+  .main-nav:before,
+  .main-nav:after{
+    pointer-events: none;
   }
 }

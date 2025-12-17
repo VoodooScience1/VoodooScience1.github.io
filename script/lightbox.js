@@ -149,7 +149,7 @@
   function bind() {
     let sx = 0, sy = 0;
 
-    // ✅ Swipe listeners ONCE (NOT inside click)
+    // Swipe listeners ONCE (NOT inside click)
     document.addEventListener("touchstart", (e) => {
       const modal = getModal();
       if (!modal || !modal.classList.contains("is-open")) return;
@@ -187,7 +187,7 @@
 
       const modal = getModal();
       if (modal && modal.classList.contains("is-open")) {
-        // ✅ ONLY close on actual backdrop click
+        // ONLY close on actual backdrop click
         if (e.target === modal) close();
       }
     });

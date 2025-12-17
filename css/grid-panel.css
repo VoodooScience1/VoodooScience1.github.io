@@ -172,7 +172,7 @@
   }
 
   .grid-wrapper--row .box-img{
-    flex: 1 1 240px;   /* magic line */
+    flex: 1 1 240px;
     max-width: 320px;
   }
 }

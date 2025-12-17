@@ -120,7 +120,7 @@ h3{ letter-spacing: .10em; }
 
 @media (min-width: 1125px){
   .img-text-div-wrapper{ grid-template-columns: 1fr 2fr; }
-  /* when reversed: text big, image small */
+  /* When reversed: text big, image small */
   .img-text-div-wrapper.reverse{ grid-template-columns: 2fr 1fr; }
 }
 
@@ -166,7 +166,7 @@ h3{ letter-spacing: .10em; }
 .lrg-img-text-div-img{
   background: #fff;
   padding: 14px;
-  margin: 20px;          /* <-- you wanted space around, not touching */
+  margin: 20px;
   box-shadow: var(--shadow);
   border-radius: 2px;
   text-align: center;
@@ -194,7 +194,7 @@ h3{ letter-spacing: .10em; }
   color: #111;
 }
 
-/* your social mini icons */
+/* Social mini icons */
 .sml > a > img{
   width: 32px;
   height: 42px;
@@ -210,7 +210,7 @@ h3{ letter-spacing: .10em; }
   display: grid;
   gap: 1px;
   text-align: left;
-  position: relative; /* for ::before divider */
+  position: relative;
 }
 
 @media (min-width: 1125px){
@@ -337,7 +337,7 @@ h3{ letter-spacing: .10em; }
 /* Required for overlays to appear above images */
 .img-text-div-img .content,
 .lrg-img-text-div-img .content{
-  position: relative; /* anchor for absolute children */
+  position: relative;
 }
 
 .img-text-div-img .content-overlay,
@@ -388,7 +388,7 @@ footer a {
 .img-text-div-img .content-image,
 .lrg-img-text-div-img .content-image{
   height: auto;
-  object-fit: contain; /* or keep 'cover' if you prefer cropping */
+  object-fit: contain;
 }
 
 /* Optional: keep the polaroid content wrapper from collapsing oddly */

@@ -68,7 +68,7 @@
   padding: 1em 0;
 }
 
-/* Close row (optional, you already support it) */
+/* Close row (optional) */
 .tab-close{
   display: flex;
   justify-content: flex-end;

@@ -10,9 +10,7 @@
     const failMsg =
 `Nice try, you're not getting hold of my valuables!
 
-p.s. there's nothing valuable in here. I may ultimately push this behind
-Cloudflare / AWS, but for now this just holds my _template baseline.
-Investigating further will show otherwise 🙂`;
+p.s. there's nothing valuable in here. I'm currently implementing a CloudFlare CMS. Sending you have to Homepage... 🙂`;
 
     function askCreds() {
       return new Promise((resolve) => {
@@ -75,7 +73,7 @@ Investigating further will show otherwise 🙂`;
 
       if (creds.user === USERNAME && creds.pass === PASSWORD) {
         sessionStorage.setItem(KEY, "true");
-        alert("Darn! You're a smart one; sadly for you, there's nothing of use in here! I'm currently implementing a CloudFlare CMS. Sending you have to Homepage...");
+        alert("Darn! You're a smart one; sadly for you, there's nothing of use in here! I'm currently implementing a CloudFlare CMS. Sending you have to Homepage... 🙂");
       } else {
         alert(failMsg);
         location.replace("/index.html");
@@ -83,7 +81,7 @@ Investigating further will show otherwise 🙂`;
     })();
   }
 
-  // 🔒 GUARANTEE body exists
+  // GUARANTEE body exists
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", runDevGate);
   } else {

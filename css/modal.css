@@ -33,9 +33,9 @@
 
 #lb-main-img{
   margin: 0;
-  display: block;         /* was flex */
-  flex: 1 1 auto;         /* allow it to take available space */
-  min-height: 0;          /* critical in column flex layouts */
+  display: block;
+  flex: 1 1 auto;
+  min-height: 0;
   width: 100%;
   max-height: calc(92vh - 170px);
   object-fit: contain;
