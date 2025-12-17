@@ -2,23 +2,24 @@
 <!DOCTYPE html>
 <head></head>
 <div id="myModal" class="modal" aria-hidden="true">
-  <div class="modal-content">
+	<div class="modal-content">
+		<button class="cursor close" type="button" data-lb-close aria-label="Close">
+			&times;
+		</button>
 
-    <button class="cursor close" type="button" data-lb-close aria-label="Close">&times;</button>
+		<div class="numbertext" id="lb-number">1 / 1</div>
 
-    <div class="numbertext" id="lb-number">1 / 1</div>
+		<img id="lb-main-img" src="" alt="" />
 
-    <img id="lb-main-img" src="" alt="">
+		<a class="prev" href="#" data-lb-prev aria-label="Previous">&#10094;</a>
+		<a class="next" href="#" data-lb-next aria-label="Next">&#10095;</a>
 
-    <a class="prev" href="#" data-lb-prev aria-label="Previous">&#10094;</a>
-    <a class="next" href="#" data-lb-next aria-label="Next">&#10095;</a>
+		<div class="modal-nav">
+			<div class="caption-container">
+				<p id="caption"></p>
+			</div>
 
-    <div class="modal-nav">
-      <div class="caption-container">
-        <p id="caption"></p>
-      </div>
-
-      <div id="lb-thumbs" class="lb-thumbs"></div>
-    </div>
-  </div>
+			<div id="lb-thumbs" class="lb-thumbs"></div>
+		</div>
+	</div>
 </div>

@@ -1,213 +1,253 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Project Management Degree Apprenticeship</title>
-        <link rel="stylesheet" type="text/css" href="./css/style-copy.css">
-        <link rel="stylesheet" type="text/css" href="./css/accordian.css">
-        <link rel="stylesheet" type="text/css" href="./css/grid-panel.css">
-        <link rel="stylesheet" type="text/css" href="./css/modal.css">
-        <link rel="stylesheet" type="text/css" href="./css/nav.css">
-        <link rel="stylesheet" type="text/css" href="./css/style-copy.css">
-        <script type="text/javascript" src="./script/modal.js"></script>
+	<head>
+		<title>Project Management Degree Apprenticeship</title>
+		<link rel="stylesheet" type="text/css" href="./css/style-copy.css" />
+		<link rel="stylesheet" type="text/css" href="./css/accordian.css" />
+		<link rel="stylesheet" type="text/css" href="./css/grid-panel.css" />
+		<link rel="stylesheet" type="text/css" href="./css/modal.css" />
+		<link rel="stylesheet" type="text/css" href="./css/nav.css" />
+		<link rel="stylesheet" type="text/css" href="./css/style-copy.css" />
+		<script type="text/javascript" src="./script/modal.js"></script>
+	</head>
+	<body>
+		<div id="nav-placeholder"></div>
 
-    </head>
-    <body>
-        <div id="nav-placeholder"></div>
+		<script>
+			fetch("/partials/nav.html")
+				.then((res) => res.text())
+				.then((html) => {
+					document.getElementById("nav-placeholder").innerHTML = html;
+				})
+				.catch((err) => console.error("Nav load failed:", err));
+		</script>
 
-        <script>
-            fetch("/partials/nav.html")
-                .then(res => res.text())
-                .then(html => {
-                document.getElementById("nav-placeholder").innerHTML = html;})
-                .catch(err => console.error("Nav load failed:", err));
-        </script>
+		<div class="container">
+			<div><img class="cover-img" src="./img/cover-photo.png" /></div>
+		</div>
 
-        <div class="container">
-            <div><img class="cover-img" src="./img/cover-photo.png"></div>
-        </div>
+		<div class="div-wrapper">
+			<div class="default-div-wrapper">
+				<h1 style="text-align: center">Plai Container</h1>
+				<p style="text-align: center">with stuff inside</p>
+			</div>
+		</div>
 
-        <div class="div-wrapper">
-            <div class="default-div-wrapper">
-                <h1 style="text-align: center">Plai Container</h1>
-                <p style="text-align: center">with stuff inside</p>
-            </div>
-        </div>
+		<!-- Use this one later to change teh format for the smaller img boxes -->
+		<div class="grid-wrapper">
+			<div class="content box box-img" onclick="openModal();currentSlide(1)">
+				<div class="content-overlay"></div>
+				<img class="content-image" src="./img/cover-photo-old-2.png" />
+				<div class="content-details fadeIn-bottom">
+					<h3 class="content-title">img1</h3>
+					<p class="content-text">img2</p>
+				</div>
+			</div>
+		</div>
 
-        <!-- Use this one later to change teh format for the smaller img boxes -->
-        <div class="grid-wrapper">
-            <div class="content box box-img" onclick="openModal();currentSlide(1)">
-                <div class="content-overlay"></div>
-                <img class="content-image" src="./img/cover-photo-old-2.png">
-                <div class="content-details fadeIn-bottom">
-                    <h3 class="content-title">img1</h3>
-                    <p class="content-text">img2</p>
-                </div>
-            </div>
-        </div>
+		<div class="div-wrapper">
+			<div class="img-text-div-wrapper">
+				<div class="img-text-div-img">
+					<img src="img/coverPhoto2.jpg" />
+					<p>hi</p>
+				</div>
+				<div class="img-text-div-text">
+					<h1>small img / big text block</h1>
+					With text inside
+				</div>
+			</div>
+		</div>
 
-        <div class="div-wrapper">
-            <div class="img-text-div-wrapper">
-                <div class="img-text-div-img">
-                    <img src="img/coverPhoto2.jpg">
-                    <p>hi</p>
-                </div>
-                <div class="img-text-div-text">
-                    <h1>small img / big text block</h1>
-                    With text inside
-                </div>
-            </div>
-        </div>
+		<div class="div-wrapper">
+			<div class="lrg-img-text-div-wrapper">
+				<div class="lrg-img-text-div-text">
+					<h1>50% img / 50% text block</h1>
+					With text inside
+				</div>
+				<div class="lrg-img-text-div-img">
+					<img src="img/coverPhoto2.jpg" />
+					<p>hi</p>
+				</div>
+			</div>
+		</div>
 
-        <div class="div-wrapper">
-            <div class="lrg-img-text-div-wrapper">
-                <div class="lrg-img-text-div-text">
-                    <h1>50% img / 50% text block</h1>
-                    With text inside
-                </div>
-                <div class="lrg-img-text-div-img">
-                    <img src="img/coverPhoto2.jpg">
-                    <p>hi</p>
-                </div>
-            </div>
-        </div>
+		<div class="div-wrapper">
+			<div class="two-text-columns-wrapper">
+				<div class="two-text-columns-text-left">
+					<h1>Two Text Columns</h1>
+					with text ib each side
+				</div>
+				<div class="two-text-columns-text-right">
+					<h1>Heading on the Other Side</h1>
+					also with text
+				</div>
+			</div>
+		</div>
 
-        <div class="div-wrapper">
-            <div class="two-text-columns-wrapper">
-                <div class="two-text-columns-text-left">
-                    <h1>Two Text Columns</h1>
-                    with text ib each side
-                </div>
-                <div class="two-text-columns-text-right">
-                    <h1>Heading on the Other Side</h1>
-                    also with text
-                </div>
-            </div>
-        </div>
+		<div class="div-wrapper">
+			<div class="flex-accordion-wrapper">
+				<div class="flex-accordion-box">
+					<h1>flex accordian - scales to content size</h1>
+					<p>text goes here if you want it</p>
+					<div class="tab">
+						<input type="checkbox" id="chck1" />
+						<label class="tab-label" for="chck1">Item 1</label>
+						<div class="tab-content">
+							<li>with space for text</li>
+						</div>
+					</div>
+					<div class="tab">
+						<input type="checkbox" id="chck2" />
+						<label class="tab-label" for="chck2">Item 2</label>
+						<div class="tab-content">
+							<li>with space for text</li>
+						</div>
+					</div>
+					<div class="tab">
+						<input type="checkbox" id="chck3" />
+						<label class="tab-label" for="chck3">Item 1</label>
+						<div class="tab-content">
+							<li>with space for text</li>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-        <div class="div-wrapper">
-            <div class="flex-accordion-wrapper">
-                <div class="flex-accordion-box">
-                    <h1>flex accordian - scales to content size</h1>
-                    <p>text goes here if you want it</p>
-                    <div class="tab">
-                        <input type="checkbox" id="chck1">
-                        <label class="tab-label" for="chck1">Item 1</label>
-                        <div class="tab-content">
-                            <li>with space for text</li>
-                        </div>
-                    </div>
-                    <div class="tab">
-                        <input type="checkbox" id="chck2">
-                        <label class="tab-label" for="chck2">Item 2</label>
-                        <div class="tab-content">
-                            <li>with space for text</li>
-                        </div>
-                    </div>
-                    <div class="tab">
-                        <input type="checkbox" id="chck3">
-                        <label class="tab-label" for="chck3">Item 1</label>
-                        <div class="tab-content">
-                            <li>with space for text</li>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+		<!-- This is the inline image blocks, if you want to have some (dont have to have any) -->
 
-        <!-- This is the inline image blocks, if you want to have some (dont have to have any) -->
+		<div style="align-items: center" class="grid-wrapper">
+			<div class="box" onclick="openModal();currentSlide(1)">
+				<img src="./img/twitter.png" />
+			</div>
+			<div class="box" onclick="openModal();currentSlide(2)">
+				<img src="./img/youtube.png" />
+			</div>
+			<div class="box" onclick="openModal();currentSlide(3)">
+				<img src="./img/linkedin.png" />
+			</div>
+			<div class="box" onclick="openModal();currentSlide(4)">
+				<img src="./img/instagram.png" />
+			</div>
+			<div class="box" onclick="openModal();currentSlide(5)">
+				<img src="./img/facebook.png" />
+			</div>
+			<div class="box" onclick="openModal();currentSlide(5)">
+				<img src="./img/temp1.png" />
+			</div>
+		</div>
 
-        <div style="align-items: center"class="grid-wrapper">
-            <div class="box" onclick="openModal();currentSlide(1)"><img src="./img/twitter.png"></div>
-            <div class="box" onclick="openModal();currentSlide(2)"><img src="./img/youtube.png"></div>
-            <div class="box" onclick="openModal();currentSlide(3)"><img src="./img/linkedin.png"></div>
-            <div class="box" onclick="openModal();currentSlide(4)"><img src="./img/instagram.png"></div>
-            <div class="box" onclick="openModal();currentSlide(5)"><img src="./img/facebook.png"></div>
-            <div class="box" onclick="openModal();currentSlide(5)"><img src="./img/temp1.png"></div>
-        </div>
+		<!-- The Modal/Lightbox - When you click any image, if it was added to the lightbox, you can scroll through -->
+		<div id="myModal" class="modal">
+			<div class="cursor close" onclick="closeModal()">&times;</div>
+			<div class="modal-content">
+				<div class="mySlides">
+					<div class="numbertext">1 / 10</div>
+					<img src="./img/twitter.png" />
+				</div>
 
-        <!-- The Modal/Lightbox - When you click any image, if it was added to the lightbox, you can scroll through -->
-        <div id="myModal" class="modal">
-            <div class="cursor close" onclick="closeModal()">&times;</div>
-            <div class="modal-content">
-                <div class="mySlides">
-                    <div class="numbertext">1 / 10</div>
-                    <img src="./img/twitter.png">
-                </div>
+				<div class="mySlides">
+					<div class="numbertext">2 / 10</div>
+					<img src="./img/youtube.png" />
+				</div>
 
-                <div class="mySlides">
-                    <div class="numbertext">2 / 10</div>
-                    <img src="./img/youtube.png">
-                </div>
+				<div class="mySlides">
+					<div class="numbertext">3 / 10</div>
+					<img src="./img/linkedin.png" />
+				</div>
 
-                <div class="mySlides">
-                    <div class="numbertext">3 / 10</div>
-                    <img src="./img/linkedin.png">
-                </div>
+				<div class="mySlides">
+					<div class="numbertext">4 / 10</div>
+					<img src="./img/instagram.png" />
+				</div>
 
-                <div class="mySlides">
-                    <div class="numbertext">4 / 10</div>
-                    <img src="./img/instagram.png">
-                </div>
+				<div class="mySlides">
+					<div class="numbertext">5 / 10</div>
+					<img src="./img/facebook.png" />
+				</div>
+				<div class="mySlides">
+					<div class="numbertext">6 / 10</div>
+					<img src="./img/temp1.png" />
+				</div>
 
-                <div class="mySlides">
-                    <div class="numbertext">5 / 10</div>
-                    <img src="./img/facebook.png">
-                </div>
-                <div class="mySlides">
-                    <div class="numbertext">6 / 10</div>
-                    <img src="./img/temp1.png">
-                </div>
+				<!-- Next/previous controls -->
+				<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+				<a class="next" onclick="plusSlides(1)">&#10095;</a>
 
-                <!-- Next/previous controls -->
-                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+				<div class="modal-nav">
+					<!-- Caption text -->
+					<div class="caption-container">
+						<p id="caption"></p>
+					</div>
 
-                <div class="modal-nav">
-                    <!-- Caption text -->
-                    <div class="caption-container">
-                        <p id="caption"></p>
-                    </div>
+					<!-- Thumbnail image controls -->
+					<div class="column">
+						<img
+							class="thumb"
+							src="./img/twitter.png"
+							onclick="currentSlide(1)"
+							alt="Twitter"
+						/>
+					</div>
 
-                    <!-- Thumbnail image controls -->
-                    <div class="column">
-                        <img class="thumb" src="./img/twitter.png" onclick="currentSlide(1)" alt="Twitter">
-                    </div>
+					<div class="column">
+						<img
+							class="thumb"
+							src="./img/youtube.png"
+							onclick="currentSlide(2)"
+							alt="YouTube"
+						/>
+					</div>
 
-                    <div class="column">
-                        <img class="thumb" src="./img/youtube.png" onclick="currentSlide(2)" alt="YouTube">
-                    </div>
+					<div class="column">
+						<img
+							class="thumb"
+							src="./img/linkedin.png"
+							onclick="currentSlide(3)"
+							alt="LinkedIn"
+						/>
+					</div>
 
-                    <div class="column">
-                        <img class="thumb" src="./img/linkedin.png" onclick="currentSlide(3)" alt="LinkedIn">
-                    </div>
+					<div class="column">
+						<img
+							class="thumb"
+							src="./img/instagram.png"
+							onclick="currentSlide(4)"
+							alt="Instagram"
+						/>
+					</div>
 
-                    <div class="column">
-                        <img class="thumb" src="./img/instagram.png" onclick="currentSlide(4)" alt="Instagram">
-                    </div>
+					<div class="column">
+						<img
+							class="thumb"
+							src="./img/facebook.png"
+							onclick="currentSlide(5)"
+							alt="Facebook"
+						/>
+					</div>
+					<div class="column">
+						<img
+							class="thumb"
+							src="./img/test1.png"
+							onclick="currentSlide(6)"
+							alt="Test 1"
+						/>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
 
-                    <div class="column">
-                        <img class="thumb" src="./img/facebook.png" onclick="currentSlide(5)" alt="Facebook">
-                    </div>
-                    <div class="column">
-                        <img class="thumb" src="./img/test1.png" onclick="currentSlide(6)" alt="Test 1">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </body>
-
-    <footer class="">
-        <ol>
-            <li>Please follow me using any of the following:</li>
-            <li>
-                <img src="img/twitter.png"> 
-                <img src="img/facebook.png"> 
-                <img src="img/instagram.png"> 
-                <img src="img/youtube.png"> 
-                <img src="img/linkedin.png">
-            </li>
-        </ol>
-    </footer>
-
+	<footer class="">
+		<ol>
+			<li>Please follow me using any of the following:</li>
+			<li>
+				<img src="img/twitter.png" />
+				<img src="img/facebook.png" />
+				<img src="img/instagram.png" />
+				<img src="img/youtube.png" />
+				<img src="img/linkedin.png" />
+			</li>
+		</ol>
+	</footer>
 </html>

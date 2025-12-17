@@ -1,22 +1,20 @@
 (function () {
+	function runDevGate() {
+		const USERNAME = "phil";
+		const PASSWORD = "polaroid";
+		const KEY = "dev-unlocked";
 
-  function runDevGate() {
-    const USERNAME = "phil";
-    const PASSWORD = "polaroid";
-    const KEY = "dev-unlocked";
+		if (sessionStorage.getItem(KEY) === "true") return;
 
-    if (sessionStorage.getItem(KEY) === "true") return;
-
-    const failMsg =
-`Nice try, you're not getting hold of my valuables!
+		const failMsg = `Nice try, you're not getting hold of my valuables!
 
 p.s. there's nothing valuable in here. I'm currently implementing a CloudFlare CMS. Sending you have to Homepage... 🙂`;
 
-    function askCreds() {
-      return new Promise((resolve) => {
-        const modal = document.createElement("div");
+		function askCreds() {
+			return new Promise((resolve) => {
+				const modal = document.createElement("div");
 
-        modal.innerHTML = `
+				modal.innerHTML = `
           <div style="
             position:fixed; inset:0; background:rgba(0,0,0,.65);
             display:flex; align-items:center; justify-content:center;
@@ -44,48 +42,49 @@ p.s. there's nothing valuable in here. I'm currently implementing a CloudFlare C
           </div>
         `;
 
-        document.body.appendChild(modal);
+				document.body.appendChild(modal);
 
-        const u = modal.querySelector("#dev-u");
-        const p = modal.querySelector("#dev-p");
+				const u = modal.querySelector("#dev-u");
+				const p = modal.querySelector("#dev-p");
 
-        modal.querySelector("#dev-ok").onclick = () => {
-          modal.remove();
-          resolve({ user: u.value, pass: p.value });
-        };
+				modal.querySelector("#dev-ok").onclick = () => {
+					modal.remove();
+					resolve({ user: u.value, pass: p.value });
+				};
 
-        modal.querySelector("#dev-cancel").onclick = () => {
-          modal.remove();
-          resolve(null);
-        };
+				modal.querySelector("#dev-cancel").onclick = () => {
+					modal.remove();
+					resolve(null);
+				};
 
-        u.focus();
-      });
-    }
+				u.focus();
+			});
+		}
 
-    (async () => {
-      const creds = await askCreds();
-      if (!creds) {
-        alert(failMsg);
-        location.replace("/index.html");
-        return;
-      }
+		(async () => {
+			const creds = await askCreds();
+			if (!creds) {
+				alert(failMsg);
+				location.replace("/index.html");
+				return;
+			}
 
-      if (creds.user === USERNAME && creds.pass === PASSWORD) {
-        sessionStorage.setItem(KEY, "true");
-        alert("Darn! You're a smart one; sadly for you, there's nothing of use in here! I'm currently implementing a CloudFlare CMS. Sending you have to Homepage... 🙂");
-      } else {
-        alert(failMsg);
-        location.replace("/index.html");
-      }
-    })();
-  }
+			if (creds.user === USERNAME && creds.pass === PASSWORD) {
+				sessionStorage.setItem(KEY, "true");
+				alert(
+					"Darn! You're a smart one; sadly for you, there's nothing of use in here! I'm currently implementing a CloudFlare CMS. Sending you have to Homepage... 🙂"
+				);
+			} else {
+				alert(failMsg);
+				location.replace("/index.html");
+			}
+		})();
+	}
 
-  // GUARANTEE body exists
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", runDevGate);
-  } else {
-    runDevGate();
-  }
-
+	// GUARANTEE body exists
+	if (document.readyState === "loading") {
+		document.addEventListener("DOMContentLoaded", runDevGate);
+	} else {
+		runDevGate();
+	}
 })();

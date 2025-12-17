@@ -1,178 +1,181 @@
 /***********************************************************************
 *  Overlay / Hover Card
 **********************************************************************/
-.content-image{
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
+.content-image {
+	width: 100%;
+	height: 100%;
+	display: block;
+	object-fit: cover;
 }
 
 .grid-wrapper {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    grid-gap: 20px;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+	grid-gap: 20px;
 }
 
 .box {
-    background-color: #444;
-    padding: 70px;
-    margin: 20px;
-    text-align: left;
-    -webkit-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    -moz-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    -o-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	background-color: #444;
+	padding: 70px;
+	margin: 20px;
+	text-align: left;
+	-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+		0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	-moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+		0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	-o-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+		0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .box:hover {
-    -webkit-transform: rotate(-3deg);
-    -moz-transform: rotate(-3deg);
-    -o-transform: rotate(-3deg);
-    transform: rotate(-3deg);
+	-webkit-transform: rotate(-3deg);
+	-moz-transform: rotate(-3deg);
+	-o-transform: rotate(-3deg);
+	transform: rotate(-3deg);
 }
 
 .content {
-    position: relative;
-    width: 90%;
-    max-width: 400px;
-    margin: auto;
-    overflow: hidden;
+	position: relative;
+	width: 90%;
+	max-width: 400px;
+	margin: auto;
+	overflow: hidden;
 }
 
 /* Make overlay-card fill the polaroid frame (used by sections JS) */
-.content.content--full{
-  width: 100%;
-  max-width: none;
-  margin: 0;
+.content.content--full {
+	width: 100%;
+	max-width: none;
+	margin: 0;
 }
 
 .content .content-overlay {
-    background: rgba(0,0,0,0.7);
-    position: absolute;
-    height: 99%;
-    width: 100%;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    opacity: 0;
-    -webkit-transition: all 0.4s ease-in-out 0s;
-    -moz-transition: all 0.4s ease-in-out 0s;
-    transition: all 0.4s ease-in-out 0s;
+	background: rgba(0, 0, 0, 0.7);
+	position: absolute;
+	height: 99%;
+	width: 100%;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	opacity: 0;
+	-webkit-transition: all 0.4s ease-in-out 0s;
+	-moz-transition: all 0.4s ease-in-out 0s;
+	transition: all 0.4s ease-in-out 0s;
 }
 
-.content:hover .content-overlay{
-    opacity: 1;
+.content:hover .content-overlay {
+	opacity: 1;
 }
 
 .content-details {
-    background: rgba(0,0,0,0.7);
-    position: absolute;
-    text-align: center;
-    align-content: center;
-    vertical-align: middle;
-    padding-left: 1em;
-    padding-right: 1em;
-    padding-top: 1em;
-    width: 101%;
-    height: 101%;
-    top: 50%;
-    left: 50%;
-    opacity: 0;
-    -webkit-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    -webkit-transition: all 0.3s ease-in-out 0s;
-    -moz-transition: all 0.3s ease-in-out 0s;
-    transition: all 0.3s ease-in-out 0s;
+	background: rgba(0, 0, 0, 0.7);
+	position: absolute;
+	text-align: center;
+	align-content: center;
+	vertical-align: middle;
+	padding-left: 1em;
+	padding-right: 1em;
+	padding-top: 1em;
+	width: 101%;
+	height: 101%;
+	top: 50%;
+	left: 50%;
+	opacity: 0;
+	-webkit-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	-webkit-transition: all 0.3s ease-in-out 0s;
+	-moz-transition: all 0.3s ease-in-out 0s;
+	transition: all 0.3s ease-in-out 0s;
 }
 
-.content:hover .content-details{
-    top: 50%;
-    left: 50%;
-    opacity: 1;
-    cursor: pointer;
+.content:hover .content-details {
+	top: 50%;
+	left: 50%;
+	opacity: 1;
+	cursor: pointer;
 }
 
-.content-details h3{
-    color: #fff;
-    font-weight: 500;
-    letter-spacing: 0.15em;
-    margin-bottom: 0.5em;
-    text-transform: uppercase;
+.content-details h3 {
+	color: #fff;
+	font-weight: 500;
+	letter-spacing: 0.15em;
+	margin-bottom: 0.5em;
+	text-transform: uppercase;
 }
 
-.content-details p{
-    color: #fff;
-    font-size: 0.8em;
+.content-details p {
+	color: #fff;
+	font-size: 0.8em;
 }
 
-.fadeIn-bottom{
-    top: 80%;
+.fadeIn-bottom {
+	top: 80%;
 }
 
 .box > img {
-    width: 80px;
-    height: auto;
+	width: 80px;
+	height: auto;
 }
 
 .box-img {
-    padding: 0px;
-    overflow: hidden;
-    height: 150px;
-    align-content: center;
+	padding: 0px;
+	overflow: hidden;
+	height: 150px;
+	align-content: center;
 }
 
 .box-img > img {
-    object-fit: cover;
-    min-width: 100%;
-    min-height: 100%;
-    display: block;
+	object-fit: cover;
+	min-width: 100%;
+	min-height: 100%;
+	display: block;
 }
 
 /* Make the hover-card strip a single horizontal row */
-.grid-wrapper--row{
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  overflow-x: auto;
-  padding: 10px 0;
+.grid-wrapper--row {
+	display: flex;
+	gap: 20px;
+	align-items: center;
+	overflow-x: auto;
+	padding: 10px 0;
 }
 
 /* optional: stop items stretching */
-.grid-wrapper--row .box-img{
-  flex: 0 0 280px;   /* card width */
+.grid-wrapper--row .box-img {
+	flex: 0 0 280px; /* card width */
 }
 
 /* CRITICAL: overlays must not steal clicks from the image */
 .content .content-overlay,
-.content .content-details{
-  pointer-events: none;
+.content .content-details {
+	pointer-events: none;
 }
 
 /* Make it obvious it's clickable */
-.content-image.js-lightbox{
-  cursor: pointer;
+.content-image.js-lightbox {
+	cursor: pointer;
 }
 
-.grid-wrapper--row{
-  display: flex;
-  gap: 20px;
-  justify-content: center;
+.grid-wrapper--row {
+	display: flex;
+	gap: 20px;
+	justify-content: center;
 }
 
-.grid-wrapper--row .box-img{
-  scroll-snap-align: start;
+.grid-wrapper--row .box-img {
+	scroll-snap-align: start;
 }
 
-@media (max-width: 900px){
-  .grid-wrapper--row{
-    flex-wrap: wrap;
-  }
+@media (max-width: 900px) {
+	.grid-wrapper--row {
+		flex-wrap: wrap;
+	}
 
-  .grid-wrapper--row .box-img{
-    flex: 1 1 240px;
-    max-width: 320px;
-  }
+	.grid-wrapper--row .box-img {
+		flex: 1 1 240px;
+		max-width: 320px;
+	}
 }

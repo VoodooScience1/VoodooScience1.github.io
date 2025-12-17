@@ -3,116 +3,119 @@
 **********************************************************************/
 
 .grid-wrapper {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    grid-gap: 20px;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+	grid-gap: 20px;
 }
 
 .box {
-    background-color: #444;
-    padding: 70px;
-    margin: 20px;
-    text-align: left;
-    -webkit-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    -moz-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    -o-box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	background-color: #444;
+	padding: 70px;
+	margin: 20px;
+	text-align: left;
+	-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+		0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	-moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+		0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	-o-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+		0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .box:hover {
-    -webkit-transform: rotate(-3deg);
-    -moz-transform: rotate(-3deg);
-    -o-transform: rotate(-3deg);
-    transform: rotate(-3deg);
+	-webkit-transform: rotate(-3deg);
+	-moz-transform: rotate(-3deg);
+	-o-transform: rotate(-3deg);
+	transform: rotate(-3deg);
 }
 
 .content {
-    position: relative;
-    width: 90%;
-    max-width: 400px;
-    margin: auto;
-    overflow: hidden;
+	position: relative;
+	width: 90%;
+	max-width: 400px;
+	margin: auto;
+	overflow: hidden;
 }
 
 .content .content-overlay {
-    background: rgba(0,0,0,0.7);
-    position: absolute;
-    height: 99%;
-    width: 100%;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    opacity: 0;
-    -webkit-transition: all 0.4s ease-in-out 0s;
-    -moz-transition: all 0.4s ease-in-out 0s;
-    transition: all 0.4s ease-in-out 0s;
+	background: rgba(0, 0, 0, 0.7);
+	position: absolute;
+	height: 99%;
+	width: 100%;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	opacity: 0;
+	-webkit-transition: all 0.4s ease-in-out 0s;
+	-moz-transition: all 0.4s ease-in-out 0s;
+	transition: all 0.4s ease-in-out 0s;
 }
 
-.content:hover .content-overlay{
-    opacity: 1;
+.content:hover .content-overlay {
+	opacity: 1;
 }
 
 .content-details {
-    background: rgba(0,0,0,0.7);
-    position: absolute;
-    text-align: center;
-    vertical-align: middle;
-    padding-left: 1em;
-    padding-right: 1em;
-    padding-top: 1em;
-    width: 101%;
-    height: 101%;
-    top: 50%;
-    left: 50%;
-    opacity: 0;
-    -webkit-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    -webkit-transition: all 0.3s ease-in-out 0s;
-    -moz-transition: all 0.3s ease-in-out 0s;
-    transition: all 0.3s ease-in-out 0s;
+	background: rgba(0, 0, 0, 0.7);
+	position: absolute;
+	text-align: center;
+	vertical-align: middle;
+	padding-left: 1em;
+	padding-right: 1em;
+	padding-top: 1em;
+	width: 101%;
+	height: 101%;
+	top: 50%;
+	left: 50%;
+	opacity: 0;
+	-webkit-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	-webkit-transition: all 0.3s ease-in-out 0s;
+	-moz-transition: all 0.3s ease-in-out 0s;
+	transition: all 0.3s ease-in-out 0s;
 }
 
-.content:hover .content-details{
-    top: 50%;
-    left: 50%;
-    opacity: 1;
-    cursor: pointer;
+.content:hover .content-details {
+	top: 50%;
+	left: 50%;
+	opacity: 1;
+	cursor: pointer;
 }
 
-.content-details h3{
-    color: #fff;
-    font-weight: 500;
-    letter-spacing: 0.15em;
-    margin-bottom: 0.5em;
-    text-transform: uppercase;
+.content-details h3 {
+	color: #fff;
+	font-weight: 500;
+	letter-spacing: 0.15em;
+	margin-bottom: 0.5em;
+	text-transform: uppercase;
 }
 
-.content-details p{
-    color: #fff;
-    font-size: 0.8em;
+.content-details p {
+	color: #fff;
+	font-size: 0.8em;
 }
 
-.fadeIn-bottom{
-    top: 80%;
+.fadeIn-bottom {
+	top: 80%;
 }
 
 .box > img {
-    width: 80px;
-    height: auto;
+	width: 80px;
+	height: auto;
 }
 
 .box-img {
-    padding: 0px;
-    overflow: hidden;
-    height: 150px;
-    align-content: center;
+	padding: 0px;
+	overflow: hidden;
+	height: 150px;
+	align-content: center;
 }
 
 .box-img > img {
-    object-fit: cover;
-    min-width: 100%;
-    min-height: 100%;
-    display: block;
+	object-fit: cover;
+	min-width: 100%;
+	min-height: 100%;
+	display: block;
 }
