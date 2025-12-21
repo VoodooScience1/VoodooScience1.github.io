@@ -55,7 +55,7 @@
 		caption,
 		useLightbox,
 		overlayTitle,
-		overlayText
+		overlayText,
 	) {
 		const imgWrap = el("div", className);
 
@@ -130,9 +130,12 @@
 			const overlayTitle = stub.dataset.overlayTitle || "";
 			const overlayText = stub.dataset.overlayText || "";
 
+			const explicitClass = (stub.dataset.class || "").trim();
 			const size = (stub.dataset.size || "sml").toLowerCase();
+
 			const className =
-				size === "lrg" ? "lrg-img-text-div-img" : "img-text-div-img";
+				explicitClass ||
+				(size === "lrg" ? "lrg-img-text-div-img" : "img-text-div-img");
 
 			const built = buildImgWrap(
 				className,
@@ -140,7 +143,7 @@
 				caption,
 				useLightbox,
 				overlayTitle,
-				overlayText
+				overlayText,
 			);
 
 			// IMPORTANT: prevents “vanish after scroll” on inline images (esp iOS Safari)
@@ -173,7 +176,7 @@
 			caption,
 			useLightbox,
 			overlayTitle,
-			overlayText
+			overlayText,
 		);
 
 		const textCol = el("div", "img-text-div-text");
@@ -213,7 +216,7 @@
 			caption,
 			useLightbox,
 			overlayTitle,
-			overlayText
+			overlayText,
 		);
 
 		const textCol = el("div", "lrg-img-text-div-text");
