@@ -17,7 +17,8 @@
 
 @font-face {
 	font-family: "CustomFont";
-	src: url("../font/CustomFont.woff2") format("woff2"),
+	src:
+		url("../font/CustomFont.woff2") format("woff2"),
 		url("../font/CustomFont.woff") format("woff");
 	font-weight: normal;
 	font-style: normal;
@@ -75,7 +76,7 @@ h3 {
 *  Cover
 **********************************************************************/
 .container {
-	margin-top: 90px;
+	margin-top: 50px;
 	height: 300px;
 	display: flex;
 	align-items: center;
@@ -95,7 +96,7 @@ h3 {
 	}
 
 	.container {
-		margin-top: 55px;
+		margin-top: 0px;
 	}
 }
 
