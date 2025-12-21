@@ -243,7 +243,9 @@
 		bottom: 0;
 		opacity: 0;
 		background: rgba(255, 255, 255, 0.14);
-		transition: opacity 180ms ease, top 180ms ease;
+		transition:
+			opacity 180ms ease,
+			top 180ms ease;
 		pointer-events: none;
 	}
 	.main-nav ol li:hover ol li:nth-of-type(1n):hover:after {
@@ -497,7 +499,8 @@
 		left: calc(50% - 15px);
 		border-radius: 5px;
 		box-shadow: 0 10px 0 0 #fff;
-		transition: transform 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275),
+		transition:
+			transform 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275),
 			box-shadow 100ms ease-in-out;
 		transition-delay: 0.1s, 0s;
 		transform-origin: 0% 50%;
@@ -768,4 +771,40 @@
 	.main-nav:after {
 		pointer-events: none;
 	}
+}
+
+/***********************************************************************
+*  Breadcrumbs
+**********************************************************************/
+.breadcrumbs {
+	width: 100%;
+	padding: 10px 18px;
+	font-size: 12px;
+	letter-spacing: 0.2px;
+	color: rgba(255, 255, 255, 0.55);
+	background: transparent;
+}
+
+.breadcrumbs a,
+.breadcrumbs span {
+	color: rgba(255, 255, 255, 0.45);
+	text-decoration: none;
+	text-transform: none;
+	letter-spacing: 0.2px;
+	font-weight: 500;
+}
+
+.breadcrumbs a:hover {
+	text-decoration: underline;
+	text-underline-offset: 4px;
+}
+
+.breadcrumbs .sep {
+	margin: 0 8px;
+	color: rgba(255, 255, 255, 0.25);
+}
+
+.breadcrumbs .current {
+	color: rgba(255, 255, 255, 0.75);
+	font-weight: 700;
 }
