@@ -1,22 +1,9 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 	<head>
 		<title>
 			Phil Cook - Engineering Manager, Developing Solutions Architect
 		</title>
-
-		<link rel="stylesheet" href="/css/style.css" />
-		<link rel="stylesheet" href="/css/accordian.css" />
-		<link rel="stylesheet" href="/css/grid-panel.css" />
-		<link rel="stylesheet" href="/css/nav.css" />
-		<link rel="stylesheet" href="/css/modal.css" />
-		<script type="text/javascript" src="/script/sections.js" defer></script>
-		<script type="text/javascript" src="/script/lightbox.js" defer></script>
-		<script type="text/javascript" src="/script/nav-close.js" defer></script>
-		<script type="text/javascript" src="/script/nav-marker.js" defer></script>
-		<script type="text/javascript" src="/script/dev-gate.js">
-			defer
-		</script>
 	</head>
 
 	<body>
@@ -24,35 +11,18 @@
 		<div id="nav-placeholder"></div>
 		<div id="lightbox-placeholder"></div>
 
-		<script>
-			// Load partials AFTER the DOM exists (safe on all browsers)
-			window.addEventListener("DOMContentLoaded", () => {
-				fetch("/partials/nav.html")
-					.then((r) => r.text())
-					.then((html) => {
-						document.getElementById("nav-placeholder").innerHTML = html;
-						window.setActiveNav(); // run AFTER nav is injected
-					})
-					.catch((err) => console.error("Nav load failed:", err));
-
-				fetch("/partials/lightbox.html")
-					.then((r) => r.text())
-					.then((html) => {
-						document.getElementById("lightbox-placeholder").innerHTML = html;
-					})
-					.catch((err) => console.error("Lightbox load failed:", err));
-			});
-		</script>
-
+		<!-- Cover photo image box -->
 		<div class="container">
 			<div>
-				<img class="cover-img" src="/img/cover-photo.png" alt="Cover" />
+				<img class="cover-img" src="/assets/img/cover-photo.png" alt="Cover" />
 			</div>
 		</div>
 
+		<nav class="breadcrumbs" aria-label="Breadcrumb"></nav>
+
 		<!-- Standard container, nothing fancy at all, one column -->
 		<div class="div-wrapper">
-			<div class="default-div-wrapper">
+			<div class="default-div-wrapper hero-override">
 				<h1 style="text-align: center">Plain, Wide, Container</h1>
 				<p style="text-align: center">With some limited words iside it</p>
 			</div>
@@ -65,7 +35,7 @@
 				<!-- js-lightbox + alt -->
 				<img
 					class="content-image js-lightbox"
-					src="/img/cover-photo-old-2.png"
+					src="/assets/img/cover-photo-old-2.png"
 					alt="img1"
 				/>
 				<!-- Animation + text for overlay -->
@@ -79,7 +49,7 @@
 				<div class="content-overlay"></div>
 				<img
 					class="content-image js-lightbox"
-					src="/img/cover-photo-old-2.png"
+					src="/assets/img/cover-photo-old-2.png"
 					alt="Twitter"
 				/>
 				<div class="content-details fadeIn-bottom">
@@ -92,7 +62,7 @@
 				<div class="content-overlay"></div>
 				<img
 					class="content-image js-lightbox"
-					src="/img/cover-photo-old-2.png"
+					src="/assets/img/cover-photo-old-2.png"
 					alt="Twitter"
 				/>
 				<div class="content-details fadeIn-bottom">
@@ -105,25 +75,25 @@
 
 		<!-- Normal content... -->
 		<!-- Note: throughout, there's options you can mod
-      data-type="imgText" --- block type
-      data-img-pos="right" --- image position (left / right)
-      data-img="/img/cover-photo-old-2.png" --- source image
-      data-caption="hi" --- the figure/caption that appears below the image
-      data-lightbox="true" --- decide whether to add to the lightbox/modal or not
-    -->
-		<!-- Note: There's block for images (for a clean lok), but you can still add
-      inline images if you so with, and tehy can still be aded to the lightbox/modal
-      you just call js-lightbox class as seen in the example below:
-          <img class="js-lightbox" src="/img/twitter.png" alt="Twitter">
-      
-      Note: alt is handled by "caption"
-    -->
+				data-type="imgText" --- block type
+				data-img-pos="right" --- image position (left / right)
+				data-img="/img/cover-photo-old-2.png" --- source image
+				data-caption="hi" --- the figure/caption that appears below the image
+				data-lightbox="true" --- decide whether to add to the lightbox/modal or not
+		-->
 
-		<!-- Small image, large text; Image on left (default) -->
+		<!-- Note: There's block for images (for a clean lok), but you can still add
+				inline images if you so with, and tehy can still be aded to the lightbox/modal
+				you just call js-lightbox class as seen in the example below:
+				<img class="js-lightbox" src="/img/twitter.png" alt="Twitter">
+				Note: alt is handled by "caption"
+		-->
+
+		<!-- Small image, large text: Image on left (default) -->
 		<div
 			class="section"
 			data-type="imgText"
-			data-img="/img/cover-photo-old-2.png"
+			data-img="/assets/img/cover-photo-old-2.png"
 			data-caption="left-side-image"
 			data-lightbox="true"
 		>
@@ -136,7 +106,7 @@
 			class="section"
 			data-type="imgText"
 			data-img-pos="right"
-			data-img="/img/cover-photo-old-2.png"
+			data-img="/assets/img/cover-photo-old-2.png"
 			data-caption="right-side-image"
 			data-lightbox="true"
 		>
@@ -149,7 +119,7 @@
 		<div
 			class="section"
 			data-type="split50"
-			data-img="/img/cover-photo-old-2.png"
+			data-img="/assets/img/cover-photo-old-2.png"
 			data-caption="left-side-image"
 			data-lightbox="true"
 		>
@@ -163,7 +133,7 @@
 			class="section"
 			data-type="split50"
 			data-img-pos="right"
-			data-img="/img/cover-photo-old-2.png"
+			data-img="/assets/img/cover-photo-old-2.png"
 			data-caption="Same but image-right"
 			data-lightbox="true"
 		>
@@ -178,7 +148,7 @@
 				<h2>Left column</h2>
 
 				<div class="img-text-div-img">
-					<img src="/img/pablo.PNG" alt="Pablo" />
+					<img src="/assets/img/pablo.PNG" alt="Pablo" />
 				</div>
 
 				<p>Keeping it simple, and not adding it to the Lightbox</p>
@@ -192,7 +162,7 @@
 				<div
 					class="img-stub"
 					data-class="img-text-div-img"
-					data-img="/img/miguel.jpeg"
+					data-img="/assets/img/miguel.jpeg"
 					data-caption="Miguel"
 					data-lightbox="true"
 					data-overlay-title="Miguel"
@@ -219,7 +189,7 @@
 			</div>
 
 			<!-- Make sure you change the id's i.e. id="acc-1" -->
-			<!-- Mthis is page wide and handles hich asset is animated -->
+			<!-- This is page wide and handles which asset is animated -->
 			<div data-col="right">
 				<h2>Right column</h2>
 				<p>Or maybe even add yourself an accordian? Firstly, in-line</p>
@@ -287,44 +257,39 @@
 		<!-- Your grid stays INLINE (keep it). Just add class js-lightbox on images you want clickable -->
 		<div class="grid-wrapper grid-wrapper--row">
 			<div class="box">
-				<img class="js-lightbox" src="/img/twitter.png" alt="Twitter" />
+				<img class="js-lightbox" src="/assets/img/twitter.png" alt="Twitter" />
 			</div>
 			<div class="box">
-				<img class="js-lightbox" src="/img/youtube.png" alt="YouTube" />
+				<img class="js-lightbox" src="/assets/img/youtube.png" alt="YouTube" />
 			</div>
 			<div class="box">
-				<img class="js-lightbox" src="/img/linkedin.png" alt="LinkedIn" />
+				<img
+					class="js-lightbox"
+					src="/assets/img/linkedin.png"
+					alt="LinkedIn"
+				/>
 			</div>
 			<div class="box">
-				<img class="js-lightbox" src="/img/instagram.png" alt="Instagram" />
+				<img
+					class="js-lightbox"
+					src="/assets/img/instagram.png"
+					alt="Instagram"
+				/>
 			</div>
 			<div class="box">
-				<img class="js-lightbox" src="/img/facebook.png" alt="Facebook" />
+				<img
+					class="js-lightbox"
+					src="/assets/img/facebook.png"
+					alt="Facebook"
+				/>
 			</div>
 		</div>
 
 		<!-- A simple footer for referring to my (non-existant) socials -->
 		<footer>
-			<ol>
-				<li>Please follow me using any of the following:</li>
-				<li>
-					<a href="https://www.x.com">
-						<img src="/img/twitter.png" alt="Twitter" />
-					</a>
-					<a href="https://www.facebook.com">
-						<img src="/img/facebook.png" alt="Facebook" />
-					</a>
-					<a href="https://www.instagram.com">
-						<img src="/img/instagram.png" alt="Instagram" />
-					</a>
-					<a href="https://www.youtube.com">
-						<img src="/img/youtube.png" alt="Youtube" />
-					</a>
-					<a href="https://www.linkedin.com">
-						<img src="/img/linkedin.png" alt="LinkedIn" />
-					</a>
-				</li>
-			</ol>
+			<div id="footer-placeholder"></div>
 		</footer>
+
+		<script src="/assets/script/dom-loader.js" defer></script>
 	</body>
 </html>

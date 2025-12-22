@@ -67,7 +67,12 @@
 				wrap.appendChild(cur);
 			} else {
 				const a = document.createElement("a");
-				a.href = c.path === "/" ? "/" : c.path + ".html"; // adjust if you *don’t* use .html routes
+				a.href =
+					c.path === "/"
+						? "/"
+						: c.path.endsWith(".html")
+							? c.path
+							: c.path + ".html";
 				a.textContent = c.label;
 				wrap.appendChild(a);
 			}
@@ -88,7 +93,6 @@
 		mo.observe(document.documentElement, { childList: true, subtree: true });
 	}
 
-	window.addEventListener("DOMContentLoaded", () => {
-		whenNavReady(buildBreadcrumbs);
-	});
+	window.buildBreadcrumbs = buildBreadcrumbs;
+	window.whenNavReady = whenNavReady; // optional
 })();

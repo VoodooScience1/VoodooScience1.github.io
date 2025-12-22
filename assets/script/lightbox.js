@@ -39,7 +39,7 @@
 					im.onload = () => resolve(im);
 					im.onerror = reject;
 					im.src = src;
-				})
+				}),
 			);
 		}
 		return cache.get(src);
@@ -172,7 +172,7 @@
 				sx = t.clientX;
 				sy = t.clientY;
 			},
-			{ passive: true }
+			{ passive: true },
 		);
 
 		document.addEventListener(
@@ -189,7 +189,7 @@
 					else next(-1);
 				}
 			},
-			{ passive: true }
+			{ passive: true },
 		);
 
 		// Click any js-lightbox image to open + controls + backdrop-close
@@ -237,5 +237,21 @@
 		});
 	}
 
-	window.addEventListener("DOMContentLoaded", bind);
+	let bound = false;
+
+	function initLightbox() {
+		if (bound) return;
+		bound = true;
+		bind();
+	}
+
+	// expose for your dom-loader to call explicitly (optional but nice)
+	window.initLightbox = initLightbox;
+
+	// run immediately if DOM is already ready (because dom-loader loads this late)
+	if (document.readyState === "loading") {
+		window.addEventListener("DOMContentLoaded", initLightbox, { once: true });
+	} else {
+		initLightbox();
+	}
 })();

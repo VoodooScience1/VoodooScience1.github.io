@@ -19,8 +19,8 @@
 @font-face {
 	font-family: "CustomFont";
 	src:
-		url("../font/CustomFont.woff2") format("woff2"),
-		url("../font/CustomFont.woff") format("woff");
+		url("/assets/font/CustomFont.woff2") format("woff2"),
+		url("/assets/font/CustomFont.woff") format("woff");
 	font-weight: normal;
 	font-style: normal;
 }
@@ -57,6 +57,13 @@ h2 {
 }
 h3 {
 	letter-spacing: 0.1em;
+}
+
+/* Mobile nav is 45px tall */
+@media (max-width: 880px) {
+	h1 {
+		text-underline-offset: 8px;
+	}
 }
 
 /***********************************************************************
