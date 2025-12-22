@@ -37,6 +37,13 @@
 						document.getElementById("lightbox-placeholder").innerHTML = html;
 					})
 					.catch((err) => console.error("Lightbox load failed:", err));
+
+				fetch("/assets/partials/footer.html")
+					.then((r) => r.text())
+					.then((html) => {
+						document.getElementById("footer-placeholder").innerHTML = html;
+					})
+					.catch((err) => console.error("Footer load failed:", err));
 			});
 		</script>
 
@@ -65,26 +72,7 @@
 		<!-- CMS:END main -->
 
 		<footer>
-			<ol>
-				<li>Please follow me using any of the following:</li>
-				<li>
-					<a href="https://www.x.com">
-						<img src="/img/twitter.png" alt="Twitter" />
-					</a>
-					<a href="https://www.facebook.com">
-						<img src="/img/facebook.png" alt="Facebook" />
-					</a>
-					<a href="https://www.instagram.com">
-						<img src="/img/instagram.png" alt="Instagram" />
-					</a>
-					<a href="https://www.youtube.com">
-						<img src="/img/youtube.png" alt="Youtube" />
-					</a>
-					<a href="https://www.linkedin.com">
-						<img src="/img/linkedin.png" alt="LinkedIn" />
-					</a>
-				</li>
-			</ol>
+			<div id="footer-placeholder"></div>
 		</footer>
 	</body>
 </html>

@@ -454,3 +454,66 @@ footer a {
 #cms-portal {
 	width: 100%;
 }
+
+/***********************************************************************
+*  cms section adder
+**********************************************************************/
+
+/* Empty state */
+.cms-empty {
+	padding: 18px;
+	border: 1px dashed rgba(255, 255, 255, 0.18);
+	border-radius: 16px;
+	background: rgba(255, 255, 255, 0.03);
+	margin: 12px;
+}
+
+/* Divider CTA */
+.cms-divider-btn {
+	margin-top: 14px;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 10px 12px;
+	border: 0;
+	background: transparent;
+	color: rgba(255, 255, 255, 0.85);
+	cursor: pointer;
+}
+
+.cms-divider-line {
+	flex: 1 1 auto;
+	height: 1px;
+	background: rgba(255, 255, 255, 0.14);
+}
+
+.cms-divider-plus {
+	width: 32px;
+	height: 32px;
+	border-radius: 999px;
+	display: grid;
+	place-items: center;
+	font-weight: 900;
+	background: rgba(60, 200, 120, 0.18);
+	border: 1px solid rgba(60, 200, 120, 0.35);
+	transform: translateZ(0);
+	transition:
+		transform 160ms ease,
+		background 160ms ease;
+}
+
+.cms-divider-text {
+	font-weight: 700;
+	letter-spacing: 0.02em;
+	opacity: 0.9;
+}
+
+/* Hover animation */
+.cms-divider-btn:hover .cms-divider-plus {
+	transform: scale(1.08) rotate(90deg);
+	background: rgba(60, 200, 120, 0.26);
+}
+.cms-divider-btn:hover .cms-divider-line {
+	background: rgba(60, 200, 120, 0.22);
+}

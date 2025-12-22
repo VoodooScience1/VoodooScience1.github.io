@@ -877,6 +877,15 @@
 	opacity: 0.45;
 }
 
+#cms-portal,
+#cms-portal * {
+	color: rgba(255, 255, 255, 0.88);
+}
+
+#cms-portal a {
+	color: rgba(255, 255, 255, 0.9);
+}
+
 /* Status pill */
 #cms-status-strip .cms-pill {
 	font:
