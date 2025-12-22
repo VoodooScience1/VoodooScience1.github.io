@@ -817,9 +817,8 @@
 *  cms-status-strip
 **********************************************************************/
 
-/* One sticky stack: nav + strip move as one */
-#cms-sticky-stack {
+#cms-status-strip {
 	position: sticky;
-	top: 0;
-	z-index: 9999;
+	top: var(--nav-h, 64px);
+	z-index: 60;
 }

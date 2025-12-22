@@ -432,3 +432,14 @@ footer a {
 .lrg-img-text-div-img .content {
 	height: auto;
 }
+
+/***********************************************************************
+*  cms-banner
+**********************************************************************/
+
+#cms-banner img {
+	width: 100%;
+	height: 300px;
+	object-fit: cover;
+	display: block;
+}
