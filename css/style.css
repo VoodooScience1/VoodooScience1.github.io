@@ -449,3 +449,7 @@ footer a {
 	height: auto;
 	object-fit: contain; /* show all, no crop */
 }
+
+#cms-portal {
+	width: 100%;
+}
