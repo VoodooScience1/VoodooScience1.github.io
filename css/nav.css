@@ -812,6 +812,7 @@
 	position: sticky;
 	top: 80px; /* same as #nav-placeholder height */
 	z-index: 9998;
+	width: 100%;
 }
 
 /* Mobile nav is 45px tall */
@@ -821,13 +822,84 @@
 	}
 }
 
-/* Match nav colour + remove the “stripe” look */
-.cms-strip {
-	background: #1e1f24;
-	border: 0;
-	box-shadow: none;
+/* Make the strip match nav styling + full-width layout */
+#cms-status-strip .cms-strip {
+	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: space-between; /* left / mid / right columns */
 	gap: 12px;
-	padding: 6px 12px;
+
+	padding: 8px 16px;
+	background: var(--nav-bg); /* match nav */
+	color: rgba(255, 255, 255, 0.9);
+
+	border: 0; /* remove borders for nav-consistency */
+	box-shadow: none;
+}
+
+/* Keep columns from squashing oddly */
+#cms-status-strip .cms-strip-left {
+	flex: 0 0 auto;
+	font-weight: 800;
+	letter-spacing: 0.06em;
+}
+#cms-status-strip .cms-strip-mid {
+	flex: 1 1 auto;
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	justify-content: center;
+}
+#cms-status-strip .cms-strip-right {
+	flex: 0 0 auto;
+	display: flex;
+	gap: 8px;
+	align-items: center;
+}
+
+/* Controls look “nav-like” */
+#cms-status-strip .cms-btn,
+#cms-status-strip .cms-select {
+	font:
+		700 12px/1.2 system-ui,
+		-apple-system,
+		Segoe UI,
+		Roboto,
+		Arial;
+	color: rgba(255, 255, 255, 0.9);
+	background: rgba(255, 255, 255, 0.06);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 10px;
+	padding: 6px 10px;
+}
+
+#cms-status-strip .cms-btn:disabled {
+	opacity: 0.45;
+}
+
+/* Status pill */
+#cms-status-strip .cms-pill {
+	font:
+		800 12px/1.1 system-ui,
+		-apple-system,
+		Segoe UI,
+		Roboto,
+		Arial;
+	padding: 4px 10px;
+	border-radius: 999px;
+	border: 1px solid rgba(255, 255, 255, 0.18);
+	background: rgba(255, 255, 255, 0.06);
+}
+
+#cms-status-strip .cms-pill.ok {
+	background: rgba(60, 200, 120, 0.18);
+	border-color: rgba(60, 200, 120, 0.35);
+}
+#cms-status-strip .cms-pill.warn {
+	background: rgba(255, 183, 3, 0.16);
+	border-color: rgba(255, 183, 3, 0.3);
+}
+#cms-status-strip .cms-pill.err {
+	background: rgba(255, 90, 90, 0.16);
+	border-color: rgba(255, 90, 90, 0.3);
 }
