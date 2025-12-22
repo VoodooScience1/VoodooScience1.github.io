@@ -3,7 +3,9 @@
 **********************************************************************/
 
 /*Drop down over 666px*/
-.main-nav {
+#nav-placeholder {
+	position: sticky;
+	top: 0;
 	display: flex;
 	justify-content: center;
 	height: 80px;
@@ -13,6 +15,15 @@
 	perspective: 200px;
 	transform-style: preserve-3d;
 	z-index: 9999;
+}
+
+.main-nav {
+	width: 100%;
+	background: #1e1f24;
+	margin: 0px;
+	max-width: 100%;
+	z-index: 9999;
+	display: flex;
 }
 
 .sub-menu {
@@ -29,15 +40,6 @@
 **********************************************************************/
 
 @media (min-width: 880px) {
-	.main-nav {
-		width: 100%;
-		position: absolute;
-		background: #1e1f24;
-		margin: 0px;
-		max-width: 100%;
-		z-index: 9999;
-	}
-
 	.main-nav ol {
 		width: 100%;
 		display: flex;
@@ -414,17 +416,11 @@
 *  Nav Bar over 666px page width
 **********************************************************************/
 @media (max-width: 880px) {
-	.main-nav {
-		position: absolute;
-		top: 0;
+	#nav-placeholder {
 		height: 45px;
-		left: 0;
-		background: #1e1f24;
-		width: 100%;
-		z-index: 9999;
 	}
 
-	/* Mobile: carry the same colour per slot */
+	/* Mobile: carry the same colour per slot w/ animation */
 	.main-nav ol li:nth-of-type(1) {
 		--c: #ff2b00;
 		--i: 1;
@@ -613,12 +609,6 @@
 	border-bottom: 5px solid var(--accent);
 	color: var(--accent);
 	padding-bottom: 1px;
-}
-
-.sticky {
-	position: fixed;
-	top: 0;
-	width: 100%;
 }
 
 /* Forces the nav bar to go invisible, and then re-apear on hover */
@@ -811,4 +801,34 @@
 
 .hero-override {
 	margin-top: 0px;
+}
+
+/***********************************************************************
+*  Breadcrumbs
+**********************************************************************/
+
+/* Slim bar sticks underneath the sticky nav placeholder */
+#cms-status-strip {
+	position: sticky;
+	top: 80px; /* same as #nav-placeholder height */
+	z-index: 9998;
+	width: 100%;
+}
+
+/* Mobile nav is 45px tall */
+@media (max-width: 880px) {
+	#cms-status-strip {
+		top: 45px;
+	}
+}
+
+/* Match nav colour + remove the “stripe” look */
+.cms-strip {
+	background: #1e1f24;
+	border: 0;
+	box-shadow: none;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 6px 12px;
 }
