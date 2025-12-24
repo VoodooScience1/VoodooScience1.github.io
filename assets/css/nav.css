@@ -83,7 +83,7 @@
 
 	/* Keep submenu link text white */
 	.main-nav ol li:hover ol li a {
-		color: #fff;
+		color: var(--nav-bg);
 	}
 
 	.main-nav ol li:hover ol:before {
