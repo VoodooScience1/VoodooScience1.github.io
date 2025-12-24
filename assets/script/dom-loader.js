@@ -56,6 +56,16 @@
 		});
 	}
 
+	function setAdminLinkForEnv() {
+		const a = document.querySelector('a[data-role="admin-link"]');
+		if (!a) return;
+
+		const isDev = location.hostname.startsWith("dev.");
+		a.href = isDev
+			? "https://dev.admin.portfolio.tacsa.co.uk/"
+			: "https://admin.portfolio.tacsa.co.uk/";
+	}
+
 	async function boot() {
 		// 1) Inject CSS first (no script tags in head-common.html)
 		await mountPartial({
@@ -71,6 +81,8 @@
 			id: "nav-placeholder",
 			url: `${PARTIALS_BASE}/nav.html`,
 		});
+		setAdminLinkForEnv();
+
 		await mountPartial({
 			id: "lightbox-placeholder",
 			url: `${PARTIALS_BASE}/lightbox.html`,
