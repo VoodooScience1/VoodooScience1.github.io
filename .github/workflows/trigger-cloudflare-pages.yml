@@ -1,4 +1,4 @@
-name: Trigger Cloudflare Pages Rebuild
+name: Trigger Cloudflare Pages Rebuilds
 
 on:
   push:
@@ -8,12 +8,17 @@ jobs:
   trigger:
     runs-on: ubuntu-latest
     steps:
-      - name: Call Cloudflare Pages Deploy Hook (PROD)
+      - name: Trigger PROD admin rebuild (master)
         if: github.ref == 'refs/heads/master'
         run: |
           curl -X POST "${{ secrets.CLOUDFLARE_PAGES_DEPLOY_HOOK }}"
 
-      - name: Call Cloudflare Pages Deploy Hook (DEV)
+      - name: Trigger DEV core rebuild (dev)
+        if: github.ref == 'refs/heads/dev'
+        run: |
+          curl -X POST "${{ secrets.CLOUDFLARE_CORE_DEPLOY_HOOK_DEV }}"
+
+      - name: Trigger DEV admin rebuild (dev)
         if: github.ref == 'refs/heads/dev'
         run: |
           curl -X POST "${{ secrets.CLOUDFLARE_PAGES_DEPLOY_HOOK_DEV }}"
