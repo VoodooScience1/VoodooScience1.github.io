@@ -515,3 +515,50 @@ footer a {
 .cms-divider-btn:hover .cms-divider-line {
 	background: rgba(60, 200, 120, 0.22);
 }
+
+/***********************************************************************
+*  Doc card (insertable anywhere via CMS)
+**********************************************************************/
+.doc-card {
+	background: #fff;
+	padding: 14px;
+	margin: 20px;
+	box-shadow: var(--shadow);
+	border-radius: 2px;
+}
+
+.doc-card__link {
+	display: block;
+	color: #111;
+	text-decoration: none;
+}
+
+.doc-card__title {
+	font-weight: 900;
+	letter-spacing: 0.1em;
+	text-decoration: underline;
+	text-decoration-color: var(--accent);
+	text-decoration-thickness: 3px;
+	margin: 0 0 8px 0;
+}
+
+.doc-card__desc {
+	margin: 0;
+	letter-spacing: 0.08em;
+	opacity: 0.9;
+}
+
+/* Optional: subtle hover that matches your “card” language */
+.doc-card:hover {
+	transform: rotate(-1deg);
+}
+
+/***********************************************************************
+*  Divider
+**********************************************************************/
+hr.divider {
+	border: 0;
+	border-top: 2px solid var(--accent);
+	margin: 10px 0;
+	opacity: 0.9;
+}

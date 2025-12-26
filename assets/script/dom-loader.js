@@ -114,6 +114,11 @@
 
 		window.initLightbox?.();
 	}
-
-	boot().catch(console.error);
+	document.documentElement.classList.add("dom-ready");
+	boot()
+		.then(() => document.documentElement.classList.add("dom-ready"))
+		.catch((e) => {
+			console.error(e);
+			document.documentElement.classList.add("dom-ready"); // fail open
+		});
 })();

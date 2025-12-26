@@ -2,6 +2,9 @@
 	let items = [];
 	let index = 0;
 
+	// signature of current gallery ordering
+	let itemsSig = "";
+
 	// Thumbs: build once per open, then just toggle active class
 	let thumbsBuilt = false;
 
@@ -22,11 +25,13 @@
 	}
 
 	function rebuildItems() {
-		// Collect all images that should open the lightbox
 		items = qsa("img.js-lightbox").map((img) => ({
 			src: img.getAttribute("src"),
 			alt: img.getAttribute("alt") || "",
 		}));
+
+		// signature based on src order (good enough)
+		return items.map((it) => it.src).join("|");
 	}
 
 	function preload(src) {
@@ -52,8 +57,12 @@
 			return;
 		}
 
-		rebuildItems();
-		thumbsBuilt = false;
+		const sig = rebuildItems();
+		if (sig !== itemsSig) {
+			itemsSig = sig;
+			thumbsBuilt = false; // only rebuild thumbs when gallery changed
+		}
+
 		if (!items.length) return;
 
 		index = Math.max(0, Math.min(i, items.length - 1));
