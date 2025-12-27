@@ -560,6 +560,11 @@ footer a {
 	box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
 }
 
+.cms-lock,
+.cms-lock body {
+	overflow: hidden;
+}
+
 .cms-modal__header,
 .cms-modal__footer {
 	padding: 14px 16px;
@@ -578,11 +583,23 @@ footer a {
 }
 
 .cms-modal__close {
-	background: transparent;
-	border: 0;
+	background: rgba(255, 90, 90, 0.16);
+	border: 1px solid rgba(255, 90, 90, 0.35);
 	color: #fff;
-	font-size: 22px;
+	font-size: 18px;
+	width: 32px;
+	height: 32px;
+	line-height: 1;
 	cursor: pointer;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 4px;
+}
+
+.cms-modal__close:hover {
+	background: rgba(255, 90, 90, 0.3);
+	border-color: rgba(255, 90, 90, 0.55);
 }
 
 .cms-modal__body {
@@ -608,6 +625,11 @@ footer a {
 	background: rgba(255, 255, 255, 0.03);
 }
 
+.cms-modal__group:hover {
+	background: rgba(255, 255, 255, 0.06);
+	border-color: rgba(255, 255, 255, 0.2);
+}
+
 .cms-modal__row {
 	display: flex;
 	align-items: center;
@@ -615,9 +637,17 @@ footer a {
 	margin-bottom: 8px;
 }
 
+.cms-modal__row:hover {
+	background: rgba(255, 255, 255, 0.04);
+}
+
 .cms-modal__label {
 	font-weight: 700;
 	letter-spacing: 0.02em;
+}
+
+.cms-modal__row input[type="checkbox"] {
+	cursor: pointer;
 }
 
 .cms-modal__sublist {
@@ -636,6 +666,13 @@ footer a {
 	margin-bottom: 10px;
 }
 
+.cms-modal__input:focus,
+.cms-modal__textarea:focus {
+	outline: none;
+	border-color: rgba(255, 255, 255, 0.35);
+	box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08);
+}
+
 .cms-modal__textarea {
 	min-height: 110px;
 	resize: vertical;
@@ -647,8 +684,48 @@ footer a {
 	opacity: 0.85;
 }
 
+.cms-modal__divider {
+	height: 1px;
+	background: rgba(255, 255, 255, 0.12);
+	margin: 12px 0;
+}
+
 .cms-modal__action {
 	margin-left: auto;
+}
+
+.cms-modal .cms-btn {
+	font:
+		700 12px/1.2 system-ui,
+		-apple-system,
+		Segoe UI,
+		Roboto,
+		Arial;
+	border-radius: 10px;
+	padding: 6px 10px;
+}
+
+.cms-btn.cms-modal__action {
+	background: rgba(255, 255, 255, 0.06);
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	color: rgba(255, 255, 255, 0.85);
+	cursor: not-allowed;
+}
+
+.cms-btn.cms-modal__action.cms-btn--danger {
+	background: rgba(255, 90, 90, 0.2);
+	border-color: rgba(255, 90, 90, 0.4);
+	color: #fff;
+	cursor: pointer;
+}
+
+.cms-btn.cms-modal__action:not(.cms-btn--danger):hover {
+	background: rgba(255, 255, 255, 0.08);
+}
+
+.cms-btn.cms-modal__action.cms-btn--danger:hover {
+	background: rgba(255, 90, 90, 0.3);
+	border-color: rgba(255, 90, 90, 0.55);
 }
 
 /***********************************************************************
