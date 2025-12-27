@@ -719,13 +719,25 @@ footer a {
 	cursor: pointer;
 }
 
-.cms-btn.cms-modal__action:not(.cms-btn--danger):hover {
+.cms-btn.cms-modal__action.cms-btn--success {
+	background: rgba(60, 200, 120, 0.2);
+	border-color: rgba(60, 200, 120, 0.4);
+	color: #fff;
+	cursor: pointer;
+}
+
+.cms-btn.cms-modal__action:not(.cms-btn--danger):not(.cms-btn--success):hover {
 	background: rgba(255, 255, 255, 0.08);
 }
 
 .cms-btn.cms-modal__action.cms-btn--danger:hover {
 	background: rgba(255, 90, 90, 0.3);
 	border-color: rgba(255, 90, 90, 0.55);
+}
+
+.cms-btn.cms-modal__action.cms-btn--success:hover {
+	background: rgba(60, 200, 120, 0.3);
+	border-color: rgba(60, 200, 120, 0.55);
 }
 
 /***********************************************************************
