@@ -873,6 +873,34 @@
 	padding: 6px 10px;
 }
 
+#cms-status-strip .cms-pr-link {
+	font:
+		700 12px/1.2 system-ui,
+		-apple-system,
+		Segoe UI,
+		Roboto,
+		Arial;
+	color: rgba(255, 255, 255, 0.9);
+	background: rgba(255, 255, 255, 0.06);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 10px;
+	padding: 4px 8px;
+	text-decoration: none;
+}
+
+#cms-status-strip .cms-btn,
+#cms-status-strip .cms-select,
+#cms-status-strip .cms-pr-link {
+	cursor: pointer;
+}
+
+#cms-status-strip .cms-btn:hover:not(:disabled),
+#cms-status-strip .cms-select:hover,
+#cms-status-strip .cms-pr-link:hover {
+	background: rgba(255, 255, 255, 0.12);
+	border-color: rgba(255, 255, 255, 0.2);
+}
+
 #cms-status-strip .cms-btn:disabled {
 	opacity: 0.45;
 }
