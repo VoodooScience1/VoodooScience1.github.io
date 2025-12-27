@@ -932,10 +932,6 @@
 	border-color: rgba(255, 90, 90, 0.3);
 }
 
-#cms-status-strip .cms-pill--dirty {
-	background: rgba(255, 183, 3, 0.16);
-	border-color: rgba(255, 183, 3, 0.3);
-}
 
 /* Nav Commit PR button (admin only) */
 .main-nav a.cms-nav-pr {

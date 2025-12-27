@@ -531,6 +531,127 @@ footer a {
 }
 
 /***********************************************************************
+*  cms modal
+**********************************************************************/
+
+.cms-modal {
+	position: fixed;
+	inset: 0;
+	z-index: 10000;
+	display: none;
+	align-items: center;
+	justify-content: center;
+	background: rgba(0, 0, 0, 0.7);
+	padding: 16px;
+}
+
+.cms-modal.is-open {
+	display: flex;
+}
+
+.cms-modal__panel {
+	width: min(900px, 96vw);
+	max-height: 92vh;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	background: #0b1220;
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+}
+
+.cms-modal__header,
+.cms-modal__footer {
+	padding: 14px 16px;
+	background: rgba(255, 255, 255, 0.04);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.cms-modal__title {
+	margin: 0;
+	font-size: 18px;
+	letter-spacing: 0.04em;
+	color: #fff;
+}
+
+.cms-modal__close {
+	background: transparent;
+	border: 0;
+	color: #fff;
+	font-size: 22px;
+	cursor: pointer;
+}
+
+.cms-modal__body {
+	padding: 16px;
+	overflow: auto;
+	color: rgba(255, 255, 255, 0.9);
+}
+
+.cms-modal__text {
+	margin: 0 0 12px;
+	opacity: 0.85;
+}
+
+.cms-modal__list {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.cms-modal__group {
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	padding: 10px 12px;
+	background: rgba(255, 255, 255, 0.03);
+}
+
+.cms-modal__row {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 8px;
+}
+
+.cms-modal__label {
+	font-weight: 700;
+	letter-spacing: 0.02em;
+}
+
+.cms-modal__sublist {
+	margin: 0;
+	padding-left: 18px;
+	opacity: 0.9;
+}
+
+.cms-modal__input,
+.cms-modal__textarea {
+	width: 100%;
+	background: rgba(255, 255, 255, 0.06);
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	color: #fff;
+	padding: 8px 10px;
+	margin-bottom: 10px;
+}
+
+.cms-modal__textarea {
+	min-height: 110px;
+	resize: vertical;
+}
+
+.cms-modal__note {
+	font-weight: 800;
+	letter-spacing: 0.02em;
+	opacity: 0.85;
+}
+
+.cms-modal__action {
+	margin-left: auto;
+}
+
+/***********************************************************************
 *  Doc card (insertable anywhere via CMS)
 **********************************************************************/
 .doc-card {
