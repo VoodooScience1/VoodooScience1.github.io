@@ -931,3 +931,41 @@
 	background: rgba(255, 90, 90, 0.16);
 	border-color: rgba(255, 90, 90, 0.3);
 }
+
+/* Nav Commit PR button (admin only) */
+.main-nav a.cms-nav-pr {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	padding: 6px 10px;
+	border-radius: 10px;
+	border: 1px solid rgba(255, 255, 255, 0.18);
+	background: rgba(255, 255, 255, 0.08);
+	cursor: pointer;
+}
+.main-nav a.cms-nav-pr:hover {
+	background: rgba(255, 255, 255, 0.16);
+	border-color: rgba(255, 255, 255, 0.3);
+}
+.main-nav a.cms-nav-pr--ok {
+	background: rgba(60, 200, 120, 0.18);
+	border-color: rgba(60, 200, 120, 0.35);
+}
+.main-nav a.cms-nav-pr--warn {
+	background: rgba(255, 183, 3, 0.18);
+	border-color: rgba(255, 183, 3, 0.35);
+}
+.main-nav a.cms-nav-pr--err {
+	background: rgba(255, 90, 90, 0.18);
+	border-color: rgba(255, 90, 90, 0.35);
+}
+.main-nav a.cms-nav-pr--pr {
+	background: rgba(65, 110, 255, 0.18);
+	border-color: rgba(65, 110, 255, 0.35);
+}
+.main-nav a.cms-nav-pr--readonly {
+	background: rgba(255, 255, 255, 0.08);
+	border-color: rgba(255, 255, 255, 0.18);
+	opacity: 0.7;
+}
