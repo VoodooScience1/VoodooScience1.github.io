@@ -709,6 +709,13 @@ footer a {
 	background: rgba(255, 255, 255, 0.1);
 }
 
+.cms-modal__loading {
+	font-weight: 700;
+	letter-spacing: 0.02em;
+	padding: 24px 0;
+	opacity: 0.85;
+}
+
 .cms-modal__divider {
 	height: 1px;
 	background: rgba(255, 255, 255, 0.12);
