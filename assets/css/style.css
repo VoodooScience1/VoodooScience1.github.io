@@ -684,6 +684,31 @@ footer a {
 	opacity: 0.85;
 }
 
+.cms-modal__toggle {
+	display: inline-flex;
+	gap: 8px;
+	margin-bottom: 12px;
+}
+
+.cms-modal__toggle-btn {
+	background: rgba(255, 255, 255, 0.06);
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	color: rgba(255, 255, 255, 0.75);
+	padding: 6px 10px;
+	border-radius: 10px;
+	cursor: pointer;
+}
+
+.cms-modal__toggle-btn.is-active {
+	background: rgba(60, 200, 120, 0.2);
+	border-color: rgba(60, 200, 120, 0.4);
+	color: #fff;
+}
+
+.cms-modal__toggle-btn:hover {
+	background: rgba(255, 255, 255, 0.1);
+}
+
 .cms-modal__divider {
 	height: 1px;
 	background: rgba(255, 255, 255, 0.12);
