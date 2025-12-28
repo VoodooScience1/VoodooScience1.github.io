@@ -644,10 +644,12 @@ footer a {
 .cms-modal__label {
 	font-weight: 700;
 	letter-spacing: 0.02em;
+	pointer-events: none;
 }
 
 .cms-modal__row input[type="checkbox"] {
 	cursor: pointer;
+	pointer-events: auto;
 }
 
 .cms-modal__sublist {
