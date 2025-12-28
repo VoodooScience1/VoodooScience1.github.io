@@ -656,6 +656,18 @@ footer a {
 	opacity: 0.9;
 }
 
+.cms-modal__block {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 6px 4px;
+	cursor: pointer;
+}
+
+.cms-modal__block:hover {
+	background: rgba(255, 255, 255, 0.06);
+}
+
 .cms-modal__input,
 .cms-modal__textarea {
 	width: 100%;
