@@ -645,6 +645,7 @@ footer a {
 	font-weight: 700;
 	letter-spacing: 0.02em;
 	cursor: pointer;
+	user-select: none;
 }
 
 .cms-modal__row input[type="checkbox"] {
