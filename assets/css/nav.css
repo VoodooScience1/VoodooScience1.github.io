@@ -888,44 +888,6 @@
 	text-decoration: none;
 }
 
-#cms-status-strip .cms-pr-wrap {
-	position: relative;
-	display: inline-flex;
-	align-items: center;
-}
-
-#cms-status-strip .cms-pr-menu {
-	position: absolute;
-	top: 100%;
-	right: 0;
-	min-width: 140px;
-	background: rgba(12, 14, 24, 0.95);
-	border: 1px solid rgba(255, 255, 255, 0.12);
-	border-radius: 10px;
-	padding: 6px;
-	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-	display: none;
-	z-index: 9999;
-}
-
-#cms-status-strip .cms-pr-wrap:hover .cms-pr-menu {
-	display: block;
-}
-
-#cms-status-strip .cms-pr-menu__item {
-	display: block;
-	padding: 6px 8px;
-	color: rgba(255, 255, 255, 0.9);
-	text-decoration: none;
-	border-radius: 6px;
-	font-weight: 700;
-	font-size: 12px;
-}
-
-#cms-status-strip .cms-pr-menu__item:hover {
-	background: rgba(255, 255, 255, 0.12);
-}
-
 #cms-status-strip .cms-btn,
 #cms-status-strip .cms-select,
 #cms-status-strip .cms-pr-link {
