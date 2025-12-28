@@ -573,6 +573,12 @@ footer a {
 	color: rgba(255, 235, 210, 0.95);
 }
 
+.cms-block__badge--committed {
+	background: rgba(34, 55, 110, 0.9);
+	border-color: rgba(100, 140, 255, 0.7);
+	color: rgba(220, 235, 255, 0.95);
+}
+
 .cms-block__overlay {
 	position: absolute;
 	inset: 0;
