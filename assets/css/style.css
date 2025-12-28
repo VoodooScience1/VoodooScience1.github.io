@@ -530,6 +530,30 @@ footer a {
 	background: rgba(60, 200, 120, 0.22);
 }
 
+.cms-block {
+	position: relative;
+}
+
+.cms-block--pending {
+	outline: 1px solid rgba(255, 183, 3, 0.5);
+	box-shadow: 0 0 0 1px rgba(255, 183, 3, 0.2);
+}
+
+.cms-block__overlay {
+	position: absolute;
+	inset: 0;
+	background: rgba(10, 12, 20, 0.4);
+	backdrop-filter: blur(1px);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: rgba(255, 255, 255, 0.85);
+	pointer-events: none;
+}
+
 /***********************************************************************
 *  cms modal
 **********************************************************************/
