@@ -668,6 +668,10 @@ footer a {
 	background: rgba(255, 255, 255, 0.06);
 }
 
+.cms-modal__page {
+	cursor: pointer;
+}
+
 .cms-modal__input,
 .cms-modal__textarea {
 	width: 100%;
