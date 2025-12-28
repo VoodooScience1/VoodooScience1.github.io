@@ -644,7 +644,7 @@ footer a {
 .cms-modal__label {
 	font-weight: 700;
 	letter-spacing: 0.02em;
-	pointer-events: none;
+	cursor: pointer;
 }
 
 .cms-modal__row input[type="checkbox"] {
