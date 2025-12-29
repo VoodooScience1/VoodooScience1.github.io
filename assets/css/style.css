@@ -542,41 +542,47 @@ footer a {
 .cms-block__badge {
 	position: absolute;
 	top: 8px;
-	left: 12px;
+	left: 18px;
 	padding: 4px 10px;
 	border-radius: 999px;
 	font-size: 10px;
 	font-weight: 800;
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
-	background: rgba(20, 24, 36, 0.9);
-	color: rgba(255, 255, 255, 0.85);
-	border: 1px solid rgba(255, 255, 255, 0.16);
+	background: rgba(10, 12, 18, 0.95);
+	color: rgba(255, 255, 255, 0.9);
+	border: 1px solid rgba(255, 255, 255, 0.2);
 	pointer-events: none;
 }
 
 .cms-block__badge--baseline {
-	background: rgba(40, 46, 66, 0.85);
-	border-color: rgba(120, 140, 190, 0.5);
-	color: rgba(220, 235, 255, 0.9);
+	background: rgba(34, 40, 60, 0.95);
+	border-color: rgba(110, 130, 190, 0.65);
+	color: rgba(230, 240, 255, 0.95);
 }
 
 .cms-block__badge--new {
-	background: rgba(20, 60, 40, 0.9);
-	border-color: rgba(80, 200, 140, 0.7);
-	color: rgba(200, 255, 220, 0.95);
+	background: rgba(18, 52, 38, 0.95);
+	border-color: rgba(80, 200, 140, 0.8);
+	color: rgba(210, 255, 230, 0.98);
 }
 
 .cms-block__badge--modified {
-	background: rgba(70, 46, 20, 0.9);
-	border-color: rgba(255, 170, 80, 0.7);
-	color: rgba(255, 235, 210, 0.95);
+	background: rgba(62, 40, 18, 0.95);
+	border-color: rgba(255, 170, 80, 0.85);
+	color: rgba(255, 235, 215, 0.98);
 }
 
 .cms-block__badge--committed {
-	background: rgba(34, 55, 110, 0.9);
-	border-color: rgba(100, 140, 255, 0.7);
-	color: rgba(220, 235, 255, 0.95);
+	background: rgba(28, 42, 86, 0.95);
+	border-color: rgba(100, 140, 255, 0.85);
+	color: rgba(225, 235, 255, 0.98);
+}
+
+.cms-block__badge--removed {
+	background: rgba(90, 22, 22, 0.95);
+	border-color: rgba(255, 110, 110, 0.85);
+	color: rgba(255, 230, 230, 0.98);
 }
 
 .cms-block__overlay {
@@ -592,6 +598,11 @@ footer a {
 	text-transform: uppercase;
 	color: rgba(255, 255, 255, 0.85);
 	pointer-events: none;
+}
+
+.cms-block__overlay--remove {
+	background: rgba(120, 30, 30, 0.4);
+	color: rgba(255, 235, 235, 0.95);
 }
 
 .cms-block__controls {
