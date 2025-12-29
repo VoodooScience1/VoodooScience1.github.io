@@ -542,9 +542,9 @@ footer a {
 .cms-block__badge {
 	position: absolute;
 	top: 8px;
-	left: 0;
-	padding: 4px 8px;
-	border-radius: 0 999px 999px 0;
+	left: 12px;
+	padding: 4px 10px;
+	border-radius: 999px;
 	font-size: 10px;
 	font-weight: 800;
 	letter-spacing: 0.08em;
@@ -597,7 +597,7 @@ footer a {
 .cms-block__controls {
 	position: absolute;
 	top: 8px;
-	right: 8px;
+	right: 18px;
 	display: flex;
 	gap: 6px;
 	z-index: 2;
@@ -614,6 +614,9 @@ footer a {
 	border-radius: 8px;
 	cursor: pointer;
 	transition: background 120ms ease, border-color 120ms ease;
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
 }
 
 .cms-block__btn:hover {
@@ -621,14 +624,32 @@ footer a {
 	border-color: rgba(255, 255, 255, 0.25);
 }
 
+.cms-block__icon {
+	width: 12px;
+	height: 12px;
+	display: inline-block;
+}
+
+.cms-block__btn--edit {
+	border-color: rgba(255, 190, 60, 0.6);
+	background: rgba(255, 190, 60, 0.22);
+	color: #fff;
+}
+
+.cms-block__btn--edit:hover {
+	background: rgba(255, 190, 60, 0.32);
+	border-color: rgba(255, 190, 60, 0.8);
+}
+
 .cms-block__btn--danger {
-	border-color: rgba(200, 80, 80, 0.5);
-	color: rgba(255, 210, 210, 0.95);
+	border-color: rgba(255, 90, 90, 0.6);
+	background: rgba(255, 90, 90, 0.22);
+	color: #fff;
 }
 
 .cms-block__btn--danger:hover {
-	background: rgba(200, 80, 80, 0.2);
-	border-color: rgba(255, 120, 120, 0.7);
+	background: rgba(255, 90, 90, 0.32);
+	border-color: rgba(255, 90, 90, 0.8);
 }
 
 /***********************************************************************
