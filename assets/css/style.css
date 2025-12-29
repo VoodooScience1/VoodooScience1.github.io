@@ -542,7 +542,7 @@ footer a {
 .cms-block__badge {
 	position: absolute;
 	top: 8px;
-	left: 48px;
+	left: 0;
 	padding: 4px 10px;
 	border-radius: 999px;
 	font-size: 10px;
@@ -648,12 +648,8 @@ footer a {
 	font-size: 14px;
 	line-height: 1;
 	font-family:
-		"Material Icons",
-		"Font Awesome 6 Free",
-		"Font Awesome 5 Free",
-		"FontAwesome",
-		system-ui,
-		sans-serif;
+		"Material Icons", "Font Awesome 6 Free", "Font Awesome 5 Free",
+		"FontAwesome", system-ui, sans-serif;
 	font-weight: 900;
 }
 
