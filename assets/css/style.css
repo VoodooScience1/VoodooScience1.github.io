@@ -656,8 +656,8 @@ footer a {
 }
 
 .cms-block__icon--edit {
-	font-family: "Font Awesome 5 Free", "FontAwesome", system-ui, sans-serif;
-	font-weight: 900;
+	font-family: "Material Icons", system-ui, sans-serif;
+	font-weight: 400;
 }
 
 .cms-block__icon--delete {
