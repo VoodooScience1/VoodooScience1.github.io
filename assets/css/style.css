@@ -892,6 +892,13 @@ footer a {
 	display: flex;
 	gap: 8px;
 	flex-wrap: wrap;
+	position: sticky;
+	top: 0;
+	z-index: 5;
+	padding: 8px 10px;
+	border-radius: 10px;
+	background: #0f1726;
+	border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .cms-rte__toolbar button {
@@ -945,17 +952,61 @@ footer a {
 	cursor: pointer;
 }
 
-.cms-rte pre::after {
-	content: "✎";
-	position: absolute;
-	top: 8px;
-	right: 10px;
-	font-size: 12px;
-	opacity: 0;
+.cms-rte pre.cms-code-block {
+	padding-top: 38px;
 }
 
-.cms-rte pre:hover::after {
-	opacity: 0.6;
+.cms-code-toolbar {
+	position: absolute;
+	top: 6px;
+	right: 8px;
+	display: flex;
+	gap: 6px;
+	align-items: center;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.15s ease;
+}
+
+.cms-code-block:hover .cms-code-toolbar,
+.cms-code-toolbar:focus-within {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+.cms-code-toolbar__select {
+	background: rgba(15, 20, 32, 0.9);
+	color: #eef2ff;
+	border: 1px solid rgba(255, 255, 255, 0.25);
+	border-radius: 8px;
+	padding: 4px 8px;
+	font:
+		600 11px/1 system-ui,
+		-apple-system,
+		Segoe UI,
+		Roboto,
+		Arial;
+}
+
+.cms-code-toolbar__btn {
+	background: rgba(255, 255, 255, 0.08);
+	border: 1px solid rgba(255, 255, 255, 0.18);
+	color: #e5ecff;
+	padding: 4px 8px;
+	border-radius: 8px;
+	cursor: pointer;
+	font:
+		600 11px/1 system-ui,
+		-apple-system,
+		Segoe UI,
+		Roboto,
+		Arial;
+}
+
+.cms-code-toolbar__btn:hover {
+	background: rgba(43, 194, 107, 0.22);
+	border-color: rgba(43, 194, 107, 0.5);
+	color: #f5fff8;
 }
 
 .cms-rte .img-stub {
