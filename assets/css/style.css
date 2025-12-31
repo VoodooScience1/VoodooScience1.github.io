@@ -973,7 +973,7 @@ footer a {
 	transition: opacity 0.15s ease;
 }
 
-.cms-code-block:hover .cms-code-toolbar,
+.cms-code-block-wrap:hover .cms-code-toolbar,
 .cms-code-toolbar:focus-within {
 	opacity: 1;
 	pointer-events: auto;
@@ -1092,6 +1092,10 @@ footer a {
 	border-radius: 10px;
 	overflow: auto;
 	color: #121620;
+}
+
+.cms-rte pre {
+	padding: 2px 12px;
 }
 
 .cms-rte pre code,
