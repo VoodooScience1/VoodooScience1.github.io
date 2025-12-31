@@ -42,6 +42,23 @@
 		return host;
 	}
 
+	function mountPartialHtml({
+		id,
+		html,
+		where = "inner",
+		tag = "div",
+		parent,
+	} = {}) {
+		const host = ensurePlaceholder(id, tag, parent || document.body);
+		const text = String(html || "");
+		if (where === "inner") host.innerHTML = text;
+		else if (where === "beforeend") host.insertAdjacentHTML("beforeend", text);
+		else if (where === "afterbegin")
+			host.insertAdjacentHTML("afterbegin", text);
+		else throw new Error(`Unknown mount mode: ${where}`);
+		return host;
+	}
+
 	// Load a script in strict order (awaitable)
 	function loadScript(src) {
 		return new Promise((resolve, reject) => {
@@ -80,10 +97,17 @@
 	}
 
 	async function boot() {
-		// 1) Inject CSS first (no script tags in head-common.html)
-		await mountPartial({
+		// 1) Fetch partials in parallel (reduces waterfall)
+		const headPromise = fetchText(`${PARTIALS_BASE}/head-common.html`);
+		const navPromise = fetchText(`${PARTIALS_BASE}/nav.html`);
+		const lightboxPromise = fetchText(`${PARTIALS_BASE}/lightbox.html`);
+		const footerPromise = fetchText(`${PARTIALS_BASE}/footer.html`);
+
+		// 2) Inject CSS first (no script tags in head-common.html)
+		const headHtml = await headPromise;
+		mountPartialHtml({
 			id: "head-common", // can be absent; we'll create it
-			url: `${PARTIALS_BASE}/head-common.html`,
+			html: headHtml,
 			where: "inner",
 			tag: "div",
 			parent: document.head, // put CSS into <head>
@@ -92,28 +116,30 @@
 			document.querySelectorAll("#head-common link[rel='stylesheet']"),
 		);
 
-		// 2) Mount DOM partials (order matters for “things that refer to placeholders”)
-		const navPromise = mountPartial({
+		// 3) Mount DOM partials (order matters for “things that refer to placeholders”)
+		const [navHtml, lightboxHtml, footerHtml] = await Promise.all([
+			navPromise,
+			lightboxPromise,
+			footerPromise,
+		]);
+		mountPartialHtml({
 			id: "nav-placeholder",
-			url: `${PARTIALS_BASE}/nav.html`,
+			html: navHtml,
 		});
 		setAdminLinkForEnv();
-
-		const lightboxPromise = mountPartial({
+		mountPartialHtml({
 			id: "lightbox-placeholder",
-			url: `${PARTIALS_BASE}/lightbox.html`,
+			html: lightboxHtml,
 		});
-
 		// footer is inside <footer><div id="footer-placeholder"></div></footer> on your pages
 		// This will still work even if that wrapper doesn’t exist; it’ll create a div at the bottom.
-		const footerPromise = mountPartial({
+		mountPartialHtml({
 			id: "footer-placeholder",
-			url: `${PARTIALS_BASE}/footer.html`,
+			html: footerHtml,
 			parent: document.querySelector("footer") || document.body,
 		});
-		await Promise.all([navPromise, lightboxPromise, footerPromise]);
 
-		// 3) Load scripts in a guaranteed sequence
+		// 4) Load scripts in a guaranteed sequence
 		// (Put any “defines globals used by others” FIRST)
 		await loadScript(`${ASSETS_BASE}/script/nav-marker.js`);
 		await loadScript(`${ASSETS_BASE}/script/nav-close.js`);
