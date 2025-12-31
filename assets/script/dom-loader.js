@@ -142,6 +142,7 @@
 		// 4) Load scripts in a guaranteed sequence
 		// (Put any “defines globals used by others” FIRST)
 		await loadScript(`${ASSETS_BASE}/script/sections.js`);
+		document.documentElement.classList.add("sections-ready");
 
 		// Show the page once CSS + sections expansion are done; nav scripts can finish after.
 		document.documentElement.classList.add("dom-ready");
@@ -164,6 +165,7 @@
 	boot()
 		.catch((e) => {
 			console.error(e);
+			document.documentElement.classList.add("sections-ready");
 			document.documentElement.classList.add("dom-ready"); // fail open
 		});
 })();
