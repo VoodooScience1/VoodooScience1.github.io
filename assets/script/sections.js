@@ -56,6 +56,7 @@
 		imgSrc,
 		caption,
 		useLightbox,
+		overlayEnabled,
 		overlayTitle,
 		overlayText,
 	) {
@@ -66,7 +67,6 @@
 
 		// Reuse your hover-card overlay CSS inside the polaroid frame.
 		const content = el("div", "content content--full");
-		const overlay = el("div", "content-overlay");
 
 		const img = document.createElement("img");
 		img.src = imgSrc;
@@ -86,35 +86,36 @@
 
 		if (useLightbox) img.classList.add("js-lightbox");
 
-		const details = el("div", "content-details fadeIn-bottom");
-
-		const titleText =
-			(overlayTitle && overlayTitle.trim()) ||
-			(caption && caption.trim()) ||
-			"";
-
-		const bodyText =
-			(overlayText && overlayText.trim()) ||
-			(useLightbox ? "Click to view" : "");
-
-		// Only render overlay text blocks if there’s something to show.
-		if (titleText) {
-			const h3 = document.createElement("h3");
-			h3.className = "content-title";
-			h3.textContent = titleText;
-			details.appendChild(h3);
+		let titleText = (overlayTitle && overlayTitle.trim()) || "";
+		let bodyText = (overlayText && overlayText.trim()) || "";
+		if (overlayEnabled && !titleText && !bodyText && useLightbox) {
+			bodyText = "Click to view";
 		}
 
-		if (bodyText) {
-			const p = document.createElement("p");
-			p.className = "content-text";
-			p.textContent = bodyText;
-			details.appendChild(p);
-		}
+		if (overlayEnabled) {
+			const overlay = el("div", "content-overlay");
+			const details = el("div", "content-details fadeIn-bottom");
 
-		content.appendChild(overlay);
-		content.appendChild(img);
-		if (titleText || bodyText) content.appendChild(details);
+			if (titleText) {
+				const h3 = document.createElement("h3");
+				h3.className = "content-title";
+				h3.textContent = titleText;
+				details.appendChild(h3);
+			}
+
+			if (bodyText) {
+				const p = document.createElement("p");
+				p.className = "content-text";
+				p.textContent = bodyText;
+				details.appendChild(p);
+			}
+
+			content.appendChild(overlay);
+			content.appendChild(img);
+			if (titleText || bodyText) content.appendChild(details);
+		} else {
+			content.appendChild(img);
+		}
 
 		imgWrap.appendChild(content);
 
@@ -134,6 +135,7 @@
 			const imgSrc = stub.dataset.img || "";
 			const caption = stub.dataset.caption || "";
 			const useLightbox = isTrue(stub.dataset.lightbox);
+			const overlayEnabled = stub.dataset.overlay !== "false";
 			const overlayTitle = stub.dataset.overlayTitle || "";
 			const overlayText = stub.dataset.overlayText || "";
 
@@ -146,6 +148,7 @@
 				imgSrc,
 				caption,
 				useLightbox,
+				overlayEnabled,
 				overlayTitle,
 				overlayText,
 			);
@@ -161,6 +164,7 @@
 		const caption = stub.dataset.caption || "";
 		const useLightbox = isTrue(stub.dataset.lightbox);
 		const pos = (stub.dataset.imgPos || "left").toLowerCase();
+		const overlayEnabled = stub.dataset.overlay !== "false";
 
 		const overlayTitle = stub.dataset.overlayTitle || "";
 		const overlayText = stub.dataset.overlayText || "";
@@ -173,6 +177,7 @@
 			imgSrc,
 			caption,
 			useLightbox,
+			overlayEnabled,
 			overlayTitle,
 			overlayText,
 		);
@@ -196,6 +201,7 @@
 		const imgSrc = stub.dataset.img || "";
 		const caption = stub.dataset.caption || "";
 		const useLightbox = isTrue(stub.dataset.lightbox);
+		const overlayEnabled = stub.dataset.overlay !== "false";
 
 		// DEFAULT = LEFT
 		const pos = (stub.dataset.imgPos || "left").toLowerCase();
@@ -213,6 +219,7 @@
 			imgSrc,
 			caption,
 			useLightbox,
+			overlayEnabled,
 			overlayTitle,
 			overlayText,
 		);
