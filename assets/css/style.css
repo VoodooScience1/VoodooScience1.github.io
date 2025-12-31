@@ -950,10 +950,15 @@ footer a {
 .cms-rte pre {
 	position: relative;
 	cursor: pointer;
+	line-height: 1.35;
 }
 
 .cms-rte pre.cms-code-block {
-	padding-top: 38px;
+	padding-top: 32px;
+}
+
+.cms-code-block-wrap {
+	position: relative;
 }
 
 .cms-code-toolbar {
@@ -975,9 +980,9 @@ footer a {
 }
 
 .cms-code-toolbar__select {
-	background: rgba(15, 20, 32, 0.9);
-	color: #eef2ff;
-	border: 1px solid rgba(255, 255, 255, 0.25);
+	background: rgba(90, 140, 255, 0.4);
+	color: #0b1526;
+	border: 1px solid rgba(90, 140, 255, 0.9);
 	border-radius: 8px;
 	padding: 4px 8px;
 	font:
@@ -989,9 +994,9 @@ footer a {
 }
 
 .cms-code-toolbar__btn {
-	background: rgba(255, 255, 255, 0.08);
-	border: 1px solid rgba(255, 255, 255, 0.18);
-	color: #e5ecff;
+	background: rgba(90, 140, 255, 0.4);
+	border: 1px solid rgba(90, 140, 255, 0.9);
+	color: #0b1526;
 	padding: 4px 8px;
 	border-radius: 8px;
 	cursor: pointer;
@@ -1004,9 +1009,9 @@ footer a {
 }
 
 .cms-code-toolbar__btn:hover {
-	background: rgba(43, 194, 107, 0.22);
-	border-color: rgba(43, 194, 107, 0.5);
-	color: #f5fff8;
+	background: rgba(90, 140, 255, 0.7);
+	border-color: rgba(90, 140, 255, 1);
+	color: #0b1526;
 }
 
 .cms-rte .img-stub {
@@ -1095,7 +1100,9 @@ footer a {
 .tab-content pre code,
 .cms-block pre code {
 	display: block;
-	white-space: pre-wrap;
+	white-space: pre;
+	font-size: 12px;
+	line-height: 1.35;
 }
 
 .cms-rte code,
