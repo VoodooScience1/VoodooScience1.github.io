@@ -141,6 +141,9 @@
 
 		// 4) Load scripts in a guaranteed sequence
 		// (Put any “defines globals used by others” FIRST)
+		await loadScript(`${ASSETS_BASE}/script/breadcrumbs.js`);
+		window.buildBreadcrumbs?.();
+
 		await loadScript(`${ASSETS_BASE}/script/sections.js`);
 		document.documentElement.classList.add("sections-ready");
 
@@ -149,7 +152,6 @@
 
 		await loadScript(`${ASSETS_BASE}/script/nav-marker.js`);
 		await loadScript(`${ASSETS_BASE}/script/nav-close.js`);
-		await loadScript(`${ASSETS_BASE}/script/breadcrumbs.js`);
 		await loadScript(`${ASSETS_BASE}/script/lightbox.js`);
 
 		if (typeof window.setActiveNav === "function") window.setActiveNav();
