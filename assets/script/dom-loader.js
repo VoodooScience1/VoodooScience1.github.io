@@ -56,6 +56,21 @@
 		});
 	}
 
+	function waitForStyles(links) {
+		const list = Array.from(links || []);
+		if (!list.length) return Promise.resolve();
+		return Promise.all(
+			list.map(
+				(link) =>
+					new Promise((resolve) => {
+						if (link.sheet) return resolve();
+						link.addEventListener("load", () => resolve(), { once: true });
+						link.addEventListener("error", () => resolve(), { once: true });
+					}),
+			),
+		);
+	}
+
 	function setAdminLinkForEnv() {
 		const a = document.querySelector('a[data-role="admin-link"]');
 		if (!a) return;
@@ -75,6 +90,9 @@
 			tag: "div",
 			parent: document.head, // put CSS into <head>
 		});
+		await waitForStyles(
+			document.querySelectorAll("#head-common link[rel='stylesheet']"),
+		);
 
 		// 2) Mount DOM partials (order matters for “things that refer to placeholders”)
 		await mountPartial({
@@ -114,7 +132,6 @@
 
 		window.initLightbox?.();
 	}
-	document.documentElement.classList.add("dom-ready");
 	boot()
 		.then(() => document.documentElement.classList.add("dom-ready"))
 		.catch((e) => {
