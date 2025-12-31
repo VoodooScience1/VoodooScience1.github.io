@@ -139,16 +139,17 @@
 			parent: document.querySelector("footer") || document.body,
 		});
 
-		// Show the page once styles + core chrome are in place; scripts can finish after.
-		document.documentElement.classList.add("dom-ready");
-
 		// 4) Load scripts in a guaranteed sequence
 		// (Put any “defines globals used by others” FIRST)
+		await loadScript(`${ASSETS_BASE}/script/sections.js`);
+
+		// Show the page once CSS + sections expansion are done; nav scripts can finish after.
+		document.documentElement.classList.add("dom-ready");
+
 		await loadScript(`${ASSETS_BASE}/script/nav-marker.js`);
 		await loadScript(`${ASSETS_BASE}/script/nav-close.js`);
 		await loadScript(`${ASSETS_BASE}/script/breadcrumbs.js`);
 		await loadScript(`${ASSETS_BASE}/script/lightbox.js`);
-		await loadScript(`${ASSETS_BASE}/script/sections.js`);
 
 		if (typeof window.setActiveNav === "function") window.setActiveNav();
 
