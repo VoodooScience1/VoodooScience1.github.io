@@ -779,6 +779,26 @@ footer a {
 	color: rgba(255, 255, 255, 0.9);
 }
 
+.cms-modal__body {
+	scrollbar-color: rgba(255, 255, 255, 0.45) rgba(255, 255, 255, 0.08);
+	scrollbar-width: thin;
+}
+
+.cms-modal__body::-webkit-scrollbar {
+	width: 12px;
+}
+
+.cms-modal__body::-webkit-scrollbar-track {
+	background: rgba(255, 255, 255, 0.08);
+	border-radius: 8px;
+}
+
+.cms-modal__body::-webkit-scrollbar-thumb {
+	background: rgba(255, 255, 255, 0.4);
+	border-radius: 8px;
+	border: 2px solid rgba(11, 18, 32, 0.85);
+}
+
 .cms-modal__text {
 	margin: 0 0 12px;
 	opacity: 0.85;
