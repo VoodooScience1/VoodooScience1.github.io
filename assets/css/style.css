@@ -890,7 +890,8 @@ footer a {
 .cms-rte blockquote,
 .default-div-wrapper blockquote,
 .section blockquote,
-.tab-content blockquote {
+.tab-content blockquote,
+.cms-block blockquote {
 	margin: 10px 0;
 	padding: 10px 14px;
 	border-left: 3px solid rgba(43, 194, 107, 0.6);
@@ -901,7 +902,8 @@ footer a {
 .cms-rte table,
 .default-div-wrapper table,
 .section table,
-.tab-content table {
+.tab-content table,
+.cms-block table {
 	width: 100%;
 	border-collapse: collapse;
 	margin: 12px 0;
@@ -915,7 +917,9 @@ footer a {
 .section th,
 .section td,
 .tab-content th,
-.tab-content td {
+.tab-content td,
+.cms-block th,
+.cms-block td {
 	border: 1px solid rgba(255, 255, 255, 0.12);
 	padding: 8px 10px;
 	font-size: 13px;
@@ -924,11 +928,38 @@ footer a {
 .cms-rte th,
 .default-div-wrapper th,
 .section th,
-.tab-content th {
+.tab-content th,
+.cms-block th {
 	background: rgba(255, 255, 255, 0.08);
 	text-transform: uppercase;
 	letter-spacing: 0.08em;
 	font-size: 11px;
+}
+
+.cms-rte pre,
+.default-div-wrapper pre,
+.section pre,
+.tab-content pre,
+.cms-block pre {
+	background: rgba(8, 12, 22, 0.7);
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	padding: 12px 14px;
+	border-radius: 10px;
+	overflow: auto;
+	color: #f5f7ff;
+}
+
+.cms-rte code,
+.default-div-wrapper code,
+.section code,
+.tab-content code,
+.cms-block code {
+	background: rgba(255, 255, 255, 0.08);
+	padding: 2px 6px;
+	border-radius: 6px;
+	font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+		"Courier New", monospace;
+	font-size: 0.9em;
 }
 
 .cms-rte {
@@ -1001,6 +1032,12 @@ footer a {
 .cms-field__toggle-text {
 	font-size: 13px;
 	opacity: 0.85;
+}
+
+.cms-field__input:disabled,
+.cms-field__select:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
 }
 
 .cms-modal__group--settings {
