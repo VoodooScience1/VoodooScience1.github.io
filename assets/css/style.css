@@ -822,10 +822,15 @@ footer a {
 	cursor: pointer;
 }
 
-.cms-modal__row--pick .cms-modal__action--disabled {
-	pointer-events: none;
-	cursor: not-allowed;
-	opacity: 0.7;
+.cms-modal__row--pick .cms-modal__action--pick {
+	cursor: pointer;
+	transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+}
+
+.cms-modal__row--pick:hover .cms-modal__action--pick {
+	background: linear-gradient(135deg, #1f9d5a, #2bc26b);
+	border-color: rgba(43, 194, 107, 0.6);
+	color: #081a10;
 }
 
 .cms-modal__label {
