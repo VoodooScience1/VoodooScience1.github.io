@@ -1029,6 +1029,15 @@ footer a {
 	color: #121620;
 }
 
+.cms-rte pre code,
+.default-div-wrapper pre code,
+.section pre code,
+.tab-content pre code,
+.cms-block pre code {
+	display: block;
+	white-space: pre-wrap;
+}
+
 .cms-rte code,
 .default-div-wrapper code,
 .section code,
