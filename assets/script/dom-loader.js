@@ -139,6 +139,9 @@
 			parent: document.querySelector("footer") || document.body,
 		});
 
+		// Show the page once styles + core chrome are in place; scripts can finish after.
+		document.documentElement.classList.add("dom-ready");
+
 		// 4) Load scripts in a guaranteed sequence
 		// (Put any “defines globals used by others” FIRST)
 		await loadScript(`${ASSETS_BASE}/script/nav-marker.js`);
@@ -158,7 +161,6 @@
 		window.initLightbox?.();
 	}
 	boot()
-		.then(() => document.documentElement.classList.add("dom-ready"))
 		.catch((e) => {
 			console.error(e);
 			document.documentElement.classList.add("dom-ready"); // fail open
