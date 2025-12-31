@@ -154,6 +154,9 @@
 			await loadScript(
 				"https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js",
 			);
+			if (window.hljs?.configure) {
+				window.hljs.configure({ ignoreUnescapedHTML: true });
+			}
 			if (window.hljs?.highlightAll) window.hljs.highlightAll();
 		} catch (err) {
 			console.error(err);

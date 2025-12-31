@@ -1088,7 +1088,7 @@ footer a {
 .cms-block pre {
 	background: #eff2f7;
 	border: 1px solid rgba(18, 22, 32, 0.18);
-	padding: 2px 12px;
+	padding: 2px 12px !important;
 	border-radius: 10px;
 	overflow: auto;
 	color: #121620;
@@ -1114,7 +1114,7 @@ footer a {
 .section pre code.hljs,
 .tab-content pre code.hljs,
 .cms-block pre code.hljs {
-	padding: 0;
+	padding: 0 !important;
 	background: transparent;
 }
 
