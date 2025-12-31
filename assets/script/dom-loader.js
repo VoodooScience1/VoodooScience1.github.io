@@ -157,7 +157,12 @@
 			if (window.hljs?.configure) {
 				window.hljs.configure({ ignoreUnescapedHTML: true });
 			}
-			if (window.hljs?.highlightAll) window.hljs.highlightAll();
+			const disableHighlight =
+				window.__CMS_DISABLE_HIGHLIGHT__ ||
+				document.documentElement.classList.contains("cms-admin");
+			if (!disableHighlight && window.hljs?.highlightAll) {
+				window.hljs.highlightAll();
+			}
 		} catch (err) {
 			console.error(err);
 		}
