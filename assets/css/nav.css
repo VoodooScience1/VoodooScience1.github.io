@@ -773,7 +773,7 @@
 	letter-spacing: 0.2px;
 	color: rgba(255, 255, 255, 0.55);
 	background: transparent;
-	min-height: 24px;
+	min-height: 37px;
 	box-sizing: border-box;
 	display: flex;
 	align-items: center;
@@ -939,7 +939,6 @@
 	background: rgba(65, 110, 255, 0.18);
 	border-color: rgba(65, 110, 255, 0.35);
 }
-
 
 /* Nav Commit PR button (admin only) */
 .main-nav a.cms-nav-pr {
