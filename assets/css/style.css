@@ -887,6 +887,50 @@ footer a {
 	color: #f5fff8;
 }
 
+.cms-rte blockquote,
+.default-div-wrapper blockquote,
+.section blockquote,
+.tab-content blockquote {
+	margin: 10px 0;
+	padding: 10px 14px;
+	border-left: 3px solid rgba(43, 194, 107, 0.6);
+	background: rgba(10, 18, 32, 0.5);
+	color: rgba(245, 247, 255, 0.85);
+}
+
+.cms-rte table,
+.default-div-wrapper table,
+.section table,
+.tab-content table {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 12px 0;
+	background: rgba(8, 12, 22, 0.6);
+}
+
+.cms-rte th,
+.cms-rte td,
+.default-div-wrapper th,
+.default-div-wrapper td,
+.section th,
+.section td,
+.tab-content th,
+.tab-content td {
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	padding: 8px 10px;
+	font-size: 13px;
+}
+
+.cms-rte th,
+.default-div-wrapper th,
+.section th,
+.tab-content th {
+	background: rgba(255, 255, 255, 0.08);
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	font-size: 11px;
+}
+
 .cms-rte {
 	min-height: 140px;
 	padding: 10px 12px;
