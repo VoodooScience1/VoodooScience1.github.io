@@ -7,9 +7,7 @@
 
 	async function fetchText(url) {
 		const VERSION = "2025-12-22"; // bump when needed
-		const r = await fetch(`${url}?v=${encodeURIComponent(VERSION)}`, {
-			cache: "no-store",
-		});
+		const r = await fetch(`${url}?v=${encodeURIComponent(VERSION)}`);
 		if (!r.ok) throw new Error(`${r.status} ${r.statusText} for ${url}`);
 		return r.text();
 	}
@@ -95,24 +93,25 @@
 		);
 
 		// 2) Mount DOM partials (order matters for “things that refer to placeholders”)
-		await mountPartial({
+		const navPromise = mountPartial({
 			id: "nav-placeholder",
 			url: `${PARTIALS_BASE}/nav.html`,
 		});
 		setAdminLinkForEnv();
 
-		await mountPartial({
+		const lightboxPromise = mountPartial({
 			id: "lightbox-placeholder",
 			url: `${PARTIALS_BASE}/lightbox.html`,
 		});
 
 		// footer is inside <footer><div id="footer-placeholder"></div></footer> on your pages
 		// This will still work even if that wrapper doesn’t exist; it’ll create a div at the bottom.
-		await mountPartial({
+		const footerPromise = mountPartial({
 			id: "footer-placeholder",
 			url: `${PARTIALS_BASE}/footer.html`,
 			parent: document.querySelector("footer") || document.body,
 		});
+		await Promise.all([navPromise, lightboxPromise, footerPromise]);
 
 		// 3) Load scripts in a guaranteed sequence
 		// (Put any “defines globals used by others” FIRST)
