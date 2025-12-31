@@ -150,6 +150,15 @@
 		// Show the page once CSS + sections expansion are done; nav scripts can finish after.
 		document.documentElement.classList.add("dom-ready");
 
+		try {
+			await loadScript(
+				"https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js",
+			);
+			if (window.hljs?.highlightAll) window.hljs.highlightAll();
+		} catch (err) {
+			console.error(err);
+		}
+
 		await loadScript(`${ASSETS_BASE}/script/nav-marker.js`);
 		await loadScript(`${ASSETS_BASE}/script/nav-close.js`);
 		await loadScript(`${ASSETS_BASE}/script/lightbox.js`);
