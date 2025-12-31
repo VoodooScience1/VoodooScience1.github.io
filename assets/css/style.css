@@ -186,7 +186,7 @@ h3 {
 	box-shadow: var(--shadow);
 	border-radius: 2px;
 	text-align: center;
-	align-self: start;
+	align-self: center;
 }
 
 .lrg-img-text-div-img {
@@ -824,7 +824,10 @@ footer a {
 
 .cms-modal__row--pick .cms-modal__action--pick {
 	cursor: pointer;
-	transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+	transition:
+		background 160ms ease,
+		color 160ms ease,
+		border-color 160ms ease;
 }
 
 .cms-modal__row--pick:hover .cms-modal__action--pick {
@@ -878,7 +881,12 @@ footer a {
 	padding: 4px 8px;
 	border-radius: 8px;
 	cursor: pointer;
-	font: 700 12px/1 system-ui, -apple-system, Segoe UI, Roboto, Arial;
+	font:
+		700 12px/1 system-ui,
+		-apple-system,
+		Segoe UI,
+		Roboto,
+		Arial;
 }
 
 .cms-rte__toolbar button:hover {
@@ -981,7 +989,8 @@ footer a {
 .section th,
 .tab-content th,
 .cms-block th {
-	background: #eef1f6;
+	background: #0b1220;
+	color: #f5f7ff;
 	text-transform: uppercase;
 	letter-spacing: 0.08em;
 	font-size: 11px;
@@ -1008,7 +1017,8 @@ footer a {
 	background: #e7ecf4;
 	padding: 2px 6px;
 	border-radius: 6px;
-	font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+	font-family:
+		ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
 		"Courier New", monospace;
 	font-size: 0.9em;
 }
@@ -1060,7 +1070,12 @@ footer a {
 	color: #f5f7ff;
 	border-radius: 8px;
 	padding: 8px 10px;
-	font: 500 13px/1.3 system-ui, -apple-system, Segoe UI, Roboto, Arial;
+	font:
+		500 13px/1.3 system-ui,
+		-apple-system,
+		Segoe UI,
+		Roboto,
+		Arial;
 }
 
 .cms-field__textarea {
@@ -1113,6 +1128,10 @@ footer a {
 
 .cms-field__row .cms-btn--inline {
 	white-space: nowrap;
+}
+
+.cms-field__row .cms-field__toggle {
+	margin-left: 8px;
 }
 
 .cms-image-preview {
@@ -1197,6 +1216,10 @@ footer a {
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
 	opacity: 0.7;
+}
+
+.cms-modal__subgroup {
+	margin-top: 6px;
 }
 
 .cms-modal__block {
