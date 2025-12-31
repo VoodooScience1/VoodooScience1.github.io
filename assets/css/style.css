@@ -812,6 +812,22 @@ footer a {
 	background: rgba(255, 255, 255, 0.04);
 }
 
+.cms-modal__row--pick {
+	padding: 8px 10px;
+	border-radius: 10px;
+	cursor: pointer;
+}
+
+.cms-modal__row--pick .cms-modal__label {
+	cursor: pointer;
+}
+
+.cms-modal__row--pick .cms-modal__action--disabled {
+	pointer-events: none;
+	cursor: not-allowed;
+	opacity: 0.7;
+}
+
 .cms-modal__label {
 	font-weight: 700;
 	letter-spacing: 0.02em;
