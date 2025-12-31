@@ -1109,6 +1109,15 @@ footer a {
 	line-height: 1.35;
 }
 
+.cms-rte pre code.hljs,
+.default-div-wrapper pre code.hljs,
+.section pre code.hljs,
+.tab-content pre code.hljs,
+.cms-block pre code.hljs {
+	padding: 0;
+	background: transparent;
+}
+
 .cms-rte code,
 .default-div-wrapper code,
 .section code,
