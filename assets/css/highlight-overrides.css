@@ -1,3 +1,8 @@
+/* Code block hooks:
+ * - markup: <pre><code class="language-xxx"> or hljs adds .hljs
+ * - badge uses data-lang (set by admin or dom-loader)
+ * - selectors include cms wrappers and plain pre
+ */
 .cms-rte pre,
 .default-div-wrapper pre,
 .section pre,
