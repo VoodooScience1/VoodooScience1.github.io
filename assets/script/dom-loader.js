@@ -6,7 +6,7 @@
 	const qs = (sel) => document.querySelector(sel);
 
 	async function fetchText(url) {
-		const VERSION = "2025-12-22"; // bump when needed
+		const VERSION = "2025-03-08"; // bump when needed
 		const r = await fetch(`${url}?v=${encodeURIComponent(VERSION)}`);
 		if (!r.ok) throw new Error(`${r.status} ${r.statusText} for ${url}`);
 		return r.text();
@@ -84,6 +84,92 @@
 					}),
 			),
 		);
+	}
+
+	function copyTextToClipboard(text) {
+		const value = String(text ?? "");
+		if (!value) return Promise.resolve();
+		if (navigator.clipboard?.writeText) {
+			return navigator.clipboard.writeText(value);
+		}
+		return new Promise((resolve, reject) => {
+			const area = document.createElement("textarea");
+			area.value = value;
+			area.setAttribute("readonly", "true");
+			area.style.position = "fixed";
+			area.style.top = "-9999px";
+			area.style.left = "-9999px";
+			document.body.appendChild(area);
+			area.select();
+			try {
+				document.execCommand("copy");
+				resolve();
+			} catch (err) {
+				reject(err);
+			} finally {
+				document.body.removeChild(area);
+			}
+		});
+	}
+
+	function setupCodeCopyButtons() {
+		if (document.documentElement.dataset.codeCopyReady) return;
+		document.documentElement.dataset.codeCopyReady = "1";
+
+		const attachButton = (pre) => {
+			if (!pre || !(pre instanceof HTMLElement)) return;
+			if (pre.dataset.codeCopyReady === "1") return;
+			if (pre.closest(".cms-rte")) return;
+			const code = pre.querySelector("code");
+			if (!code) return;
+			pre.dataset.codeCopyReady = "1";
+
+			const btn = document.createElement("button");
+			btn.type = "button";
+			btn.className = "code-copy-btn";
+			btn.setAttribute("aria-label", "Copy code");
+			btn.setAttribute("title", "Copy");
+			btn.textContent = "content_copy";
+			btn.addEventListener("click", (event) => {
+				event.preventDefault();
+				event.stopPropagation();
+				const text = code.textContent || "";
+				copyTextToClipboard(text)
+					.then(() => {
+						btn.classList.add("is-copied");
+						btn.textContent = "check";
+						window.setTimeout(() => {
+							btn.classList.remove("is-copied");
+							btn.textContent = "content_copy";
+						}, 1200);
+					})
+					.catch(() => {
+						btn.textContent = "error";
+						window.setTimeout(() => {
+							btn.textContent = "content_copy";
+						}, 1200);
+					});
+			});
+			pre.appendChild(btn);
+		};
+
+		const scan = (root) => {
+			if (!root) return;
+			if (root.matches?.("pre")) attachButton(root);
+			root.querySelectorAll?.("pre").forEach((pre) => attachButton(pre));
+		};
+
+		scan(document);
+
+		const observer = new MutationObserver((mutations) => {
+			mutations.forEach((mutation) => {
+				mutation.addedNodes.forEach((node) => {
+					if (!(node instanceof HTMLElement)) return;
+					scan(node);
+				});
+			});
+		});
+		observer.observe(document.body, { childList: true, subtree: true });
 	}
 
 	function setAdminLinkForEnv() {
@@ -183,6 +269,8 @@
 		} catch (err) {
 			console.error(err);
 		}
+
+		setupCodeCopyButtons();
 
 		await loadScript(`${ASSETS_BASE}/script/nav-marker.js`);
 		await loadScript(`${ASSETS_BASE}/script/nav-close.js`);
