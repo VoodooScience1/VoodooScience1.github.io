@@ -1321,6 +1321,11 @@ footer a {
 	display: block;
 }
 
+.cms-image-preview__img--block {
+	width: 100%;
+	height: auto;
+}
+
 .cms-image-preview__img--thumb {
 	width: 96px;
 	height: 72px;
@@ -1359,6 +1364,32 @@ footer a {
 .cms-image-display-row .cms-field__row {
 	flex: 1;
 	flex-wrap: wrap;
+}
+
+.cms-image-settings {
+	display: flex;
+	gap: 16px;
+	align-items: flex-start;
+	flex-wrap: wrap;
+}
+
+.cms-image-settings__preview {
+	flex: 1 1 320px;
+	max-width: 50%;
+}
+
+.cms-image-settings__controls {
+	flex: 1 1 320px;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.cms-field__stack {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
 }
 
 .cms-btn {
