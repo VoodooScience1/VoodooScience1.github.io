@@ -59,8 +59,13 @@
 		overlayEnabled,
 		overlayTitle,
 		overlayText,
+		scale,
 	) {
 		const imgWrap = el("div", className);
+		const scaleValue = String(scale || "").trim().toLowerCase();
+		if (scaleValue && scaleValue !== "auto") {
+			imgWrap.classList.add(`img-scale-${scaleValue}`);
+		}
 
 		// No image? No broken <img>.
 		if (!imgSrc) return imgWrap;
@@ -138,6 +143,7 @@
 			const overlayEnabled = stub.dataset.overlay !== "false";
 			const overlayTitle = stub.dataset.overlayTitle || "";
 			const overlayText = stub.dataset.overlayText || "";
+			const scale = stub.dataset.scale || "";
 
 			const size = (stub.dataset.size || "sml").toLowerCase();
 			const className =
@@ -151,6 +157,7 @@
 				overlayEnabled,
 				overlayTitle,
 				overlayText,
+				scale,
 			);
 
 			// Replace stub with fully-rendered structure.
@@ -168,6 +175,7 @@
 
 		const overlayTitle = stub.dataset.overlayTitle || "";
 		const overlayText = stub.dataset.overlayText || "";
+		const scale = stub.dataset.scale || "";
 
 		const grid = el("div", "img-text-div-wrapper");
 		if (pos === "right") grid.classList.add("reverse");
@@ -180,6 +188,7 @@
 			overlayEnabled,
 			overlayTitle,
 			overlayText,
+			scale,
 		);
 
 		const textCol = el("div", "img-text-div-text");
@@ -208,6 +217,7 @@
 
 		const overlayTitle = stub.dataset.overlayTitle || "";
 		const overlayText = stub.dataset.overlayText || "";
+		const scale = stub.dataset.scale || "";
 
 		const grid = el("div", "lrg-img-text-div-wrapper");
 
@@ -222,6 +232,7 @@
 			overlayEnabled,
 			overlayTitle,
 			overlayText,
+			scale,
 		);
 
 		const textCol = el("div", "lrg-img-text-div-text");
