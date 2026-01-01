@@ -955,14 +955,18 @@ footer a {
 	color: rgba(255, 255, 255, 0.9);
 	padding: 4px 8px;
 	border-radius: 8px;
-	font: 700 12px/1 system-ui, -apple-system, Segoe UI, Roboto, Arial;
+	font:
+		700 12px/1 system-ui,
+		-apple-system,
+		Segoe UI,
+		Roboto,
+		Arial;
 }
 
 .cms-rte__panel {
 	margin-top: 10px;
 	padding: 12px;
 	border-radius: 10px;
-	background: #f6f7fb;
 	border: 1px solid rgba(18, 22, 32, 0.12);
 }
 
@@ -1342,7 +1346,7 @@ footer a {
 	padding: 6px 10px;
 	border: 1px solid rgba(18, 22, 32, 0.2);
 	background: rgba(18, 22, 32, 0.08);
-	color: #121620;
+	color: #fff;
 	cursor: pointer;
 }
 
@@ -1360,13 +1364,11 @@ footer a {
 .cms-btn--success {
 	background: rgba(60, 200, 120, 0.25);
 	border-color: rgba(60, 200, 120, 0.5);
-	color: #0b1b10;
 }
 
 .cms-btn--danger {
 	background: rgba(255, 90, 90, 0.2);
 	border-color: rgba(255, 90, 90, 0.45);
-	color: #2a0b0b;
 }
 
 .cms-btn--success:hover {
