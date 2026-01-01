@@ -1483,8 +1483,10 @@ footer a {
 	border-color: rgba(255, 90, 90, 0.6);
 }
 
+.cms-field__input--muted,
 .cms-field__input:disabled,
 .cms-field__select:disabled {
+	color: rgba(245, 247, 255, 0.45);
 	opacity: 0.6;
 	cursor: not-allowed;
 }
