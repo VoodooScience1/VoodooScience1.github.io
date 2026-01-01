@@ -917,8 +917,9 @@ footer a {
 
 .cms-rte__toolbar {
 	display: flex;
-	gap: 8px;
+	gap: 10px;
 	flex-wrap: wrap;
+	align-items: stretch;
 	position: sticky;
 	top: 0;
 	z-index: 5;
@@ -926,6 +927,43 @@ footer a {
 	border-radius: 10px;
 	background: #0f1726;
 	border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cms-rte__toolbar-group {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.cms-rte__toolbar-title {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	padding: 0 2px;
+	font-size: 10px;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: rgba(255, 255, 255, 0.55);
+}
+
+.cms-rte__toolbar-title-line {
+	width: 26px;
+	height: 1px;
+	background: rgba(255, 255, 255, 0.25);
+	border-radius: 999px;
+}
+
+.cms-rte__toolbar-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+
+.cms-rte__toolbar-divider {
+	width: 1px;
+	align-self: stretch;
+	background: rgba(255, 255, 255, 0.16);
+	margin: 0 4px;
 }
 
 .cms-rte__toolbar button {
