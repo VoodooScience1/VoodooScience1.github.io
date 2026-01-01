@@ -1309,11 +1309,22 @@ footer a {
 	align-self: center;
 }
 
+.cms-image-preview--inline {
+	margin-top: 0;
+	align-self: flex-start;
+}
+
 .cms-image-preview__img {
 	max-width: 100%;
 	border-radius: 8px;
 	border: 1px solid rgba(18, 22, 32, 0.15);
 	display: block;
+}
+
+.cms-image-preview__img--thumb {
+	width: 96px;
+	height: 72px;
+	object-fit: cover;
 }
 
 .cms-image-preview__img--sm {
@@ -1337,6 +1348,17 @@ footer a {
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
+}
+
+.cms-image-display-row {
+	display: flex;
+	gap: 12px;
+	align-items: center;
+}
+
+.cms-image-display-row .cms-field__row {
+	flex: 1;
+	flex-wrap: wrap;
 }
 
 .cms-btn {
@@ -1450,6 +1472,14 @@ footer a {
 	letter-spacing: 0.02em;
 	opacity: 0.85;
 }
+
+.cms-note--warning {
+	color: #f5c84c;
+	font-style: italic;
+	text-align: center;
+	opacity: 0.95;
+}
+
 .cms-modal__note--subtle {
 	font-weight: 600;
 	font-size: 0.9em;
