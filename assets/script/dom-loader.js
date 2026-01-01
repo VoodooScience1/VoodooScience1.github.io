@@ -162,6 +162,11 @@
 				document.documentElement.classList.contains("cms-admin");
 			if (!disableHighlight && window.hljs?.highlightAll) {
 				window.hljs.highlightAll();
+				document.querySelectorAll("pre code").forEach((code) => {
+					const cls = code.getAttribute("class") || "";
+					const match = cls.match(/language-([a-z0-9_-]+)/i);
+					if (match) code.setAttribute("data-lang", match[1]);
+				});
 			}
 		} catch (err) {
 			console.error(err);
