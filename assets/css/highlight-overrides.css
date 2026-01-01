@@ -110,9 +110,9 @@ pre code.hljs[data-lang]::after,
 pre code[data-lang]::after {
 	content: attr(data-lang);
 	position: absolute;
-	top: 10px;
+	top: 5px;
 	right: 12px;
-	padding: 2px 8px;
+	padding: 3.5px 8px;
 	border-radius: 10px;
 	background: rgba(15, 23, 42, 0.75);
 	color: #e2e8f0;

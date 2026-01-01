@@ -995,7 +995,7 @@ footer a {
 .cms-code-toolbar {
 	position: absolute;
 	top: 6px;
-	right: 8px;
+	right: 80px;
 	display: flex;
 	gap: 6px;
 	align-items: center;
@@ -1012,10 +1012,11 @@ footer a {
 
 .cms-code-toolbar__select {
 	background: rgba(90, 140, 255, 0.4);
-	color: #0b1526;
+	color: #fff;
 	border: 1px solid rgba(90, 140, 255, 0.9);
 	border-radius: 8px;
 	padding: 4px 8px;
+	height: 21px;
 	font:
 		600 11px/1 system-ui,
 		-apple-system,
@@ -1027,7 +1028,7 @@ footer a {
 .cms-code-toolbar__btn {
 	background: rgba(90, 140, 255, 0.4);
 	border: 1px solid rgba(90, 140, 255, 0.9);
-	color: #0b1526;
+	color: #fff;
 	padding: 4px 8px;
 	border-radius: 8px;
 	cursor: pointer;
@@ -1236,7 +1237,7 @@ footer a {
 	border: 1px solid rgba(255, 255, 255, 0.14);
 	color: #f5f7ff;
 	border-radius: 8px;
-	padding: 8px 10px;
+	padding: 4.5px 8px;
 	font:
 		500 13px/1.3 system-ui,
 		-apple-system,
@@ -1287,10 +1288,12 @@ footer a {
 
 .cms-field__row .cms-field__input {
 	flex: 1;
+	height: 28px;
 }
 
 .cms-field__row .cms-field__select {
 	width: 140px;
+	height: 35px;
 }
 
 .cms-field__row .cms-btn--inline {
@@ -1303,6 +1306,7 @@ footer a {
 
 .cms-image-preview {
 	margin-top: 8px;
+	align-self: center;
 }
 
 .cms-image-preview__img {
@@ -1558,10 +1562,6 @@ footer a {
 .cms-btn.cms-modal__action.cms-btn--success:hover {
 	background: rgba(60, 200, 120, 0.3);
 	border-color: rgba(60, 200, 120, 0.55);
-}
-
-.cms-btn--inline {
-	margin-top: 4px;
 }
 
 /***********************************************************************
