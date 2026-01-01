@@ -112,6 +112,18 @@
 			tag: "div",
 			parent: document.head, // put CSS into <head>
 		});
+		const headCommon = document.querySelector("#head-common");
+		if (headCommon) {
+			const atom = headCommon.querySelector(
+				'link[rel="stylesheet"][href*="atom-one-dark"]',
+			);
+			const overrides = headCommon.querySelector(
+				'link[rel="stylesheet"][href*="highlight-overrides.css"]',
+			);
+			if (atom && overrides && atom.nextSibling !== overrides) {
+				atom.parentNode.insertBefore(overrides, atom.nextSibling);
+			}
+		}
 		await waitForStyles(
 			document.querySelectorAll("#head-common link[rel='stylesheet']"),
 		);
