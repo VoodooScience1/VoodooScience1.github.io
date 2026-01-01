@@ -2,28 +2,30 @@
 .default-div-wrapper pre,
 .section pre,
 .tab-content pre,
-.cms-block pre {
+.cms-block pre,
+pre {
 	position: relative;
-	background: transparent;
-	border: none;
+	background: transparent !important;
+	border: none !important;
 	padding: 0 !important;
-	border-radius: 12px;
-	overflow: auto;
+	border-radius: 12px !important;
+	overflow: auto !important;
 }
 
 .cms-rte pre code,
 .default-div-wrapper pre code,
 .section pre code,
 .tab-content pre code,
-.cms-block pre code {
+.cms-block pre code,
+pre code {
 	display: block;
 	white-space: pre;
-	font-size: 12px;
-	line-height: 1.4;
+	font-size: 12px !important;
+	line-height: 1.4 !important;
 	font-family:
 		ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
-		"Courier New", monospace;
-	tab-size: 2;
+		"Courier New", monospace !important;
+	tab-size: 2 !important;
 }
 
 .cms-rte pre code.hljs,
@@ -31,17 +33,19 @@
 .section pre code.hljs,
 .tab-content pre code.hljs,
 .cms-block pre code.hljs,
+pre code.hljs,
 .cms-rte pre code[class^="language-"],
 .default-div-wrapper pre code[class^="language-"],
 .section pre code[class^="language-"],
 .tab-content pre code[class^="language-"],
-.cms-block pre code[class^="language-"] {
+.cms-block pre code[class^="language-"],
+pre code[class^="language-"] {
 	position: relative;
-	padding: 14px 16px;
-	background: #282c34;
-	color: #abb2bf;
-	border-radius: 12px;
-	box-shadow: 0 10px 30px rgba(17, 24, 39, 0.35);
+	padding: 14px 16px !important;
+	background: #282c34 !important;
+	color: #abb2bf !important;
+	border-radius: 12px !important;
+	box-shadow: 0 10px 30px rgba(17, 24, 39, 0.35) !important;
 }
 
 .cms-rte pre code.hljs[data-lang]::after,
@@ -49,11 +53,13 @@
 .section pre code.hljs[data-lang]::after,
 .tab-content pre code.hljs[data-lang]::after,
 .cms-block pre code.hljs[data-lang]::after,
+pre code.hljs[data-lang]::after,
 .cms-rte pre code[data-lang]::after,
 .default-div-wrapper pre code[data-lang]::after,
 .section pre code[data-lang]::after,
 .tab-content pre code[data-lang]::after,
-.cms-block pre code[data-lang]::after {
+.cms-block pre code[data-lang]::after,
+pre code[data-lang]::after {
 	content: attr(data-lang);
 	position: absolute;
 	top: 10px;
