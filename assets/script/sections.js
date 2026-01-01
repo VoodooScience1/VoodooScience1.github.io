@@ -1,6 +1,6 @@
 // sections.js
 // Expands <div class="section" data-type="..."> stubs into EXISTING div/class structure.
-// Also expands inline image stubs: <div class="img-stub" ...></div>
+// Also expands inline media stubs: <div class="img-stub" ...></div>
 //
 // IMPORTANT:
 // - This file is the *only* renderer for stub expansion.
@@ -19,6 +19,11 @@
 //        data-overlay-title="..."
 //        data-overlay-text="..."
 //        data-size="sml|lrg"></div>
+//
+// Inline video stubs:
+//  - <div class="video-stub"
+//        data-video="/assets/video/..."
+//        data-caption="..."></div>
 //
 // Notes:
 // - We intentionally DO NOT support `data-class` anymore (keeps authoring deterministic).
@@ -134,6 +139,30 @@
 		return imgWrap;
 	}
 
+	function buildVideoWrap(className, videoSrc, caption) {
+		const videoWrap = el("div", className);
+
+		if (!videoSrc) return videoWrap;
+
+		const content = el("div", "content content--full");
+		const video = document.createElement("video");
+		video.src = videoSrc;
+		video.className = "content-video";
+		video.controls = true;
+		video.playsInline = true;
+		video.preload = "metadata";
+		content.appendChild(video);
+		videoWrap.appendChild(content);
+
+		if (caption) {
+			const p = document.createElement("p");
+			p.textContent = caption;
+			videoWrap.appendChild(p);
+		}
+
+		return videoWrap;
+	}
+
 	// Expand inline .img-stub elements anywhere in the document.
 	function expandInlineImgStubs(root = document) {
 		root.querySelectorAll(".img-stub[data-img]").forEach((stub) => {
@@ -161,6 +190,17 @@
 			);
 
 			// Replace stub with fully-rendered structure.
+			stub.replaceWith(built);
+		});
+	}
+
+	// Expand inline .video-stub elements anywhere in the document.
+	function expandInlineVideoStubs(root = document) {
+		root.querySelectorAll(".video-stub[data-video]").forEach((stub) => {
+			const videoSrc = stub.dataset.video || "";
+			const caption = stub.dataset.caption || "";
+
+			const built = buildVideoWrap("img-text-div-img", videoSrc, caption);
 			stub.replaceWith(built);
 		});
 	}
@@ -295,6 +335,7 @@
 
 		// Then expand inline image stubs anywhere (including inside twoCol)
 		expandInlineImgStubs(document);
+		expandInlineVideoStubs(document);
 
 		// Finally, normalize any raw js-lightbox <img> (used by square grids etc.)
 		normalizePlainLightboxImgs(document);

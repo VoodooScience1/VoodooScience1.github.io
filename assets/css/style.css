@@ -393,6 +393,15 @@ h3 {
 	height: auto;
 }
 
+.img-text-div-img .content-video,
+.lrg-img-text-div-img .content-video {
+	width: 100%;
+	height: auto;
+	display: block;
+	border-radius: 2px;
+	background: #000;
+}
+
 /* Required for overlays to appear above images */
 .img-text-div-img .content,
 .lrg-img-text-div-img .content {
@@ -446,6 +455,12 @@ footer a {
 /* Polaroid contexts: let images size naturally (fixes “disappearing” images) */
 .img-text-div-img .content-image,
 .lrg-img-text-div-img .content-image {
+	height: auto;
+	object-fit: contain;
+}
+
+.img-text-div-img .content-video,
+.lrg-img-text-div-img .content-video {
 	height: auto;
 	object-fit: contain;
 }
@@ -1084,12 +1099,14 @@ footer a {
 	color: #0b1526;
 }
 
-.cms-rte .img-stub {
+.cms-rte .img-stub,
+.cms-rte .video-stub {
 	position: relative;
 	cursor: pointer;
 }
 
-.cms-rte .img-stub .cms-inline-actions {
+.cms-rte .img-stub .cms-inline-actions,
+.cms-rte .video-stub .cms-inline-actions {
 	position: absolute;
 	top: -15px;
 	right: 15px;
@@ -1103,21 +1120,39 @@ footer a {
 		transform 120ms ease;
 }
 
-.cms-rte .img-stub:hover .cms-inline-actions {
+.cms-rte .img-stub:hover .cms-inline-actions,
+.cms-rte .video-stub:hover .cms-inline-actions {
 	opacity: 1;
 	transform: translateY(0);
 }
 
-.cms-rte .img-stub .cms-inline-actions .cms-block__btn {
+.cms-rte .img-stub .cms-inline-actions .cms-block__btn,
+.cms-rte .video-stub .cms-inline-actions .cms-block__btn {
 	padding: 4px 8px;
 	font-size: 11px;
 	border-radius: 8px;
 }
 
-.cms-rte .img-stub .cms-inline-caption {
+.cms-rte .img-stub .cms-inline-caption,
+.cms-rte .video-stub .cms-inline-caption {
 	margin: 8px 0 0;
 	color: #121620;
 	font-size: 13px;
+}
+
+.cms-video-preview .cms-video-placeholder,
+.cms-rte .video-stub .cms-video-placeholder {
+	min-height: 180px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(15, 23, 38, 0.08);
+	border: 1px dashed rgba(15, 23, 38, 0.25);
+	color: rgba(18, 22, 32, 0.7);
+	font-size: 12px;
+	text-transform: uppercase;
+	letter-spacing: 0.12em;
+	border-radius: 2px;
 }
 
 .cms-rte blockquote,
@@ -1301,6 +1336,11 @@ footer a {
 		Segoe UI,
 		Roboto,
 		Arial;
+}
+
+.cms-field__input--invalid {
+	border-color: rgba(255, 122, 110, 0.9);
+	box-shadow: 0 0 0 1px rgba(255, 122, 110, 0.5);
 }
 
 .cms-field__textarea {
