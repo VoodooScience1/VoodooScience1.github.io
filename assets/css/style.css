@@ -1307,6 +1307,9 @@ footer a {
 .cms-image-preview {
 	margin-top: 8px;
 	align-self: center;
+	position: relative;
+	overflow: hidden;
+	border-radius: 8px;
 }
 
 .cms-image-preview--inline {
@@ -1319,6 +1322,49 @@ footer a {
 	border-radius: 8px;
 	border: 1px solid rgba(18, 22, 32, 0.15);
 	display: block;
+}
+
+.cms-image-preview__overlay,
+.cms-image-preview__details {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	pointer-events: none;
+	opacity: 0;
+	transition: opacity 0.2s ease;
+}
+
+.cms-image-preview__overlay {
+	background: rgba(0, 0, 0, 0.55);
+}
+
+.cms-image-preview__details {
+	flex-direction: column;
+	gap: 6px;
+	padding: 12px;
+	color: #fff;
+}
+
+.cms-image-preview__title {
+	font-size: 11px;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+}
+
+.cms-image-preview__text {
+	font-size: 12px;
+	line-height: 1.3;
+}
+
+.cms-image-preview--overlay .cms-image-preview__overlay {
+	opacity: 0.45;
+}
+
+.cms-image-preview--overlay .cms-image-preview__details {
+	opacity: 1;
 }
 
 .cms-image-preview__img--block {
