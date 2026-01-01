@@ -1,0 +1,59 @@
+.cms-rte pre,
+.default-div-wrapper pre,
+.section pre,
+.tab-content pre,
+.cms-block pre {
+	position: relative;
+	background: transparent;
+	border: none;
+	padding: 0 !important;
+	border-radius: 12px;
+	overflow: auto;
+}
+
+.cms-rte pre code,
+.default-div-wrapper pre code,
+.section pre code,
+.tab-content pre code,
+.cms-block pre code {
+	display: block;
+	white-space: pre;
+	font-size: 12px;
+	line-height: 1.4;
+	font-family:
+		ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+		"Courier New", monospace;
+	tab-size: 2;
+}
+
+.cms-rte pre code.hljs,
+.default-div-wrapper pre code.hljs,
+.section pre code.hljs,
+.tab-content pre code.hljs,
+.cms-block pre code.hljs {
+	position: relative;
+	padding: 14px 16px;
+	background: #282c34;
+	color: #abb2bf;
+	border-radius: 12px;
+	box-shadow: 0 10px 30px rgba(17, 24, 39, 0.35);
+}
+
+.cms-rte pre code.hljs[data-lang]::after,
+.default-div-wrapper pre code.hljs[data-lang]::after,
+.section pre code.hljs[data-lang]::after,
+.tab-content pre code.hljs[data-lang]::after,
+.cms-block pre code.hljs[data-lang]::after {
+	content: attr(data-lang);
+	position: absolute;
+	top: 10px;
+	right: 12px;
+	padding: 2px 8px;
+	border-radius: 10px;
+	background: rgba(15, 23, 42, 0.75);
+	color: #e2e8f0;
+	font-size: 10px;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	pointer-events: none;
+}
