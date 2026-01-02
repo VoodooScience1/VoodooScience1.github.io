@@ -1242,7 +1242,8 @@ footer a {
 .cms-rte .img-stub .cms-inline-actions,
 .cms-rte .video-stub .cms-inline-actions,
 .cms-rte .doc-card .cms-inline-actions,
-.cms-rte .cms-table-wrap .cms-inline-actions {
+.cms-rte .cms-table-wrap .cms-inline-actions,
+.cms-rte .flex-accordion-wrapper .cms-inline-actions {
 	position: absolute;
 	top: -30px;
 	right: 0;
@@ -1259,24 +1260,34 @@ footer a {
 .cms-rte .img-stub:hover .cms-inline-actions,
 .cms-rte .video-stub:hover .cms-inline-actions,
 .cms-rte .doc-card:hover .cms-inline-actions,
-.cms-rte .cms-table-wrap:hover .cms-inline-actions {
+.cms-rte .cms-table-wrap:hover .cms-inline-actions,
+.cms-rte .flex-accordion-wrapper:hover .cms-inline-actions {
 	opacity: 1;
 	transform: translateY(0);
 }
 
 .cms-rte .doc-card .cms-inline-actions {
-	top: -18px;
-	right: 8px;
+	top: -22px;
+	right: 0;
 	z-index: 4;
 }
 
 .cms-rte .img-stub .cms-inline-actions .cms-block__btn,
 .cms-rte .video-stub .cms-inline-actions .cms-block__btn,
 .cms-rte .doc-card .cms-inline-actions .cms-block__btn,
-.cms-rte .cms-table-wrap .cms-inline-actions .cms-block__btn {
+.cms-rte .cms-table-wrap .cms-inline-actions .cms-block__btn,
+.cms-rte .flex-accordion-wrapper .cms-inline-actions .cms-block__btn {
 	padding: 4px 8px;
 	font-size: 11px;
 	border-radius: 8px;
+}
+
+.cms-rte .doc-card {
+	overflow: visible;
+}
+
+.cms-rte .doc-card__link {
+	overflow: hidden;
 }
 
 .cms-rte .img-stub .cms-inline-caption,
@@ -1738,6 +1749,10 @@ footer a {
 	align-items: center;
 	justify-content: center;
 	text-align: center;
+}
+
+.cms-image-settings__preview .doc-card {
+	margin: 0 auto;
 }
 
 .cms-image-settings__controls {
