@@ -1858,6 +1858,10 @@ footer a {
 	border-radius: 2px;
 }
 
+.doc-card.cms-doc-preview {
+	margin: 0;
+}
+
 .doc-card__link {
 	display: block;
 	color: #111;
@@ -1882,6 +1886,10 @@ footer a {
 /* Optional: subtle hover that matches your “card” language */
 .doc-card:hover {
 	transform: rotate(-1deg);
+}
+
+.doc-card.cms-doc-preview:hover {
+	transform: none;
 }
 
 /***********************************************************************
