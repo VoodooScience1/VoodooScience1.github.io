@@ -1240,8 +1240,8 @@ footer a {
 .cms-rte .doc-card .cms-inline-actions,
 .cms-rte .cms-table-wrap .cms-inline-actions {
 	position: absolute;
-	top: -15px;
-	right: 15px;
+	top: -30px;
+	right: 0;
 	display: flex;
 	gap: 6px;
 	z-index: 3;
@@ -1258,6 +1258,12 @@ footer a {
 .cms-rte .cms-table-wrap:hover .cms-inline-actions {
 	opacity: 1;
 	transform: translateY(0);
+}
+
+.cms-rte .doc-card .cms-inline-actions {
+	top: -18px;
+	right: 8px;
+	z-index: 4;
 }
 
 .cms-rte .img-stub .cms-inline-actions .cms-block__btn,
@@ -1610,6 +1616,8 @@ footer a {
 	position: relative;
 	overflow: hidden;
 	border-radius: 8px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .cms-image-preview--inline {
@@ -1722,6 +1730,10 @@ footer a {
 .cms-image-settings__preview {
 	flex: 1 1 320px;
 	max-width: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
 }
 
 .cms-image-settings__controls {
