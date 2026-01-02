@@ -461,7 +461,6 @@ footer a {
 	object-fit: contain;
 }
 
-
 /* Optional: keep the polaroid content wrapper from collapsing oddly */
 .img-text-div-img .content,
 .lrg-img-text-div-img .content {
@@ -939,6 +938,11 @@ footer a {
 	border-radius: 10px;
 	background: #0f1726;
 	border: 1px solid rgba(255, 255, 255, 0.1);
+	align-self: center;
+}
+
+.cms-rte__toolbar-title-text {
+	align-self: center;
 }
 
 .cms-rte__toolbar-group {
@@ -959,7 +963,6 @@ footer a {
 }
 
 .cms-rte__toolbar-title-line {
-	width: 26px;
 	height: 1px;
 	background: rgba(255, 255, 255, 0.25);
 	border-radius: 999px;
