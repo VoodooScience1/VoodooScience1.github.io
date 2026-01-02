@@ -275,6 +275,7 @@
 		await loadScript(`${ASSETS_BASE}/script/nav-marker.js`);
 		await loadScript(`${ASSETS_BASE}/script/nav-close.js`);
 		await loadScript(`${ASSETS_BASE}/script/lightbox.js`);
+		await loadScript(`${ASSETS_BASE}/script/doc-modal.js`);
 
 		if (typeof window.setActiveNav === "function") window.setActiveNav();
 

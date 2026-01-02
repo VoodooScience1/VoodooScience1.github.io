@@ -1894,10 +1894,11 @@ footer a {
 **********************************************************************/
 .doc-card {
 	background: #fff;
-	padding: 14px;
 	margin: 20px;
 	box-shadow: var(--shadow);
 	border-radius: 2px;
+	position: relative;
+	overflow: hidden;
 }
 
 .doc-card.cms-doc-preview {
@@ -1908,6 +1909,20 @@ footer a {
 	display: block;
 	color: #111;
 	text-decoration: none;
+	padding: 16px 18px;
+	position: relative;
+}
+
+.doc-card__header {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.doc-card__type-icon {
+	font-size: 30px;
+	color: rgba(17, 17, 17, 0.7);
 }
 
 .doc-card__title {
@@ -1925,6 +1940,51 @@ footer a {
 	opacity: 0.9;
 }
 
+.doc-card__apps {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-top: 12px;
+}
+
+.doc-card__app {
+	font-size: 22px;
+	color: rgba(17, 17, 17, 0.55);
+	transition: color 120ms ease, transform 120ms ease, opacity 120ms ease;
+}
+
+.doc-card__app.is-active {
+	color: var(--accent);
+	opacity: 1;
+	transform: translateY(-1px);
+}
+
+.doc-card__overlay {
+	position: absolute;
+	inset: 0;
+	background: rgba(15, 23, 38, 0.78);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 160ms ease;
+}
+
+.doc-card__overlay-content {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	color: #fff;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	font-size: 11px;
+}
+
+.doc-card__link:hover .doc-card__overlay {
+	opacity: 1;
+}
+
 /* Optional: subtle hover that matches your “card” language */
 .doc-card:hover {
 	transform: rotate(-1deg);
@@ -1932,6 +1992,10 @@ footer a {
 
 .doc-card.cms-doc-preview:hover {
 	transform: none;
+}
+
+.doc-card.cms-doc-preview .doc-card__overlay {
+	display: none;
 }
 
 /***********************************************************************
