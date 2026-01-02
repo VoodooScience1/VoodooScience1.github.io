@@ -742,6 +742,68 @@ footer a {
 	border-color: rgba(90, 140, 255, 1);
 }
 
+.cms-block--dark-controls .cms-block__btn {
+	color: #fff;
+}
+
+/***********************************************************************
+*  cms grid controls
+**********************************************************************/
+.cms-grid-card {
+	position: relative;
+}
+
+.cms-grid-actions {
+	position: absolute;
+	top: -15px;
+	right: 15px;
+	display: flex;
+	gap: 6px;
+	z-index: 4;
+	opacity: 0;
+	transform: translateY(-4px);
+	transition: opacity 140ms ease, transform 140ms ease;
+	pointer-events: none;
+}
+
+.cms-grid-card:hover .cms-grid-actions {
+	opacity: 1;
+	transform: translateY(0);
+	pointer-events: auto;
+}
+
+.cms-grid-action {
+	border: 1px solid rgba(255, 255, 255, 0.35);
+	background: rgba(10, 12, 20, 0.7);
+	color: #fff;
+	padding: 4px 6px;
+	border-radius: 8px;
+	cursor: pointer;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.cms-grid-action:hover {
+	background: rgba(255, 255, 255, 0.12);
+	border-color: rgba(255, 255, 255, 0.6);
+}
+
+.cms-grid-action--danger {
+	border-color: rgba(255, 120, 120, 0.9);
+	background: rgba(180, 40, 40, 0.55);
+}
+
+.cms-grid-action--danger:hover {
+	border-color: rgba(255, 140, 140, 1);
+	background: rgba(180, 40, 40, 0.75);
+}
+
+.cms-grid__icon {
+	font-size: 16px;
+	line-height: 1;
+}
+
 /***********************************************************************
 *  cms modal
 **********************************************************************/
