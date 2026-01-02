@@ -1212,8 +1212,8 @@ footer a {
 
 .cms-rte .tab .cms-accordion-actions {
 	position: absolute;
-	top: -14px;
-	right: 15px;
+	top: 13px;
+	right: 35px;
 	display: flex;
 	gap: 6px;
 	z-index: 3;
@@ -1240,6 +1240,12 @@ footer a {
 .cms-rte .tab .cms-accordion-actions .cms-accordion__icon {
 	font-size: 14px;
 	line-height: 1;
+	color: #fff;
+	font-weight: bold;
+}
+
+.cms-accordion-actions .cms-block__btn--danger {
+	color: #fff;
 }
 
 .cms-rte .tab .cms-accordion-actions .cms-accordion-btn.is-disabled,
@@ -1950,7 +1956,10 @@ footer a {
 .doc-card__app {
 	font-size: 22px;
 	color: rgba(17, 17, 17, 0.55);
-	transition: color 120ms ease, transform 120ms ease, opacity 120ms ease;
+	transition:
+		color 120ms ease,
+		transform 120ms ease,
+		opacity 120ms ease;
 }
 
 .doc-card__app.is-active {
