@@ -1235,6 +1235,10 @@ footer a {
 	position: relative;
 }
 
+.cms-rte .flex-accordion-wrapper {
+	position: relative;
+}
+
 .cms-rte .img-stub .cms-inline-actions,
 .cms-rte .video-stub .cms-inline-actions,
 .cms-rte .doc-card .cms-inline-actions,
