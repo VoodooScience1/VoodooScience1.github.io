@@ -1206,6 +1206,48 @@ footer a {
 	font-size: 13px;
 }
 
+.cms-rte .tab {
+	position: relative;
+}
+
+.cms-rte .tab .cms-accordion-actions {
+	position: absolute;
+	top: -14px;
+	right: 15px;
+	display: flex;
+	gap: 6px;
+	z-index: 3;
+	opacity: 0;
+	pointer-events: none;
+	transform: translateY(-4px);
+	transition:
+		opacity 120ms ease,
+		transform 120ms ease;
+}
+
+.cms-rte .tab:hover .cms-accordion-actions {
+	opacity: 1;
+	pointer-events: auto;
+	transform: translateY(0);
+}
+
+.cms-rte .tab .cms-accordion-actions .cms-block__btn {
+	padding: 4px 6px;
+	border-radius: 8px;
+	font-size: 11px;
+}
+
+.cms-rte .tab .cms-accordion-actions .cms-accordion__icon {
+	font-size: 14px;
+	line-height: 1;
+}
+
+.cms-rte .tab .cms-accordion-actions .cms-accordion-btn.is-disabled,
+.cms-rte .tab .cms-accordion-actions .cms-accordion-btn:disabled {
+	opacity: 0.45;
+	cursor: not-allowed;
+}
+
 .cms-video-preview .cms-video-placeholder,
 .cms-rte .video-stub .cms-video-placeholder {
 	min-height: 180px;
