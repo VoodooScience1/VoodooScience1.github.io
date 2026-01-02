@@ -399,6 +399,8 @@ h3 {
 	height: auto;
 	display: block;
 	border-radius: 2px;
+	border: 0;
+	aspect-ratio: 16 / 9;
 	background: #000;
 }
 
@@ -459,11 +461,6 @@ footer a {
 	object-fit: contain;
 }
 
-.img-text-div-img .content-video,
-.lrg-img-text-div-img .content-video {
-	height: auto;
-	object-fit: contain;
-}
 
 /* Optional: keep the polaroid content wrapper from collapsing oddly */
 .img-text-div-img .content,
@@ -932,13 +929,13 @@ footer a {
 
 .cms-rte__toolbar {
 	display: flex;
-	gap: 10px;
+	gap: 8px;
 	flex-wrap: wrap;
 	align-items: stretch;
 	position: sticky;
 	top: 0;
 	z-index: 5;
-	padding: 8px 10px;
+	padding: 6px 8px;
 	border-radius: 10px;
 	background: #0f1726;
 	border: 1px solid rgba(255, 255, 255, 0.1);
@@ -953,9 +950,9 @@ footer a {
 .cms-rte__toolbar-title {
 	display: flex;
 	flex-direction: column;
-	gap: 4px;
+	gap: 3px;
 	padding: 0 2px;
-	font-size: 10px;
+	font-size: 9px;
 	letter-spacing: 0.18em;
 	text-transform: uppercase;
 	color: rgba(255, 255, 255, 0.55);
@@ -971,7 +968,7 @@ footer a {
 .cms-rte__toolbar-actions {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 6px;
+	gap: 5px;
 }
 
 .cms-rte__toolbar-divider {
@@ -982,18 +979,84 @@ footer a {
 }
 
 .cms-rte__toolbar button {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
 	background: rgba(255, 255, 255, 0.08);
 	border: 1px solid rgba(255, 255, 255, 0.16);
 	color: rgba(255, 255, 255, 0.9);
-	padding: 4px 8px;
+	padding: 3px 6px;
 	border-radius: 8px;
 	cursor: pointer;
 	font:
-		700 12px/1 system-ui,
+		700 11px/1 system-ui,
 		-apple-system,
 		Segoe UI,
 		Roboto,
 		Arial;
+}
+
+.cms-rte__icon {
+	font-size: 16px;
+	line-height: 1;
+}
+
+.cms-rte__icon-label {
+	font-size: 10px;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+.cms-rte__toolbar button[data-tooltip] {
+	position: relative;
+}
+
+.cms-rte__toolbar button[data-tooltip]::after {
+	content: attr(data-tooltip);
+	position: absolute;
+	left: 50%;
+	bottom: calc(100% + 8px);
+	transform: translate(-50%, -4px);
+	background: #0f1726;
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	color: #f5f7ff;
+	padding: 4px 8px;
+	border-radius: 6px;
+	font-size: 10px;
+	letter-spacing: 0.04em;
+	white-space: nowrap;
+	opacity: 0;
+	pointer-events: none;
+	box-shadow: 0 6px 14px rgba(4, 8, 16, 0.35);
+	transition:
+		opacity 120ms ease,
+		transform 120ms ease;
+	z-index: 5;
+}
+
+.cms-rte__toolbar button[data-tooltip]::before {
+	content: "";
+	position: absolute;
+	left: 50%;
+	bottom: calc(100% + 2px);
+	transform: translateX(-50%);
+	border: 5px solid transparent;
+	border-top-color: rgba(255, 255, 255, 0.2);
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 120ms ease;
+	z-index: 4;
+}
+
+.cms-rte__toolbar button[data-tooltip]:hover::after,
+.cms-rte__toolbar button[data-tooltip]:focus-visible::after {
+	opacity: 1;
+	transform: translate(-50%, 0);
+}
+
+.cms-rte__toolbar button[data-tooltip]:hover::before,
+.cms-rte__toolbar button[data-tooltip]:focus-visible::before {
+	opacity: 1;
 }
 
 .cms-rte__toolbar button:hover {

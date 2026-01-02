@@ -22,8 +22,9 @@
 //
 // Inline video stubs:
 //  - <div class="video-stub"
-//        data-video="/assets/video/..."
-//        data-caption="..."></div>
+//        data-video="https://www.youtube.com/watch?v=..."
+//        data-caption="..."
+//        data-scale="sm|md|lg|full"></div>
 //
 // Notes:
 // - We intentionally DO NOT support `data-class` anymore (keeps authoring deterministic).
@@ -42,6 +43,36 @@
 
 	function isTrue(val) {
 		return String(val || "").toLowerCase() === "true";
+	}
+
+	function getYouTubeVideoId(value) {
+		const raw = String(value || "").trim();
+		if (!raw) return "";
+		if (/^[A-Za-z0-9_-]{11}$/.test(raw)) return raw;
+		let url = null;
+		try {
+			url = new URL(raw);
+		} catch {
+			return "";
+		}
+		const host = url.hostname.toLowerCase();
+		if (host.includes("youtu.be")) {
+			return url.pathname.replace(/^\/+/, "").split("/")[0] || "";
+		}
+		if (!host.includes("youtube.com")) return "";
+		if (url.pathname === "/watch") {
+			return url.searchParams.get("v") || "";
+		}
+		const parts = url.pathname.split("/").filter(Boolean);
+		if (parts[0] === "embed" && parts[1]) return parts[1];
+		if (parts[0] === "shorts" && parts[1]) return parts[1];
+		if (parts[0] === "live" && parts[1]) return parts[1];
+		return "";
+	}
+
+	function getYouTubeEmbedSrc(value) {
+		const id = getYouTubeVideoId(value);
+		return id ? `https://www.youtube.com/embed/${id}` : "";
 	}
 
 	function moveAllChildren(fromEl, toEl) {
@@ -139,19 +170,28 @@
 		return imgWrap;
 	}
 
-	function buildVideoWrap(className, videoSrc, caption) {
+	function buildVideoWrap(className, videoSrc, caption, scale) {
 		const videoWrap = el("div", className);
+		const scaleValue = String(scale || "").trim().toLowerCase();
+		if (scaleValue && scaleValue !== "auto") {
+			videoWrap.classList.add(`img-scale-${scaleValue}`);
+		}
 
 		if (!videoSrc) return videoWrap;
 
 		const content = el("div", "content content--full");
-		const video = document.createElement("video");
-		video.src = videoSrc;
-		video.className = "content-video";
-		video.controls = true;
-		video.playsInline = true;
-		video.preload = "metadata";
-		content.appendChild(video);
+		const embedSrc = getYouTubeEmbedSrc(videoSrc);
+		if (!embedSrc) return videoWrap;
+
+		const iframe = document.createElement("iframe");
+		iframe.src = embedSrc;
+		iframe.className = "content-video";
+		iframe.loading = "lazy";
+		iframe.allow =
+			"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+		iframe.allowFullscreen = true;
+		iframe.title = caption ? `Video: ${caption}` : "Embedded video";
+		content.appendChild(iframe);
 		videoWrap.appendChild(content);
 
 		if (caption) {
@@ -199,8 +239,9 @@
 		root.querySelectorAll(".video-stub[data-video]").forEach((stub) => {
 			const videoSrc = stub.dataset.video || "";
 			const caption = stub.dataset.caption || "";
+			const scale = stub.dataset.scale || "";
 
-			const built = buildVideoWrap("img-text-div-img", videoSrc, caption);
+			const built = buildVideoWrap("img-text-div-img", videoSrc, caption, scale);
 			stub.replaceWith(built);
 		});
 	}
