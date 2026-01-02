@@ -1,5 +1,4 @@
 (function () {
-	if (document.documentElement.classList.contains("cms-admin")) return;
 
 	const DOC_MODAL_ID = "docModal";
 	const DOC_LOCK_CLASS = "lb-lock";

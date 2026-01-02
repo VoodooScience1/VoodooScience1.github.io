@@ -1935,6 +1935,38 @@ footer a {
 	flex: 0 0 auto;
 }
 
+.doc-card[data-doc-ext="pdf"] .doc-card__type-icon {
+	color: #d32f2f;
+}
+
+.doc-card[data-doc-ext="doc"] .doc-card__type-icon,
+.doc-card[data-doc-ext="docx"] .doc-card__type-icon {
+	color: #2b579a;
+}
+
+.doc-card[data-doc-ext="xls"] .doc-card__type-icon,
+.doc-card[data-doc-ext="xlsx"] .doc-card__type-icon,
+.doc-card[data-doc-ext="csv"] .doc-card__type-icon {
+	color: #217346;
+}
+
+.doc-card[data-doc-ext="ppt"] .doc-card__type-icon,
+.doc-card[data-doc-ext="pptx"] .doc-card__type-icon {
+	color: #d24726;
+}
+
+.doc-card[data-doc-ext="md"] .doc-card__type-icon,
+.doc-card[data-doc-ext="txt"] .doc-card__type-icon,
+.doc-card[data-doc-ext="rtf"] .doc-card__type-icon {
+	color: #6b7280;
+}
+
+.doc-card[data-doc-ext="zip"] .doc-card__type-icon,
+.doc-card[data-doc-ext="rar"] .doc-card__type-icon,
+.doc-card[data-doc-ext="7z"] .doc-card__type-icon {
+	color: #d97706;
+}
+
 .doc-card__text {
 	display: flex;
 	flex-direction: column;
