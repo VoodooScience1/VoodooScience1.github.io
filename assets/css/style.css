@@ -187,6 +187,7 @@ h3 {
 	border-radius: 2px;
 	text-align: center;
 	align-self: center;
+	box-sizing: border-box;
 }
 
 .img-text-div-img.img-scale-sm,
@@ -212,8 +213,10 @@ h3 {
 
 .img-text-div-img.img-scale-full,
 .lrg-img-text-div-img.img-scale-full {
-	max-width: none;
+	max-width: 100%;
 	width: 100%;
+	margin-left: 0;
+	margin-right: 0;
 }
 
 .lrg-img-text-div-img {
@@ -1292,6 +1295,13 @@ footer a {
 	background: #f8f9fb;
 }
 
+.default-div-wrapper table.table-borderless,
+.section table.table-borderless,
+.tab-content table.table-borderless,
+.cms-block table.table-borderless {
+	background: transparent;
+}
+
 .cms-rte th,
 .cms-rte td,
 .default-div-wrapper th,
@@ -1305,6 +1315,17 @@ footer a {
 	border: 1px solid rgba(18, 22, 32, 0.15);
 	padding: 8px 10px;
 	font-size: 13px;
+}
+
+.default-div-wrapper table.table-borderless th,
+.default-div-wrapper table.table-borderless td,
+.section table.table-borderless th,
+.section table.table-borderless td,
+.tab-content table.table-borderless th,
+.tab-content table.table-borderless td,
+.cms-block table.table-borderless th,
+.cms-block table.table-borderless td {
+	border: none;
 }
 
 .cms-rte th,
