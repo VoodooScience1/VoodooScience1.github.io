@@ -86,13 +86,6 @@
 		if (overlayLabel) {
 			overlayLabel.textContent = ext === "pdf" ? "Open PDF" : "Open document";
 		}
-		card.querySelectorAll(".doc-card__app").forEach((el) => {
-			const list = String(el.getAttribute("data-doc-ext") || "")
-				.split(",")
-				.map((v) => v.trim().toLowerCase())
-				.filter(Boolean);
-			el.classList.toggle("is-active", list.includes(ext));
-		});
 	};
 
 	const scanDocCards = () => {

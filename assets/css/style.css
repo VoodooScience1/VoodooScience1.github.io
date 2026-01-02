@@ -1452,7 +1452,8 @@ footer a {
 		Arial;
 }
 
-.cms-field__input--invalid {
+.cms-field__input--invalid,
+.cms-field__select.cms-field__input--invalid {
 	border-color: rgba(255, 122, 110, 0.9);
 	box-shadow: 0 0 0 1px rgba(255, 122, 110, 0.5);
 }
@@ -1907,65 +1908,64 @@ footer a {
 	overflow: hidden;
 }
 
+.doc-card--compact {
+	display: inline-block;
+	width: 240px;
+	max-width: 100%;
+	margin: 10px 16px 10px 0;
+}
+
 .doc-card.cms-doc-preview {
 	margin: 0;
 }
 
 .doc-card__link {
-	display: block;
+	display: flex;
+	align-items: center;
+	gap: 12px;
 	color: #111;
 	text-decoration: none;
-	padding: 16px 18px;
+	padding: 10px 12px;
 	position: relative;
 }
 
-.doc-card__header {
-	display: flex;
-	align-items: flex-start;
-	justify-content: space-between;
-	gap: 12px;
+.doc-card__type-icon {
+	font-size: 28px;
+	color: rgba(17, 17, 17, 0.75);
+	flex: 0 0 auto;
 }
 
-.doc-card__type-icon {
-	font-size: 30px;
-	color: rgba(17, 17, 17, 0.7);
+.doc-card__text {
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+	min-width: 0;
+	min-height: 28px;
 }
 
 .doc-card__title {
-	font-weight: 900;
-	letter-spacing: 0.1em;
-	text-decoration: underline;
-	text-decoration-color: var(--accent);
-	text-decoration-thickness: 3px;
-	margin: 0 0 8px 0;
+	font-weight: 800;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	margin: 0;
+	font-size: 11px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .doc-card__desc {
 	margin: 0;
-	letter-spacing: 0.08em;
+	letter-spacing: 0.06em;
 	opacity: 0.9;
+	font-size: 11px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
-.doc-card__apps {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 10px;
-	margin-top: 12px;
-}
-
-.doc-card__app {
-	font-size: 22px;
-	color: rgba(17, 17, 17, 0.55);
-	transition:
-		color 120ms ease,
-		transform 120ms ease,
-		opacity 120ms ease;
-}
-
-.doc-card__app.is-active {
-	color: var(--accent);
-	opacity: 1;
-	transform: translateY(-1px);
+.doc-card__desc:empty {
+	visibility: hidden;
 }
 
 .doc-card__overlay {
