@@ -1266,11 +1266,7 @@ footer a {
 	transform: translateY(0);
 }
 
-.cms-rte .doc-card .cms-inline-actions {
-	top: -22px;
-	right: 0;
-	z-index: 4;
-}
+/* doc cards now share the standard inline action position */
 
 .cms-rte .img-stub .cms-inline-actions .cms-block__btn,
 .cms-rte .video-stub .cms-inline-actions .cms-block__btn,
