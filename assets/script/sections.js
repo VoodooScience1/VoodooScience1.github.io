@@ -315,12 +315,45 @@
 		return output;
 	}
 
+	function stripHtml(value) {
+		const raw = String(value || "");
+		return raw.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+	}
+
+	function hashText(value) {
+		const text = String(value || "");
+		let hash = 0;
+		for (let i = 0; i < text.length; i++) {
+			hash = (hash * 31 + text.charCodeAt(i)) >>> 0;
+		}
+		return hash;
+	}
+
+	function getPortfolioTypeColor(typeKey) {
+		if (!typeKey) return "";
+		const base = {
+			work: "#2563eb",
+			academic: "#dc2626",
+			personal: "#16a34a",
+		};
+		if (base[typeKey]) return base[typeKey];
+		const hue = hashText(typeKey) % 360;
+		return `hsl(${hue} 70% 42%)`;
+	}
+
 	function parseMonthYear(value) {
 		const raw = String(value || "").trim();
 		if (!raw) return null;
 		const lower = raw.toLowerCase();
-		if (lower === "present" || lower === "current")
-			return { year: 9999, month: 12 };
+		if (
+			lower === "present" ||
+			lower === "current" ||
+			lower === "on-going" ||
+			lower === "ongoing"
+		) {
+			const now = new Date();
+			return { year: now.getFullYear(), month: now.getMonth() + 1 };
+		}
 		const match = raw.match(/(\d{1,2})\D+(\d{4})/);
 		if (!match) return null;
 		const month = Math.max(1, Math.min(12, Number(match[1] || 0)));
@@ -344,6 +377,10 @@
 			showTypeFilters: grid.getAttribute("data-show-types") !== "false",
 			showTagFilters: grid.getAttribute("data-show-tags") !== "false",
 		};
+		const headerText =
+			grid.querySelector(".portfolio-grid__header h1,h2,h3")?.textContent?.trim() ||
+			"";
+		const introHtml = grid.querySelector(".portfolio-grid__intro")?.innerHTML || "";
 		const script = grid.querySelector(
 			'script[type="application/json"][data-cms="portfolio"]',
 		);
@@ -370,7 +407,7 @@
 					start: card.getAttribute("data-start") || "",
 					end: card.getAttribute("data-end") || "",
 					summary:
-						card.querySelector(".portfolio-card__summary")?.textContent?.trim() ||
+						card.querySelector(".portfolio-card__summary")?.innerHTML?.trim() ||
 						"",
 					tags: Array.from(card.querySelectorAll(".portfolio-card__tag")).map(
 						(tag) => tag.textContent || "",
@@ -386,6 +423,8 @@
 
 		const maxVisible = Number(raw.maxVisible);
 		return {
+			title: raw.title ?? headerText,
+			intro: raw.intro ?? introHtml,
 			maxVisible: Number.isFinite(maxVisible) ? maxVisible : attrs.maxVisible,
 			showSearch: normalizePortfolioBool(raw.showSearch, attrs.showSearch),
 			showTypeFilters: normalizePortfolioBool(
@@ -509,6 +548,7 @@
 				const tags = normalizePortfolioTags(card.tags);
 				const tagKeys = tags.map((tag) => normalizePortfolioKey(tag));
 				const summary = String(card.summary || "").trim();
+				const summaryText = stripHtml(summary);
 				const links = normalizePortfolioLinks(card.links);
 				const gallery = normalizePortfolioGallery(card.gallery);
 				const dateValue =
@@ -516,7 +556,7 @@
 				const sortValue = dateValue
 					? dateValue.year * 100 + dateValue.month
 					: 0;
-				const searchText = [title, summary, type, tags.join(" ")]
+				const searchText = [title, summaryText, type, tags.join(" ")]
 					.join(" ")
 					.toLowerCase();
 				return {
@@ -543,6 +583,64 @@
 			const filtersWrap =
 				grid.querySelector(".portfolio-grid__filters") ||
 				grid.insertBefore(el("div", "portfolio-grid__filters"), cardsWrap);
+			const anchor = controlsWrap || filtersWrap || cardsWrap;
+
+			const renderHeader = () => {
+				const title = String(data.title || "").trim();
+				let header = grid.querySelector(".portfolio-grid__header");
+				if (!title) {
+					if (header) header.remove();
+					return;
+				}
+				if (!header) {
+					header = el("div", "portfolio-grid__header");
+					grid.insertBefore(header, anchor);
+				}
+				header.innerHTML = "";
+				const h1 = document.createElement("h1");
+				h1.textContent = title;
+				header.appendChild(h1);
+			};
+
+			const renderIntro = () => {
+				const introRaw = String(data.intro || "").trim();
+				let intro = grid.querySelector(".portfolio-grid__intro");
+				if (!introRaw) {
+					if (intro) intro.remove();
+					return;
+				}
+				if (!intro) {
+					intro = el("div", "portfolio-grid__intro");
+					grid.insertBefore(intro, anchor);
+				}
+				if (/<[a-z][\s\S]*>/i.test(introRaw)) {
+					intro.innerHTML = introRaw;
+				} else {
+					intro.innerHTML = "";
+					const p = document.createElement("p");
+					p.textContent = introRaw;
+					intro.appendChild(p);
+				}
+			};
+
+			const renderDivider = () => {
+				const needsDivider = Boolean(
+					String(data.title || "").trim() || String(data.intro || "").trim(),
+				);
+				let divider = grid.querySelector(".portfolio-grid__divider");
+				if (!needsDivider) {
+					if (divider) divider.remove();
+					return;
+				}
+				if (!divider) {
+					divider = el("div", "portfolio-grid__divider");
+					grid.insertBefore(divider, anchor);
+				}
+			};
+
+			renderHeader();
+			renderIntro();
+			renderDivider();
 
 			const allTypes = Array.from(
 				new Set(cards.map((card) => card.type).filter(Boolean)),
@@ -578,6 +676,8 @@
 				cardEl.dataset.start = card.start || "";
 				cardEl.dataset.end = card.end || "";
 				cardEl.dataset.gallery = card.gallery.join(",");
+				const typeColor = getPortfolioTypeColor(card.typeKey);
+				if (typeColor) cardEl.style.setProperty("--portfolio-type-bg", typeColor);
 
 				const head = el("div", "portfolio-card__head");
 				const headInfo = document.createElement("div");
@@ -589,33 +689,41 @@
 				headInfo.appendChild(date);
 				const icons = el("div", "portfolio-card__icons");
 
+				const githubSvg =
+					'<svg class="portfolio-icon portfolio-icon--github" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0.3c-6.6 0-12 5.4-12 12 0 5.3 3.4 9.8 8.2 11.4 0.6 0.1 0.8-0.3 0.8-0.6v-2.2c-3.3 0.7-4-1.4-4-1.4-0.5-1.3-1.2-1.7-1.2-1.7-1-0.7 0.1-0.7 0.1-0.7 1.1 0.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.2 0.9 0.1-0.7 0.4-1.2 0.7-1.5-2.6-0.3-5.4-1.3-5.4-5.9 0-1.3 0.5-2.4 1.2-3.2-0.1-0.3-0.5-1.5 0.1-3.1 0 0 1-0.3 3.3 1.2 1-0.3 2-0.4 3-0.4s2.1 0.1 3 0.4c2.3-1.5 3.3-1.2 3.3-1.2 0.6 1.6 0.2 2.8 0.1 3.1 0.8 0.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.4 5.9 0.4 0.4 0.8 1 0.8 2v3c0 0.3 0.2 0.7 0.8 0.6 4.8-1.6 8.2-6.1 8.2-11.4 0-6.6-5.4-12-12-12z"/></svg>';
 				const iconMap = {
-					site: "link",
-					github: "code",
-					youtube: "smart_display",
-					facebook: "public",
+					site: { icon: "link", label: "Website" },
+					github: { icon: "github", label: "GitHub" },
+					youtube: { icon: "smart_display", label: "YouTube" },
+					facebook: { icon: "chat_bubble", label: "Message" },
 				};
-				Object.entries(iconMap).forEach(([key, icon]) => {
+				Object.entries(iconMap).forEach(([key, meta]) => {
 					const href = card.links[key];
 					if (!href) return;
 					const link = document.createElement("a");
-					link.className = "portfolio-card__icon";
+					link.className = `portfolio-card__icon portfolio-card__icon--${key}`;
 					link.href = href;
 					link.target = "_blank";
 					link.rel = "noopener noreferrer";
 					link.dataset.link = key;
-					link.setAttribute("aria-label", `Open ${key}`);
-					const span = el("span", "material-icons");
-					span.textContent = icon;
-					link.appendChild(span);
+					link.dataset.tooltip = meta.label;
+					link.setAttribute("aria-label", meta.label);
+					if (meta.icon === "github") {
+						link.innerHTML = githubSvg;
+					} else {
+						const span = el("span", "material-icons");
+						span.textContent = meta.icon;
+						link.appendChild(span);
+					}
 					icons.appendChild(link);
 				});
 				if (card.gallery.length) {
 					const btn = document.createElement("button");
 					btn.type = "button";
-					btn.className = "portfolio-card__icon";
+					btn.className = "portfolio-card__icon portfolio-card__icon--gallery";
 					btn.dataset.link = "gallery";
-					btn.setAttribute("aria-label", "Open image gallery");
+					btn.dataset.tooltip = "Gallery";
+					btn.setAttribute("aria-label", "Gallery");
 					const span = el("span", "material-icons");
 					span.textContent = "collections";
 					btn.appendChild(span);
@@ -636,20 +744,24 @@
 				typeBadge.textContent = card.type || "";
 
 				const summary = el("div", "portfolio-card__summary");
-				const summaryParts = card.summary
-					.split(/\n{2,}/)
-					.map((part) => part.trim())
-					.filter(Boolean);
-				if (summaryParts.length) {
-					summaryParts.forEach((part) => {
-						const p = document.createElement("p");
-						const lines = part.split("\n");
-						lines.forEach((line, idx) => {
-							if (idx > 0) p.appendChild(document.createElement("br"));
-							p.appendChild(document.createTextNode(line));
+				if (card.summary) {
+					if (/<[a-z][\s\S]*>/i.test(card.summary)) {
+						summary.innerHTML = card.summary;
+					} else {
+						const summaryParts = card.summary
+							.split(/\n{2,}/)
+							.map((part) => part.trim())
+							.filter(Boolean);
+						summaryParts.forEach((part) => {
+							const p = document.createElement("p");
+							const lines = part.split("\n");
+							lines.forEach((line, idx) => {
+								if (idx > 0) p.appendChild(document.createElement("br"));
+								p.appendChild(document.createTextNode(line));
+							});
+							summary.appendChild(p);
 						});
-						summary.appendChild(p);
-					});
+					}
 				}
 
 				const tagWrap = el("div", "portfolio-card__tags");
@@ -667,10 +779,19 @@
 					tagWrap.appendChild(btn);
 				});
 
+				const hasSummary = Boolean(card.summary);
+				const hasTags = Boolean(card.tags.length);
+				const makeDivider = () => el("div", "portfolio-card__divider");
 				cardEl.appendChild(head);
 				cardEl.appendChild(typeBadge);
-				cardEl.appendChild(summary);
-				cardEl.appendChild(tagWrap);
+				if (hasSummary) {
+					cardEl.appendChild(makeDivider());
+					cardEl.appendChild(summary);
+				}
+				if (hasTags) {
+					if (hasSummary || card.type) cardEl.appendChild(makeDivider());
+					cardEl.appendChild(tagWrap);
+				}
 				return cardEl;
 			};
 
