@@ -442,7 +442,11 @@ h3 {
 	gap: 16px;
 }
 
-.portfolio-grid__header h1 {
+.portfolio-grid__header {
+	text-align: center;
+}
+
+.portfolio-grid__header h2 {
 	margin: 0;
 	letter-spacing: 0.08em;
 }
@@ -1180,6 +1184,10 @@ footer a {
 	flex: 0 0 auto;
 }
 
+.grid-wrapper--row .cms-grid-insert {
+	align-self: center;
+}
+
 .cms-grid-insert .cms-divider-line {
 	flex: 0 0 22px;
 	height: 1px;
@@ -1418,6 +1426,9 @@ footer a {
 	display: flex;
 	justify-content: center;
 	margin-bottom: 10px;
+	position: sticky;
+	top: 10px;
+	z-index: 6;
 }
 
 .cms-rte__label {
@@ -1498,6 +1509,15 @@ footer a {
 		Segoe UI,
 		Roboto,
 		Arial;
+}
+
+.cms-rte__toolbar button.is-disabled,
+.cms-rte__toolbar button:disabled {
+	opacity: 0.35;
+	filter: grayscale(1);
+	cursor: not-allowed;
+	background: rgba(255, 255, 255, 0.04);
+	border-color: rgba(255, 255, 255, 0.1);
 }
 
 .cms-rte__icon {
@@ -2270,6 +2290,11 @@ footer a {
 	color: #0f1726;
 }
 
+.cms-rte__field--light .cms-rte__editor {
+	background: #fff;
+	color: #0f1726;
+}
+
 .cms-portfolio-card__actions {
 	display: flex;
 	gap: 8px;
@@ -2338,6 +2363,17 @@ footer a {
 	border-color: rgba(90, 140, 255, 0.65);
 }
 
+.cms-btn--info {
+	background: rgba(90, 140, 255, 0.35);
+	border-color: rgba(90, 140, 255, 0.7);
+	color: #fff;
+}
+
+.cms-btn--info:hover {
+	background: rgba(90, 140, 255, 0.55);
+	border-color: rgba(90, 140, 255, 0.9);
+}
+
 .cms-btn--success {
 	background: rgba(60, 200, 120, 0.25);
 	border-color: rgba(60, 200, 120, 0.5);
@@ -2377,6 +2413,58 @@ footer a {
 	cursor: not-allowed;
 }
 
+.cms-btn[data-tooltip] {
+	position: relative;
+}
+
+.cms-btn[data-tooltip]::after {
+	content: attr(data-tooltip);
+	position: absolute;
+	left: 50%;
+	bottom: calc(100% + 8px);
+	transform: translate(-50%, -4px);
+	background: #0f1726;
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	color: #f5f7ff;
+	padding: 4px 8px;
+	border-radius: 6px;
+	font-size: 10px;
+	letter-spacing: 0.04em;
+	white-space: nowrap;
+	opacity: 0;
+	pointer-events: none;
+	box-shadow: 0 6px 14px rgba(4, 8, 16, 0.35);
+	transition:
+		opacity 120ms ease,
+		transform 120ms ease;
+	z-index: 5;
+}
+
+.cms-btn[data-tooltip]::before {
+	content: "";
+	position: absolute;
+	left: 50%;
+	bottom: calc(100% + 2px);
+	transform: translateX(-50%);
+	border: 5px solid transparent;
+	border-top-color: rgba(255, 255, 255, 0.2);
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 120ms ease;
+	z-index: 4;
+}
+
+.cms-btn[data-tooltip]:hover::after,
+.cms-btn[data-tooltip]:focus-visible::after {
+	opacity: 1;
+	transform: translate(-50%, 0);
+}
+
+.cms-btn[data-tooltip]:hover::before,
+.cms-btn[data-tooltip]:focus-visible::before {
+	opacity: 1;
+}
+
 .cms-modal__group--settings {
 	display: flex;
 	flex-direction: column;
@@ -2384,14 +2472,14 @@ footer a {
 }
 
 .cms-modal__group--intro {
-	background: #ffffff;
-	border-color: rgba(18, 22, 32, 0.12);
+	background: rgba(255, 255, 255, 0.03);
+	border-color: rgba(255, 255, 255, 0.1);
 }
 
 .cms-modal__group--intro .cms-rte__label,
 .cms-modal__group--intro .cms-field__note {
-	color: rgba(18, 22, 32, 0.8);
-	opacity: 1;
+	color: rgba(255, 255, 255, 0.8);
+	opacity: 0.85;
 }
 
 .cms-accordion-actions-row .cms-btn--move {

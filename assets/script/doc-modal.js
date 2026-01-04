@@ -93,6 +93,34 @@
 		});
 	};
 
+	const observeDocCards = () => {
+		const root = document.body;
+		if (!root || !window.MutationObserver) return;
+		const observer = new MutationObserver((mutations) => {
+			const next = new Set();
+			mutations.forEach((mutation) => {
+				mutation.addedNodes.forEach((node) => {
+					if (!(node instanceof HTMLElement)) return;
+					if (node.classList.contains("doc-card")) next.add(node);
+					node.querySelectorAll?.(".doc-card").forEach((card) => next.add(card));
+				});
+				if (
+					mutation.type === "attributes" &&
+					mutation.target?.closest?.(".doc-card")
+				) {
+					next.add(mutation.target.closest(".doc-card"));
+				}
+			});
+			next.forEach((card) => applyDocCardMeta(card));
+		});
+		observer.observe(root, {
+			childList: true,
+			subtree: true,
+			attributes: true,
+			attributeFilter: ["href"],
+		});
+	};
+
 	document.addEventListener("click", (event) => {
 		const target = event.target.closest(".doc-card__link");
 		if (!target) return;
@@ -125,8 +153,12 @@
 	});
 
 	if (document.readyState === "loading") {
-		document.addEventListener("DOMContentLoaded", scanDocCards);
+		document.addEventListener("DOMContentLoaded", () => {
+			scanDocCards();
+			observeDocCards();
+		});
 	} else {
 		scanDocCards();
+		observeDocCards();
 	}
 })();
