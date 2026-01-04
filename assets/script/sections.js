@@ -5,6 +5,7 @@
 // IMPORTANT:
 // - This file is the *only* renderer for stub expansion.
 // - Divider/doc/grid/hover-cards are already final HTML and are intentionally ignored.
+// - Portfolio grids are data-driven and rendered from JSON below.
 //
 // Supported section stubs:
 //  - data-type="imgText"
@@ -246,6 +247,556 @@
 		});
 	}
 
+	function normalizePortfolioKey(value) {
+		return String(value || "")
+			.trim()
+			.toLowerCase()
+			.replace(/[^a-z0-9]+/g, "-")
+			.replace(/^-+/, "")
+			.replace(/-+$/, "");
+	}
+
+	function normalizePortfolioBool(value, fallback) {
+		if (value === undefined || value === null) return fallback;
+		if (typeof value === "string")
+			return String(value).toLowerCase() !== "false";
+		return Boolean(value);
+	}
+
+	function normalizePortfolioTags(value) {
+		const raw = Array.isArray(value) ? value : String(value || "").split(",");
+		const seen = new Set();
+		const output = [];
+		raw.forEach((item) => {
+			const tag = String(item || "").trim();
+			if (!tag || seen.has(tag)) return;
+			seen.add(tag);
+			output.push(tag);
+		});
+		return output;
+	}
+
+	function normalizePortfolioHref(value) {
+		const raw = String(value || "").trim();
+		if (!raw) return "";
+		if (raw.startsWith("/")) return raw;
+		if (raw.startsWith("https://")) return raw;
+		return "";
+	}
+
+	function normalizePortfolioLinks(value) {
+		const raw = value && typeof value === "object" ? value : {};
+		const keys = ["site", "github", "youtube", "facebook"];
+		const output = {};
+		keys.forEach((key) => {
+			const href = normalizePortfolioHref(raw[key] || "");
+			if (href) output[key] = href;
+		});
+		return output;
+	}
+
+	function normalizePortfolioGallery(value) {
+		const raw = Array.isArray(value) ? value : [];
+		const seen = new Set();
+		const output = [];
+		raw.forEach((item) => {
+			let src =
+				typeof item === "string" ? item : item?.src || item?.path || "";
+			src = String(src || "").trim();
+			if (!src) return;
+			if (!src.startsWith("https://") && !src.startsWith("/")) {
+				src = `/${src}`;
+			}
+			if (!src.startsWith("https://") && !src.startsWith("/assets/")) return;
+			if (seen.has(src)) return;
+			seen.add(src);
+			output.push(src);
+		});
+		return output;
+	}
+
+	function parseMonthYear(value) {
+		const raw = String(value || "").trim();
+		if (!raw) return null;
+		const lower = raw.toLowerCase();
+		if (lower === "present" || lower === "current")
+			return { year: 9999, month: 12 };
+		const match = raw.match(/(\d{1,2})\D+(\d{4})/);
+		if (!match) return null;
+		const month = Math.max(1, Math.min(12, Number(match[1] || 0)));
+		const year = Number(match[2] || 0);
+		if (!year) return null;
+		return { year, month };
+	}
+
+	function formatPortfolioDate(start, end) {
+		const s = String(start || "").trim();
+		const e = String(end || "").trim();
+		if (s && e && s !== e) return `${s} - ${e}`;
+		return s || e;
+	}
+
+	function parsePortfolioGridData(grid) {
+		const maxAttr = Number(grid.getAttribute("data-max-visible"));
+		const attrs = {
+			maxVisible: Number.isFinite(maxAttr) ? maxAttr : 3,
+			showSearch: grid.getAttribute("data-show-search") !== "false",
+			showTypeFilters: grid.getAttribute("data-show-types") !== "false",
+			showTagFilters: grid.getAttribute("data-show-tags") !== "false",
+		};
+		const script = grid.querySelector(
+			'script[type="application/json"][data-cms="portfolio"]',
+		);
+		let data = null;
+		if (script) {
+			try {
+				data = JSON.parse(script.textContent || "{}");
+			} catch {
+				data = null;
+			}
+		}
+		const raw = data && typeof data === "object" ? data : {};
+		let cards = Array.isArray(raw.cards) ? raw.cards : null;
+		if (!cards) {
+			cards = Array.from(grid.querySelectorAll(".portfolio-card")).map(
+				(card) => ({
+					title:
+						card.querySelector(".portfolio-card__title")?.textContent?.trim() ||
+						"",
+					type:
+						card.querySelector(".portfolio-card__type")?.textContent?.trim() ||
+						card.getAttribute("data-type-label") ||
+						"",
+					start: card.getAttribute("data-start") || "",
+					end: card.getAttribute("data-end") || "",
+					summary:
+						card.querySelector(".portfolio-card__summary")?.textContent?.trim() ||
+						"",
+					tags: Array.from(card.querySelectorAll(".portfolio-card__tag")).map(
+						(tag) => tag.textContent || "",
+					),
+					links: {},
+					gallery: String(card.getAttribute("data-gallery") || "")
+						.split(",")
+						.map((item) => item.trim())
+						.filter(Boolean),
+				}),
+			);
+		}
+
+		const maxVisible = Number(raw.maxVisible);
+		return {
+			maxVisible: Number.isFinite(maxVisible) ? maxVisible : attrs.maxVisible,
+			showSearch: normalizePortfolioBool(raw.showSearch, attrs.showSearch),
+			showTypeFilters: normalizePortfolioBool(
+				raw.showTypeFilters,
+				attrs.showTypeFilters,
+			),
+			showTagFilters: normalizePortfolioBool(
+				raw.showTagFilters,
+				attrs.showTagFilters,
+			),
+			cards,
+		};
+	}
+
+	function ensurePortfolioModal() {
+		let modal = document.getElementById("portfolio-gallery-modal");
+		if (modal) return modal;
+		modal = document.createElement("div");
+		modal.id = "portfolio-gallery-modal";
+		modal.className = "modal portfolio-modal";
+		modal.setAttribute("aria-hidden", "true");
+		modal.innerHTML = [
+			'<div class="modal-content portfolio-modal__content" role="dialog" aria-modal="true">',
+			'<button class="portfolio-modal__close" type="button" data-portfolio-close aria-label="Close">×</button>',
+			'<div class="portfolio-modal__header">',
+			'<div class="portfolio-modal__title" id="portfolio-modal-title"></div>',
+			'<div class="portfolio-modal__meta" id="portfolio-modal-meta"></div>',
+			"</div>",
+			'<div class="portfolio-modal__body">',
+			'<img class="portfolio-modal__main" id="portfolio-modal-main" alt="" />',
+			'<div class="portfolio-modal__thumbs" id="portfolio-modal-thumbs"></div>',
+			"</div>",
+			"</div>",
+		].join("");
+		document.body.appendChild(modal);
+		modal.addEventListener("click", (event) => {
+			if (event.target === modal) closePortfolioModal();
+		});
+		document.addEventListener("keydown", (event) => {
+			if (event.key === "Escape") closePortfolioModal();
+		});
+		return modal;
+	}
+
+	let portfolioModalState = { images: [], index: 0, title: "", meta: "" };
+
+	function closePortfolioModal() {
+		const modal = document.getElementById("portfolio-gallery-modal");
+		if (!modal || !modal.classList.contains("is-open")) return;
+		modal.classList.remove("is-open");
+		document.documentElement.classList.remove("lb-lock");
+		document.body.classList.remove("lb-lock");
+		modal.setAttribute("aria-hidden", "true");
+		portfolioModalState = { images: [], index: 0, title: "", meta: "" };
+	}
+
+	function openPortfolioModal({ title, meta, images }) {
+		const modal = ensurePortfolioModal();
+		const mainImg = modal.querySelector("#portfolio-modal-main");
+		const titleEl = modal.querySelector("#portfolio-modal-title");
+		const metaEl = modal.querySelector("#portfolio-modal-meta");
+		const thumbs = modal.querySelector("#portfolio-modal-thumbs");
+		if (!mainImg || !titleEl || !metaEl || !thumbs) return;
+		const safeImages = Array.isArray(images) ? images.filter(Boolean) : [];
+		if (!safeImages.length) return;
+		portfolioModalState = {
+			images: safeImages,
+			index: 0,
+			title: title || "",
+			meta: meta || "",
+		};
+		titleEl.textContent = portfolioModalState.title;
+		metaEl.textContent = portfolioModalState.meta;
+		thumbs.innerHTML = "";
+		safeImages.forEach((src, idx) => {
+			const thumb = document.createElement("img");
+			thumb.src = src;
+			thumb.alt = title || "Gallery image";
+			thumb.dataset.idx = String(idx);
+			thumb.addEventListener("click", (event) => {
+				event.preventDefault();
+				portfolioModalState.index = idx;
+				updatePortfolioModal();
+			});
+			thumbs.appendChild(thumb);
+		});
+		updatePortfolioModal();
+		modal.classList.add("is-open");
+		document.documentElement.classList.add("lb-lock");
+		document.body.classList.add("lb-lock");
+		modal.setAttribute("aria-hidden", "false");
+		const closeBtn = modal.querySelector("[data-portfolio-close]");
+		if (closeBtn) closeBtn.addEventListener("click", closePortfolioModal);
+	}
+
+	function updatePortfolioModal() {
+		const modal = document.getElementById("portfolio-gallery-modal");
+		if (!modal) return;
+		const mainImg = modal.querySelector("#portfolio-modal-main");
+		const thumbs = modal.querySelector("#portfolio-modal-thumbs");
+		if (!mainImg || !thumbs) return;
+		const images = portfolioModalState.images || [];
+		const idx = Math.max(
+			0,
+			Math.min(portfolioModalState.index, images.length - 1),
+		);
+		mainImg.src = images[idx] || "";
+		mainImg.alt = portfolioModalState.title || "Gallery image";
+		thumbs.querySelectorAll("img").forEach((thumb) => {
+			thumb.classList.toggle("is-active", thumb.dataset.idx === String(idx));
+		});
+	}
+
+	function initPortfolioGrids(root = document) {
+		root.querySelectorAll(".portfolio-grid").forEach((grid) => {
+			const data = parsePortfolioGridData(grid);
+			const cards = (data.cards || []).map((card) => {
+				const title = String(card.title || "").trim();
+				const type = String(card.type || "").trim();
+				const typeKey = normalizePortfolioKey(type);
+				const tags = normalizePortfolioTags(card.tags);
+				const tagKeys = tags.map((tag) => normalizePortfolioKey(tag));
+				const summary = String(card.summary || "").trim();
+				const links = normalizePortfolioLinks(card.links);
+				const gallery = normalizePortfolioGallery(card.gallery);
+				const dateValue =
+					parseMonthYear(card.end || "") || parseMonthYear(card.start || "");
+				const sortValue = dateValue
+					? dateValue.year * 100 + dateValue.month
+					: 0;
+				const searchText = [title, summary, type, tags.join(" ")]
+					.join(" ")
+					.toLowerCase();
+				return {
+					title,
+					type,
+					typeKey,
+					start: String(card.start || "").trim(),
+					end: String(card.end || "").trim(),
+					summary,
+					tags,
+					tagKeys,
+					links,
+					gallery,
+					sortValue,
+					searchText,
+				};
+			});
+			const cardsWrap =
+				grid.querySelector(".portfolio-grid__cards") ||
+				grid.appendChild(el("div", "portfolio-grid__cards"));
+			const controlsWrap =
+				grid.querySelector(".portfolio-grid__controls") ||
+				grid.insertBefore(el("div", "portfolio-grid__controls"), cardsWrap);
+			const filtersWrap =
+				grid.querySelector(".portfolio-grid__filters") ||
+				grid.insertBefore(el("div", "portfolio-grid__filters"), cardsWrap);
+
+			const allTypes = Array.from(
+				new Set(cards.map((card) => card.type).filter(Boolean)),
+			).sort((a, b) => a.localeCompare(b));
+			const allTags = Array.from(
+				new Set(cards.flatMap((card) => card.tags)),
+			).sort((a, b) => a.localeCompare(b));
+
+			let activeType = "";
+			const activeTags = new Set();
+			let searchTerm = "";
+
+			const updateFilterUi = () => {
+				filtersWrap
+					.querySelectorAll(".portfolio-filter-pill[data-type]")
+					.forEach((pill) => {
+						const key = normalizePortfolioKey(pill.dataset.type || "");
+						pill.classList.toggle("is-active", key === activeType);
+					});
+				filtersWrap
+					.querySelectorAll(".portfolio-filter-pill[data-tag]")
+					.forEach((pill) => {
+						const key = normalizePortfolioKey(pill.dataset.tag || "");
+						pill.classList.toggle("is-active", activeTags.has(key));
+					});
+			};
+
+			const buildPortfolioCard = (card, onTagClick) => {
+				const cardEl = el("article", "portfolio-card");
+				cardEl.dataset.type = card.typeKey || "";
+				cardEl.dataset.typeLabel = card.type || "";
+				cardEl.dataset.tags = card.tags.join(", ");
+				cardEl.dataset.start = card.start || "";
+				cardEl.dataset.end = card.end || "";
+				cardEl.dataset.gallery = card.gallery.join(",");
+
+				const head = el("div", "portfolio-card__head");
+				const headInfo = document.createElement("div");
+				const title = el("div", "portfolio-card__title");
+				title.textContent = card.title || "";
+				const date = el("div", "portfolio-card__date");
+				date.textContent = formatPortfolioDate(card.start, card.end);
+				headInfo.appendChild(title);
+				headInfo.appendChild(date);
+				const icons = el("div", "portfolio-card__icons");
+
+				const iconMap = {
+					site: "link",
+					github: "code",
+					youtube: "smart_display",
+					facebook: "public",
+				};
+				Object.entries(iconMap).forEach(([key, icon]) => {
+					const href = card.links[key];
+					if (!href) return;
+					const link = document.createElement("a");
+					link.className = "portfolio-card__icon";
+					link.href = href;
+					link.target = "_blank";
+					link.rel = "noopener noreferrer";
+					link.dataset.link = key;
+					link.setAttribute("aria-label", `Open ${key}`);
+					const span = el("span", "material-icons");
+					span.textContent = icon;
+					link.appendChild(span);
+					icons.appendChild(link);
+				});
+				if (card.gallery.length) {
+					const btn = document.createElement("button");
+					btn.type = "button";
+					btn.className = "portfolio-card__icon";
+					btn.dataset.link = "gallery";
+					btn.setAttribute("aria-label", "Open image gallery");
+					const span = el("span", "material-icons");
+					span.textContent = "collections";
+					btn.appendChild(span);
+					btn.addEventListener("click", () => {
+						openPortfolioModal({
+							title: card.title || "Gallery",
+							meta: formatPortfolioDate(card.start, card.end),
+							images: card.gallery,
+						});
+					});
+					icons.appendChild(btn);
+				}
+
+				head.appendChild(headInfo);
+				head.appendChild(icons);
+
+				const typeBadge = el("div", "portfolio-card__type");
+				typeBadge.textContent = card.type || "";
+
+				const summary = el("div", "portfolio-card__summary");
+				const summaryParts = card.summary
+					.split(/\n{2,}/)
+					.map((part) => part.trim())
+					.filter(Boolean);
+				if (summaryParts.length) {
+					summaryParts.forEach((part) => {
+						const p = document.createElement("p");
+						const lines = part.split("\n");
+						lines.forEach((line, idx) => {
+							if (idx > 0) p.appendChild(document.createElement("br"));
+							p.appendChild(document.createTextNode(line));
+						});
+						summary.appendChild(p);
+					});
+				}
+
+				const tagWrap = el("div", "portfolio-card__tags");
+				card.tags.forEach((tag, idx) => {
+					const btn = document.createElement("button");
+					btn.type = "button";
+					btn.className = "portfolio-card__tag";
+					btn.dataset.tag = tag;
+					btn.textContent = tag;
+					btn.addEventListener("click", () => {
+						if (typeof onTagClick === "function") {
+							onTagClick(card.tagKeys[idx]);
+						}
+					});
+					tagWrap.appendChild(btn);
+				});
+
+				cardEl.appendChild(head);
+				cardEl.appendChild(typeBadge);
+				cardEl.appendChild(summary);
+				cardEl.appendChild(tagWrap);
+				return cardEl;
+			};
+
+			const renderCards = (list) => {
+				cardsWrap.innerHTML = "";
+				if (!list.length) {
+					const empty = el("div", "portfolio-grid__empty");
+					empty.textContent = "No projects match your filters.";
+					cardsWrap.appendChild(empty);
+					return;
+				}
+				list.forEach((card) => {
+					cardsWrap.appendChild(
+						buildPortfolioCard(card, (tagKey) => {
+							if (!tagKey) return;
+							if (activeTags.has(tagKey)) activeTags.delete(tagKey);
+							else activeTags.add(tagKey);
+							applyFilters();
+						}),
+					);
+				});
+			};
+
+			const applyFilters = () => {
+				const normalizedSearch = String(searchTerm || "")
+					.trim()
+					.toLowerCase();
+				const sorted = cards.slice().sort((a, b) => b.sortValue - a.sortValue);
+				let filtered = sorted;
+				if (activeType) {
+					filtered = filtered.filter((card) => card.typeKey === activeType);
+				}
+				if (activeTags.size) {
+					const required = Array.from(activeTags);
+					filtered = filtered.filter((card) =>
+						required.every((tag) => card.tagKeys.includes(tag)),
+					);
+				}
+				if (normalizedSearch) {
+					filtered = filtered.filter((card) =>
+						card.searchText.includes(normalizedSearch),
+					);
+				}
+				if (!activeType && !activeTags.size && !normalizedSearch) {
+					const limit =
+						Number.isFinite(data.maxVisible) && data.maxVisible > 0
+							? data.maxVisible
+							: sorted.length;
+					filtered = sorted.slice(0, limit);
+				}
+				renderCards(filtered);
+				updateFilterUi();
+			};
+
+			const buildSearch = () => {
+				controlsWrap.innerHTML = "";
+				if (!data.showSearch) return;
+				const input = document.createElement("input");
+				input.type = "search";
+				input.className = "portfolio-grid__search-input";
+				input.placeholder = "Search projects";
+				input.setAttribute("aria-label", "Search projects");
+				input.addEventListener("input", () => {
+					searchTerm = input.value;
+					applyFilters();
+				});
+				const wrap = el("div", "portfolio-grid__search");
+				wrap.appendChild(input);
+				controlsWrap.appendChild(wrap);
+			};
+
+			const buildFilters = () => {
+				filtersWrap.innerHTML = "";
+				if (!data.showTypeFilters && !data.showTagFilters) return;
+				if (data.showTypeFilters && allTypes.length) {
+					const group = el("div", "portfolio-grid__filter-group");
+					group.dataset.filter = "type";
+					const allBtn = el("button", "portfolio-filter-pill");
+					allBtn.type = "button";
+					allBtn.dataset.type = "";
+					allBtn.textContent = "All";
+					allBtn.addEventListener("click", () => {
+						activeType = "";
+						applyFilters();
+					});
+					group.appendChild(allBtn);
+					allTypes.forEach((type) => {
+						const btn = el("button", "portfolio-filter-pill");
+						btn.type = "button";
+						btn.dataset.type = type;
+						btn.textContent = type;
+						btn.addEventListener("click", () => {
+							const key = normalizePortfolioKey(type);
+							activeType = activeType === key ? "" : key;
+							applyFilters();
+						});
+						group.appendChild(btn);
+					});
+					filtersWrap.appendChild(group);
+				}
+				if (data.showTagFilters && allTags.length) {
+					const group = el("div", "portfolio-grid__filter-group");
+					group.dataset.filter = "tag";
+					allTags.forEach((tag) => {
+						const btn = el("button", "portfolio-filter-pill");
+						btn.type = "button";
+						btn.dataset.tag = tag;
+						btn.textContent = tag;
+						btn.addEventListener("click", () => {
+							const key = normalizePortfolioKey(tag);
+							if (activeTags.has(key)) activeTags.delete(key);
+							else activeTags.add(key);
+							applyFilters();
+						});
+						group.appendChild(btn);
+					});
+					filtersWrap.appendChild(group);
+				}
+			};
+
+			buildSearch();
+			buildFilters();
+			applyFilters();
+		});
+	}
+
 	// Small image / big text.
 	function sectionImgText(stub) {
 		const imgSrc = stub.dataset.img || "";
@@ -377,6 +928,7 @@
 		// Then expand inline image stubs anywhere (including inside twoCol)
 		expandInlineImgStubs(document);
 		expandInlineVideoStubs(document);
+		initPortfolioGrids(document);
 
 		// Finally, normalize any raw js-lightbox <img> (used by square grids etc.)
 		normalizePlainLightboxImgs(document);
