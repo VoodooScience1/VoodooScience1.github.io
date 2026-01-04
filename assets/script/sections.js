@@ -377,9 +377,13 @@
 			showTypeFilters: grid.getAttribute("data-show-types") !== "false",
 			showTagFilters: grid.getAttribute("data-show-tags") !== "false",
 		};
-		const headerText =
-			grid.querySelector(".portfolio-grid__header h1,h2,h3")?.textContent?.trim() ||
-			"";
+		const headerEl = grid.querySelector(".portfolio-grid__header h1,h2,h3");
+		const headerText = headerEl?.textContent?.trim() || "";
+		const headerStyle = headerEl?.getAttribute("style") || "";
+		const alignMatch = String(headerStyle).match(
+			/text-align\s*:\s*(left|center)/i,
+		);
+		const headerAlign = alignMatch ? alignMatch[1].toLowerCase() : "";
 		const introHtml = grid.querySelector(".portfolio-grid__intro")?.innerHTML || "";
 		const script = grid.querySelector(
 			'script[type="application/json"][data-cms="portfolio"]',
@@ -424,6 +428,7 @@
 		const maxVisible = Number(raw.maxVisible);
 		return {
 			title: raw.title ?? headerText,
+			titleAlign: raw.titleAlign ?? headerAlign,
 			intro: raw.intro ?? introHtml,
 			maxVisible: Number.isFinite(maxVisible) ? maxVisible : attrs.maxVisible,
 			showSearch: normalizePortfolioBool(raw.showSearch, attrs.showSearch),
@@ -633,6 +638,10 @@
 				header.innerHTML = "";
 				const h2 = document.createElement("h2");
 				h2.textContent = title;
+				const align = String(data.titleAlign || "").toLowerCase();
+				if (align === "left" || align === "center") {
+					h2.style.textAlign = align;
+				}
 				header.appendChild(h2);
 			};
 

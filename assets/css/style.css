@@ -1186,6 +1186,12 @@ footer a {
 
 .grid-wrapper--row .cms-grid-insert {
 	align-self: center;
+	width: 36px;
+	height: 36px;
+	padding: 0;
+	gap: 0;
+	background: rgba(60, 200, 120, 0.18);
+	border: 1px solid rgba(60, 200, 120, 0.35);
 }
 
 .cms-grid-insert .cms-divider-line {
@@ -1196,6 +1202,17 @@ footer a {
 .cms-grid-insert .cms-divider-plus {
 	width: 26px;
 	height: 26px;
+}
+
+.grid-wrapper--row .cms-grid-insert .cms-divider-line {
+	display: none;
+}
+
+.grid-wrapper--row .cms-grid-insert .cms-divider-plus {
+	width: 32px;
+	height: 32px;
+	background: transparent;
+	border: 0;
 }
 
 /***********************************************************************
@@ -2264,18 +2281,25 @@ footer a {
 
 .cms-portfolio-type-controls {
 	display: flex;
+	flex-direction: column;
 	gap: 6px;
-	flex-wrap: wrap;
-	align-items: center;
 }
 
 .cms-portfolio-type-controls .cms-field__select {
-	width: 160px;
+	width: 180px;
+	max-width: 100%;
 }
 
 .cms-portfolio-type-controls .cms-field__input {
-	flex: 1 1 160px;
-	min-width: 160px;
+	flex: 1 1 200px;
+	min-width: 180px;
+}
+
+.cms-portfolio-type-controls .cms-field__row {
+	display: flex;
+	gap: 6px;
+	flex-wrap: wrap;
+	align-items: center;
 }
 
 .cms-portfolio-type-manager {
