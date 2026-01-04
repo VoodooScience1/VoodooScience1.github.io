@@ -1,6 +1,6 @@
 // sections.js
 // Expands <div class="section" data-type="..."> stubs into EXISTING div/class structure.
-// Also expands inline image stubs: <div class="img-stub" ...></div>
+// Also expands inline media stubs: <div class="img-stub" ...></div>
 //
 // IMPORTANT:
 // - This file is the *only* renderer for stub expansion.
@@ -19,6 +19,12 @@
 //        data-overlay-title="..."
 //        data-overlay-text="..."
 //        data-size="sml|lrg"></div>
+//
+// Inline video stubs:
+//  - <div class="video-stub"
+//        data-video="https://www.youtube.com/watch?v=..."
+//        data-caption="..."
+//        data-scale="sm|md|lg|full"></div>
 //
 // Notes:
 // - We intentionally DO NOT support `data-class` anymore (keeps authoring deterministic).
@@ -39,6 +45,36 @@
 		return String(val || "").toLowerCase() === "true";
 	}
 
+	function getYouTubeVideoId(value) {
+		const raw = String(value || "").trim();
+		if (!raw) return "";
+		if (/^[A-Za-z0-9_-]{11}$/.test(raw)) return raw;
+		let url = null;
+		try {
+			url = new URL(raw);
+		} catch {
+			return "";
+		}
+		const host = url.hostname.toLowerCase();
+		if (host.includes("youtu.be")) {
+			return url.pathname.replace(/^\/+/, "").split("/")[0] || "";
+		}
+		if (!host.includes("youtube.com")) return "";
+		if (url.pathname === "/watch") {
+			return url.searchParams.get("v") || "";
+		}
+		const parts = url.pathname.split("/").filter(Boolean);
+		if (parts[0] === "embed" && parts[1]) return parts[1];
+		if (parts[0] === "shorts" && parts[1]) return parts[1];
+		if (parts[0] === "live" && parts[1]) return parts[1];
+		return "";
+	}
+
+	function getYouTubeEmbedSrc(value) {
+		const id = getYouTubeVideoId(value);
+		return id ? `https://www.youtube.com/embed/${id}` : "";
+	}
+
 	function moveAllChildren(fromEl, toEl) {
 		toArray(fromEl.childNodes).forEach((n) => toEl.appendChild(n));
 	}
@@ -56,17 +92,22 @@
 		imgSrc,
 		caption,
 		useLightbox,
+		overlayEnabled,
 		overlayTitle,
 		overlayText,
+		scale,
 	) {
 		const imgWrap = el("div", className);
+		const scaleValue = String(scale || "").trim().toLowerCase();
+		if (scaleValue && scaleValue !== "auto") {
+			imgWrap.classList.add(`img-scale-${scaleValue}`);
+		}
 
 		// No image? No broken <img>.
 		if (!imgSrc) return imgWrap;
 
 		// Reuse your hover-card overlay CSS inside the polaroid frame.
 		const content = el("div", "content content--full");
-		const overlay = el("div", "content-overlay");
 
 		const img = document.createElement("img");
 		img.src = imgSrc;
@@ -86,35 +127,36 @@
 
 		if (useLightbox) img.classList.add("js-lightbox");
 
-		const details = el("div", "content-details fadeIn-bottom");
-
-		const titleText =
-			(overlayTitle && overlayTitle.trim()) ||
-			(caption && caption.trim()) ||
-			"";
-
-		const bodyText =
-			(overlayText && overlayText.trim()) ||
-			(useLightbox ? "Click to view" : "");
-
-		// Only render overlay text blocks if there’s something to show.
-		if (titleText) {
-			const h3 = document.createElement("h3");
-			h3.className = "content-title";
-			h3.textContent = titleText;
-			details.appendChild(h3);
+		let titleText = (overlayTitle && overlayTitle.trim()) || "";
+		let bodyText = (overlayText && overlayText.trim()) || "";
+		if (overlayEnabled && !titleText && !bodyText && useLightbox) {
+			bodyText = "Click to view";
 		}
 
-		if (bodyText) {
-			const p = document.createElement("p");
-			p.className = "content-text";
-			p.textContent = bodyText;
-			details.appendChild(p);
-		}
+		if (overlayEnabled) {
+			const overlay = el("div", "content-overlay");
+			const details = el("div", "content-details fadeIn-bottom");
 
-		content.appendChild(overlay);
-		content.appendChild(img);
-		if (titleText || bodyText) content.appendChild(details);
+			if (titleText) {
+				const h3 = document.createElement("h3");
+				h3.className = "content-title";
+				h3.textContent = titleText;
+				details.appendChild(h3);
+			}
+
+			if (bodyText) {
+				const p = document.createElement("p");
+				p.className = "content-text";
+				p.textContent = bodyText;
+				details.appendChild(p);
+			}
+
+			content.appendChild(overlay);
+			content.appendChild(img);
+			if (titleText || bodyText) content.appendChild(details);
+		} else {
+			content.appendChild(img);
+		}
 
 		imgWrap.appendChild(content);
 
@@ -128,14 +170,49 @@
 		return imgWrap;
 	}
 
+	function buildVideoWrap(className, videoSrc, caption, scale) {
+		const videoWrap = el("div", className);
+		const scaleValue = String(scale || "").trim().toLowerCase();
+		if (scaleValue && scaleValue !== "auto") {
+			videoWrap.classList.add(`img-scale-${scaleValue}`);
+		}
+
+		if (!videoSrc) return videoWrap;
+
+		const content = el("div", "content content--full");
+		const embedSrc = getYouTubeEmbedSrc(videoSrc);
+		if (!embedSrc) return videoWrap;
+
+		const iframe = document.createElement("iframe");
+		iframe.src = embedSrc;
+		iframe.className = "content-video";
+		iframe.loading = "lazy";
+		iframe.allow =
+			"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+		iframe.allowFullscreen = true;
+		iframe.title = caption ? `Video: ${caption}` : "Embedded video";
+		content.appendChild(iframe);
+		videoWrap.appendChild(content);
+
+		if (caption) {
+			const p = document.createElement("p");
+			p.textContent = caption;
+			videoWrap.appendChild(p);
+		}
+
+		return videoWrap;
+	}
+
 	// Expand inline .img-stub elements anywhere in the document.
 	function expandInlineImgStubs(root = document) {
 		root.querySelectorAll(".img-stub[data-img]").forEach((stub) => {
 			const imgSrc = stub.dataset.img || "";
 			const caption = stub.dataset.caption || "";
 			const useLightbox = isTrue(stub.dataset.lightbox);
+			const overlayEnabled = stub.dataset.overlay !== "false";
 			const overlayTitle = stub.dataset.overlayTitle || "";
 			const overlayText = stub.dataset.overlayText || "";
+			const scale = stub.dataset.scale || "";
 
 			const size = (stub.dataset.size || "sml").toLowerCase();
 			const className =
@@ -146,11 +223,25 @@
 				imgSrc,
 				caption,
 				useLightbox,
+				overlayEnabled,
 				overlayTitle,
 				overlayText,
+				scale,
 			);
 
 			// Replace stub with fully-rendered structure.
+			stub.replaceWith(built);
+		});
+	}
+
+	// Expand inline .video-stub elements anywhere in the document.
+	function expandInlineVideoStubs(root = document) {
+		root.querySelectorAll(".video-stub[data-video]").forEach((stub) => {
+			const videoSrc = stub.dataset.video || "";
+			const caption = stub.dataset.caption || "";
+			const scale = stub.dataset.scale || "";
+
+			const built = buildVideoWrap("img-text-div-img", videoSrc, caption, scale);
 			stub.replaceWith(built);
 		});
 	}
@@ -161,9 +252,11 @@
 		const caption = stub.dataset.caption || "";
 		const useLightbox = isTrue(stub.dataset.lightbox);
 		const pos = (stub.dataset.imgPos || "left").toLowerCase();
+		const overlayEnabled = stub.dataset.overlay !== "false";
 
 		const overlayTitle = stub.dataset.overlayTitle || "";
 		const overlayText = stub.dataset.overlayText || "";
+		const scale = stub.dataset.scale || "";
 
 		const grid = el("div", "img-text-div-wrapper");
 		if (pos === "right") grid.classList.add("reverse");
@@ -173,8 +266,10 @@
 			imgSrc,
 			caption,
 			useLightbox,
+			overlayEnabled,
 			overlayTitle,
 			overlayText,
+			scale,
 		);
 
 		const textCol = el("div", "img-text-div-text");
@@ -196,12 +291,14 @@
 		const imgSrc = stub.dataset.img || "";
 		const caption = stub.dataset.caption || "";
 		const useLightbox = isTrue(stub.dataset.lightbox);
+		const overlayEnabled = stub.dataset.overlay !== "false";
 
 		// DEFAULT = LEFT
 		const pos = (stub.dataset.imgPos || "left").toLowerCase();
 
 		const overlayTitle = stub.dataset.overlayTitle || "";
 		const overlayText = stub.dataset.overlayText || "";
+		const scale = stub.dataset.scale || "";
 
 		const grid = el("div", "lrg-img-text-div-wrapper");
 
@@ -213,8 +310,10 @@
 			imgSrc,
 			caption,
 			useLightbox,
+			overlayEnabled,
 			overlayTitle,
 			overlayText,
+			scale,
 		);
 
 		const textCol = el("div", "lrg-img-text-div-text");
@@ -277,6 +376,7 @@
 
 		// Then expand inline image stubs anywhere (including inside twoCol)
 		expandInlineImgStubs(document);
+		expandInlineVideoStubs(document);
 
 		// Finally, normalize any raw js-lightbox <img> (used by square grids etc.)
 		normalizePlainLightboxImgs(document);

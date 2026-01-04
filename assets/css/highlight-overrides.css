@@ -1,0 +1,123 @@
+/* Code block hooks:
+ * - markup: <pre><code class="language-xxx"> or hljs adds .hljs
+ * - badge uses data-lang (set by admin or dom-loader)
+ * - selectors include cms wrappers and plain pre
+ */
+.cms-rte pre,
+.default-div-wrapper pre,
+.section pre,
+.tab-content pre,
+.cms-block pre,
+pre {
+	position: relative;
+	background: transparent !important;
+	border: none !important;
+	padding: 0 !important;
+	border-radius: 12px !important;
+	overflow: auto !important;
+}
+
+.cms-rte pre code,
+.default-div-wrapper pre code,
+.section pre code,
+.tab-content pre code,
+.cms-block pre code,
+pre code {
+	display: block;
+	white-space: pre;
+	font-size: 12px !important;
+	line-height: 1.4 !important;
+	font-family:
+		ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+		"Courier New", monospace !important;
+	tab-size: 2 !important;
+}
+
+.cms-rte pre code.hljs,
+.default-div-wrapper pre code.hljs,
+.section pre code.hljs,
+.tab-content pre code.hljs,
+.cms-block pre code.hljs,
+pre code.hljs,
+.cms-rte pre code[class^="language-"],
+.default-div-wrapper pre code[class^="language-"],
+.section pre code[class^="language-"],
+.tab-content pre code[class^="language-"],
+.cms-block pre code[class^="language-"],
+pre code[class^="language-"] {
+	position: relative;
+	padding: 14px 16px !important;
+	background: #282c34 !important;
+	color: #abb2bf !important;
+	border-radius: 12px !important;
+	box-shadow: 0 10px 30px rgba(17, 24, 39, 0.35) !important;
+}
+
+pre .code-copy-btn {
+	position: absolute;
+	top: 30px;
+	right: 12px;
+	z-index: 3;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	border-radius: 8px;
+	border: 1px solid rgba(148, 163, 184, 0.4);
+	background: rgba(15, 23, 42, 0.75);
+	color: #e2e8f0;
+	font-family: "Material Icons", system-ui, sans-serif;
+	font-size: 18px;
+	line-height: 1;
+	opacity: 0;
+	pointer-events: none;
+	transition:
+		opacity 0.15s ease,
+		background 0.15s ease,
+		border-color 0.15s ease,
+		color 0.15s ease;
+}
+
+pre:hover .code-copy-btn,
+pre:focus-within .code-copy-btn {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+pre .code-copy-btn:hover {
+	background: rgba(30, 41, 59, 0.85);
+	border-color: rgba(148, 163, 184, 0.7);
+	color: #f8fafc;
+}
+
+pre .code-copy-btn.is-copied {
+	color: #a7f3d0;
+	border-color: rgba(110, 231, 183, 0.7);
+}
+
+.cms-rte pre code.hljs[data-lang]::after,
+.default-div-wrapper pre code.hljs[data-lang]::after,
+.section pre code.hljs[data-lang]::after,
+.tab-content pre code.hljs[data-lang]::after,
+.cms-block pre code.hljs[data-lang]::after,
+pre code.hljs[data-lang]::after,
+.cms-rte pre code[data-lang]::after,
+.default-div-wrapper pre code[data-lang]::after,
+.section pre code[data-lang]::after,
+.tab-content pre code[data-lang]::after,
+.cms-block pre code[data-lang]::after,
+pre code[data-lang]::after {
+	content: attr(data-lang);
+	position: absolute;
+	top: 5px;
+	right: 12px;
+	padding: 3.5px 8px;
+	border-radius: 10px;
+	background: rgba(15, 23, 42, 0.75);
+	color: #e2e8f0;
+	font-size: 10px;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	pointer-events: none;
+}

@@ -31,6 +31,32 @@
 	justify-content: center;
 }
 
+.doc-modal .modal-content {
+	background: #0f1726;
+	border-radius: 12px;
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	padding: 18px;
+	align-items: stretch;
+	justify-content: flex-start;
+	gap: 12px;
+}
+
+.doc-modal__title {
+	color: #f5f7ff;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	font-size: 12px;
+	text-align: left;
+}
+
+.doc-modal__frame {
+	width: 100%;
+	flex: 1 1 auto;
+	border: 0;
+	border-radius: 8px;
+	background: #0b0f1a;
+}
+
 #lb-main-img {
 	margin: 0;
 	display: block;
