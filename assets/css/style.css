@@ -755,8 +755,8 @@ footer a {
 
 .cms-grid-actions {
 	position: absolute;
-	top: -15px;
-	right: 15px;
+	top: 8px;
+	right: 8px;
 	display: flex;
 	gap: 6px;
 	z-index: 4;
@@ -794,6 +794,28 @@ footer a {
 	background: rgba(180, 40, 40, 0.55);
 }
 
+.cms-grid-action--move {
+	border-color: rgba(90, 140, 255, 0.9);
+	background: rgba(90, 140, 255, 0.5);
+	color: #fff;
+}
+
+.cms-grid-action--move:hover {
+	border-color: rgba(90, 140, 255, 1);
+	background: rgba(90, 140, 255, 0.7);
+}
+
+.cms-grid-action--edit {
+	border-color: rgba(255, 165, 90, 0.9);
+	background: rgba(255, 140, 60, 0.55);
+	color: #fff;
+}
+
+.cms-grid-action--edit:hover {
+	border-color: rgba(255, 175, 110, 1);
+	background: rgba(255, 140, 60, 0.75);
+}
+
 .cms-grid-action--danger:hover {
 	border-color: rgba(255, 140, 140, 1);
 	background: rgba(180, 40, 40, 0.75);
@@ -802,6 +824,27 @@ footer a {
 .cms-grid__icon {
 	font-size: 16px;
 	line-height: 1;
+}
+
+.cms-grid-insert {
+	width: auto;
+	margin: 0;
+	padding: 6px 8px;
+	border-radius: 999px;
+	align-self: center;
+	justify-content: center;
+	gap: 8px;
+	flex: 0 0 auto;
+}
+
+.cms-grid-insert .cms-divider-line {
+	flex: 0 0 22px;
+	height: 1px;
+}
+
+.cms-grid-insert .cms-divider-plus {
+	width: 26px;
+	height: 26px;
 }
 
 /***********************************************************************
@@ -1026,6 +1069,12 @@ footer a {
 	flex-direction: column;
 	gap: 8px;
 	margin-bottom: 14px;
+}
+
+.cms-rte__toolbar-host {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 10px;
 }
 
 .cms-rte__label {
@@ -1895,6 +1944,21 @@ footer a {
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
+}
+
+.cms-modal__group--intro {
+	background: #ffffff;
+	border-color: rgba(18, 22, 32, 0.12);
+}
+
+.cms-modal__group--intro .cms-rte__label,
+.cms-modal__group--intro .cms-field__note {
+	color: rgba(18, 22, 32, 0.8);
+	opacity: 1;
+}
+
+.cms-accordion-actions-row .cms-btn--move {
+	color: #fff;
 }
 
 .cms-modal__group-title {
