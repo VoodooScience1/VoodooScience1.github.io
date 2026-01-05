@@ -1378,6 +1378,8 @@ footer a {
 .cms-modal__body {
 	padding: 16px;
 	overflow: auto;
+	flex: 1 1 auto;
+	min-height: 0;
 	color: rgba(255, 255, 255, 0.9);
 }
 
