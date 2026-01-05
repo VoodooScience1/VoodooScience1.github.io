@@ -240,6 +240,7 @@ h3 {
 	padding: 0;
 	text-align: center;
 	color: #111;
+	text-decoration: none;
 }
 
 /* Social mini icons */
@@ -515,7 +516,8 @@ h3 {
 .portfolio-grid__cards {
 	display: grid;
 	grid-template-columns: repeat(3, minmax(0, 1fr));
-	gap: 18px;
+	gap: 45px;
+	padding: 0 45px;
 }
 
 .portfolio-grid__empty {
@@ -767,12 +769,16 @@ h3 {
 @media (max-width: 1124.98px) {
 	.portfolio-grid__cards {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 32px;
+		padding: 0 24px;
 	}
 }
 
 @media (max-width: 760px) {
 	.portfolio-grid__cards {
 		grid-template-columns: 1fr;
+		gap: 24px;
+		padding: 0 16px;
 	}
 }
 
@@ -2094,6 +2100,14 @@ footer a {
 	align-items: center;
 }
 
+.cms-field__row--heading {
+	align-items: center;
+}
+
+.cms-field__row--heading .cms-align-toggle {
+	margin-left: auto;
+}
+
 .cms-field__row .cms-field__input {
 	flex: 1;
 	height: 28px;
@@ -2110,6 +2124,48 @@ footer a {
 
 .cms-field__row .cms-field__toggle {
 	margin-left: 8px;
+}
+
+.cms-align-toggle {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 2px;
+	border-radius: 999px;
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	background: rgba(8, 12, 20, 0.45);
+}
+
+.cms-align-toggle__btn {
+	border: 0;
+	background: transparent;
+	color: rgba(255, 255, 255, 0.7);
+	width: 30px;
+	height: 26px;
+	border-radius: 999px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition:
+		background 160ms ease,
+		color 160ms ease,
+		transform 160ms ease;
+}
+
+.cms-align-toggle__btn .material-icons {
+	font-size: 18px;
+}
+
+.cms-align-toggle__btn.is-active {
+	background: rgba(60, 200, 120, 0.3);
+	color: #fff;
+}
+
+.cms-align-toggle__btn:hover {
+	background: rgba(255, 255, 255, 0.12);
+	color: #fff;
+	transform: translateY(-1px);
 }
 
 .cms-image-preview {
@@ -2283,6 +2339,38 @@ footer a {
 	display: flex;
 	flex-direction: column;
 	gap: 6px;
+}
+
+.cms-portfolio-type-row {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.cms-portfolio-type-row .cms-field__input--title {
+	flex: 1 1 220px;
+	min-width: 180px;
+}
+
+.cms-portfolio-type-row .cms-field__input {
+	height: 28px;
+}
+
+.cms-portfolio-type-row .cms-field__select {
+	width: 170px;
+	height: 28px;
+}
+
+.cms-portfolio-type-row .cms-field__input--category {
+	flex: 0 1 160px;
+	min-width: 140px;
+}
+
+@media (min-width: 1024px) {
+	.cms-portfolio-type-row {
+		flex-wrap: nowrap;
+	}
 }
 
 .cms-portfolio-type-controls .cms-field__select {

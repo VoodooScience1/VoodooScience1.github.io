@@ -1066,10 +1066,18 @@
 
 	function convertStub(stub) {
 		const type = (stub.dataset.type || "").trim();
-		if (type === "imgText") return sectionImgText(stub);
-		if (type === "split50") return sectionSplit50(stub);
-		if (type === "twoCol") return sectionTwoCol(stub);
-		return null;
+		let built = null;
+		if (type === "imgText") built = sectionImgText(stub);
+		else if (type === "split50") built = sectionSplit50(stub);
+		else if (type === "twoCol") built = sectionTwoCol(stub);
+		if (!built) return null;
+
+		// Preserve CMS IDs for admin parity (runSections replaces the stub).
+		const cmsId = stub.getAttribute("data-cms-id") || "";
+		if (cmsId && built instanceof Element) {
+			built.setAttribute("data-cms-id", cmsId);
+		}
+		return built;
 	}
 
 	// Optional: tidy up any plain <img class="js-lightbox"> so it behaves consistently.

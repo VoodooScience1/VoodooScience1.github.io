@@ -169,6 +169,17 @@
 	scroll-snap-align: start;
 }
 
+.grid-wrapper--row .box,
+.grid-wrapper--row .box-img,
+.grid-wrapper--row .content.box.box-img {
+	margin: 0;
+}
+
+.grid-wrapper--row .content.box.box-img {
+	width: 100%;
+	max-width: none;
+}
+
 @media (max-width: 900px) {
 	.grid-wrapper--row {
 		flex-wrap: wrap;
