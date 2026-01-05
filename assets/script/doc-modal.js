@@ -2,6 +2,9 @@
 
 	const DOC_MODAL_ID = "docModal";
 	const DOC_LOCK_CLASS = "lb-lock";
+	let scrollY = 0;
+	let scrollLocked = false;
+	let savedBodyStyles = null;
 	const ICON_MAP = [
 		{ exts: ["pdf"], icon: "picture_as_pdf", label: "PDF" },
 		{ exts: ["doc", "docx"], icon: "description", label: "Word" },
@@ -46,6 +49,49 @@
 		return modal;
 	};
 
+	const getScrollTop = () =>
+		document.scrollingElement
+			? document.scrollingElement.scrollTop
+			: window.scrollY || 0;
+
+	const restoreScrollTop = () => {
+		if (!Number.isFinite(scrollY)) return;
+		const scroller = document.scrollingElement;
+		if (scroller) scroller.scrollTop = scrollY;
+		else window.scrollTo({ top: scrollY, left: 0, behavior: "auto" });
+	};
+
+	const lockScroll = () => {
+		if (scrollLocked) return;
+		scrollY = getScrollTop();
+		const body = document.body;
+		savedBodyStyles = body
+			? {
+					position: body.style.position || "",
+					top: body.style.top || "",
+					width: body.style.width || "",
+				}
+			: null;
+		if (body) {
+			body.style.position = "fixed";
+			body.style.top = `-${scrollY}px`;
+			body.style.width = "100%";
+		}
+		scrollLocked = true;
+	};
+
+	const unlockScroll = () => {
+		const body = document.body;
+		if (body && savedBodyStyles) {
+			body.style.position = savedBodyStyles.position;
+			body.style.top = savedBodyStyles.top;
+			body.style.width = savedBodyStyles.width;
+		}
+		savedBodyStyles = null;
+		requestAnimationFrame(() => restoreScrollTop());
+		scrollLocked = false;
+	};
+
 	const openModal = ({ href, title }) => {
 		const modal = ensureModal();
 		const frame = qs("#doc-modal-frame", modal);
@@ -55,6 +101,7 @@
 			frame.setAttribute("title", title || "Document preview");
 			frame.src = href || "";
 		}
+		lockScroll();
 		modal.classList.add("is-open");
 		document.documentElement.classList.add(DOC_LOCK_CLASS);
 		document.body.classList.add(DOC_LOCK_CLASS);
@@ -70,6 +117,7 @@
 		document.documentElement.classList.remove(DOC_LOCK_CLASS);
 		document.body.classList.remove(DOC_LOCK_CLASS);
 		modal.setAttribute("aria-hidden", "true");
+		unlockScroll();
 	};
 
 	const applyDocCardMeta = (card) => {
@@ -90,6 +138,34 @@
 	const scanDocCards = () => {
 		document.querySelectorAll(".doc-card").forEach((card) => {
 			applyDocCardMeta(card);
+		});
+	};
+
+	const observeDocCards = () => {
+		const root = document.body;
+		if (!root || !window.MutationObserver) return;
+		const observer = new MutationObserver((mutations) => {
+			const next = new Set();
+			mutations.forEach((mutation) => {
+				mutation.addedNodes.forEach((node) => {
+					if (!(node instanceof HTMLElement)) return;
+					if (node.classList.contains("doc-card")) next.add(node);
+					node.querySelectorAll?.(".doc-card").forEach((card) => next.add(card));
+				});
+				if (
+					mutation.type === "attributes" &&
+					mutation.target?.closest?.(".doc-card")
+				) {
+					next.add(mutation.target.closest(".doc-card"));
+				}
+			});
+			next.forEach((card) => applyDocCardMeta(card));
+		});
+		observer.observe(root, {
+			childList: true,
+			subtree: true,
+			attributes: true,
+			attributeFilter: ["href"],
 		});
 	};
 
@@ -125,8 +201,12 @@
 	});
 
 	if (document.readyState === "loading") {
-		document.addEventListener("DOMContentLoaded", scanDocCards);
+		document.addEventListener("DOMContentLoaded", () => {
+			scanDocCards();
+			observeDocCards();
+		});
 	} else {
 		scanDocCards();
+		observeDocCards();
 	}
 })();
