@@ -400,6 +400,7 @@
 			showSearch: grid.getAttribute("data-show-search") !== "false",
 			showTypeFilters: grid.getAttribute("data-show-types") !== "false",
 			showTagFilters: grid.getAttribute("data-show-tags") !== "false",
+			showLinkFilters: grid.getAttribute("data-show-links") !== "false",
 		};
 		const headerEl = grid.querySelector(".portfolio-grid__header h1,h2,h3");
 		const headerText = headerEl?.textContent?.trim() || "";
@@ -424,28 +425,42 @@
 		let cards = Array.isArray(raw.cards) ? raw.cards : null;
 		if (!cards) {
 			cards = Array.from(grid.querySelectorAll(".portfolio-card")).map(
-				(card) => ({
-					title:
-						card.querySelector(".portfolio-card__title")?.textContent?.trim() ||
-						"",
-					type:
-						card.querySelector(".portfolio-card__type")?.textContent?.trim() ||
-						card.getAttribute("data-type-label") ||
-						"",
-					start: card.getAttribute("data-start") || "",
-					end: card.getAttribute("data-end") || "",
-					summary:
-						card.querySelector(".portfolio-card__summary")?.innerHTML?.trim() ||
-						"",
-					tags: Array.from(card.querySelectorAll(".portfolio-card__tag")).map(
-						(tag) => tag.textContent || "",
-					),
-					links: {},
-					gallery: String(card.getAttribute("data-gallery") || "")
-						.split(",")
-						.map((item) => item.trim())
-						.filter(Boolean),
-				}),
+				(card) => {
+					const links = {};
+					card
+						.querySelectorAll(".portfolio-card__icon[data-link]")
+						.forEach((icon) => {
+							const key = icon.getAttribute("data-link") || "";
+							if (!key || key === "gallery") return;
+							const href =
+								icon.getAttribute("href") || icon.dataset.href || "";
+							if (href) links[key] = href;
+						});
+					return {
+						title:
+							card
+								.querySelector(".portfolio-card__title")
+								?.textContent?.trim() || "",
+						type:
+							card.querySelector(".portfolio-card__type")?.textContent?.trim() ||
+							card.getAttribute("data-type-label") ||
+							"",
+						start: card.getAttribute("data-start") || "",
+						end: card.getAttribute("data-end") || "",
+						summary:
+							card
+								.querySelector(".portfolio-card__summary")
+								?.innerHTML?.trim() || "",
+						tags: Array.from(
+							card.querySelectorAll(".portfolio-card__tag"),
+						).map((tag) => tag.textContent || ""),
+						links,
+						gallery: String(card.getAttribute("data-gallery") || "")
+							.split(",")
+							.map((item) => item.trim())
+							.filter(Boolean),
+					};
+				},
 			);
 		}
 		cards = Array.isArray(cards)
@@ -466,6 +481,10 @@
 			showTagFilters: normalizePortfolioBool(
 				raw.showTagFilters,
 				attrs.showTagFilters,
+			),
+			showLinkFilters: normalizePortfolioBool(
+				raw.showLinkFilters,
+				attrs.showLinkFilters,
 			),
 			cards,
 		};
@@ -506,6 +525,52 @@
 	}
 
 	let portfolioModalState = { images: [], index: 0, title: "", meta: "" };
+	let portfolioScrollY = 0;
+	let portfolioScrollLocked = false;
+	let portfolioBodyStyles = null;
+
+	const getPortfolioScrollTop = () =>
+		document.scrollingElement
+			? document.scrollingElement.scrollTop
+			: window.scrollY || 0;
+
+	const restorePortfolioScrollTop = () => {
+		if (!Number.isFinite(portfolioScrollY)) return;
+		const scroller = document.scrollingElement;
+		if (scroller) scroller.scrollTop = portfolioScrollY;
+		else window.scrollTo({ top: portfolioScrollY, left: 0, behavior: "auto" });
+	};
+
+	const lockPortfolioScroll = () => {
+		if (portfolioScrollLocked) return;
+		portfolioScrollY = getPortfolioScrollTop();
+		const body = document.body;
+		portfolioBodyStyles = body
+			? {
+					position: body.style.position || "",
+					top: body.style.top || "",
+					width: body.style.width || "",
+				}
+			: null;
+		if (body) {
+			body.style.position = "fixed";
+			body.style.top = `-${portfolioScrollY}px`;
+			body.style.width = "100%";
+		}
+		portfolioScrollLocked = true;
+	};
+
+	const unlockPortfolioScroll = () => {
+		const body = document.body;
+		if (body && portfolioBodyStyles) {
+			body.style.position = portfolioBodyStyles.position;
+			body.style.top = portfolioBodyStyles.top;
+			body.style.width = portfolioBodyStyles.width;
+		}
+		portfolioBodyStyles = null;
+		requestAnimationFrame(() => restorePortfolioScrollTop());
+		portfolioScrollLocked = false;
+	};
 
 	function closePortfolioModal() {
 		const modal = document.getElementById("portfolio-gallery-modal");
@@ -514,6 +579,7 @@
 		document.documentElement.classList.remove("lb-lock");
 		document.body.classList.remove("lb-lock");
 		modal.setAttribute("aria-hidden", "true");
+		unlockPortfolioScroll();
 		portfolioModalState = { images: [], index: 0, title: "", meta: "" };
 	}
 
@@ -550,6 +616,7 @@
 			thumbs.appendChild(thumb);
 		});
 		updatePortfolioModal();
+		lockPortfolioScroll();
 		modal.classList.add("is-open");
 		document.documentElement.classList.add("lb-lock");
 		document.body.classList.add("lb-lock");
@@ -617,6 +684,12 @@
 				const summaryText = stripHtml(summary);
 				const links = normalizePortfolioLinks(card.links);
 				const gallery = normalizePortfolioGallery(card.gallery);
+				const linkKeys = Array.from(
+					new Set([
+						...Object.keys(links || {}),
+						...(gallery.length ? ["gallery"] : []),
+					]),
+				);
 				const dateValue =
 					parseMonthYear(card.end || "") || parseMonthYear(card.start || "");
 				const sortValue = dateValue
@@ -636,6 +709,7 @@
 					tagKeys,
 					links,
 					gallery,
+					linkKeys,
 					sortValue,
 					searchText,
 				};
@@ -718,9 +792,23 @@
 			const allTags = Array.from(
 				new Set(cards.flatMap((card) => card.tags)),
 			).sort((a, b) => a.localeCompare(b));
+			const linkOrder = ["site", "github", "youtube", "facebook", "gallery"];
+			const githubSvg =
+				'<svg class="portfolio-icon portfolio-icon--github" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0.3c-6.6 0-12 5.4-12 12 0 5.3 3.4 9.8 8.2 11.4 0.6 0.1 0.8-0.3 0.8-0.6v-2.2c-3.3 0.7-4-1.4-4-1.4-0.5-1.3-1.2-1.7-1.2-1.7-1-0.7 0.1-0.7 0.1-0.7 1.1 0.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.2 0.9 0.1-0.7 0.4-1.2 0.7-1.5-2.6-0.3-5.4-1.3-5.4-5.9 0-1.3 0.5-2.4 1.2-3.2-0.1-0.3-0.5-1.5 0.1-3.1 0 0 1-0.3 3.3 1.2 1-0.3 2-0.4 3-0.4s2.1 0.1 3 0.4c2.3-1.5 3.3-1.2 3.3-1.2 0.6 1.6 0.2 2.8 0.1 3.1 0.8 0.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.4 5.9 0.4 0.4 0.8 1 0.8 2v3c0 0.3 0.2 0.7 0.8 0.6 4.8-1.6 8.2-6.1 8.2-11.4 0-6.6-5.4-12-12-12z"/></svg>';
+			const linkIconMap = {
+				site: { icon: "link", label: "Website" },
+				github: { icon: "github", label: "GitHub" },
+				youtube: { icon: "smart_display", label: "YouTube" },
+				facebook: { icon: "chat_bubble", label: "Message" },
+				gallery: { icon: "collections", label: "Gallery" },
+			};
+			const allLinkKeys = linkOrder.filter((key) =>
+				cards.some((card) => card.linkKeys.includes(key)),
+			);
 
 			let activeType = "";
 			const activeTags = new Set();
+			const activeLinks = new Set();
 			let searchTerm = "";
 
 			const updateFilterUi = () => {
@@ -735,6 +823,12 @@
 					.forEach((pill) => {
 						const key = normalizePortfolioKey(pill.dataset.tag || "");
 						pill.classList.toggle("is-active", activeTags.has(key));
+					});
+				filtersWrap
+					.querySelectorAll(".portfolio-filter-icon[data-link]")
+					.forEach((btn) => {
+						const key = btn.dataset.link || "";
+						btn.classList.toggle("is-active", activeLinks.has(key));
 					});
 			};
 
@@ -759,15 +853,10 @@
 				headInfo.appendChild(date);
 				const icons = el("div", "portfolio-card__icons");
 
-				const githubSvg =
-					'<svg class="portfolio-icon portfolio-icon--github" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0.3c-6.6 0-12 5.4-12 12 0 5.3 3.4 9.8 8.2 11.4 0.6 0.1 0.8-0.3 0.8-0.6v-2.2c-3.3 0.7-4-1.4-4-1.4-0.5-1.3-1.2-1.7-1.2-1.7-1-0.7 0.1-0.7 0.1-0.7 1.1 0.1 1.7 1.2 1.7 1.2 1 1.7 2.6 1.2 3.2 0.9 0.1-0.7 0.4-1.2 0.7-1.5-2.6-0.3-5.4-1.3-5.4-5.9 0-1.3 0.5-2.4 1.2-3.2-0.1-0.3-0.5-1.5 0.1-3.1 0 0 1-0.3 3.3 1.2 1-0.3 2-0.4 3-0.4s2.1 0.1 3 0.4c2.3-1.5 3.3-1.2 3.3-1.2 0.6 1.6 0.2 2.8 0.1 3.1 0.8 0.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.4 5.9 0.4 0.4 0.8 1 0.8 2v3c0 0.3 0.2 0.7 0.8 0.6 4.8-1.6 8.2-6.1 8.2-11.4 0-6.6-5.4-12-12-12z"/></svg>';
-				const iconMap = {
-					site: { icon: "link", label: "Website" },
-					github: { icon: "github", label: "GitHub" },
-					youtube: { icon: "smart_display", label: "YouTube" },
-					facebook: { icon: "chat_bubble", label: "Message" },
-				};
-				Object.entries(iconMap).forEach(([key, meta]) => {
+				linkOrder.forEach((key) => {
+					if (key === "gallery") return;
+					const meta = linkIconMap[key];
+					if (!meta) return;
 					const href = card.links[key];
 					if (!href) return;
 					const link = document.createElement("a");
@@ -778,9 +867,8 @@
 					link.dataset.link = key;
 					link.dataset.tooltip = meta.label;
 					link.setAttribute("aria-label", meta.label);
-					if (meta.icon === "github") {
-						link.innerHTML = githubSvg;
-					} else {
+					if (meta.icon === "github") link.innerHTML = githubSvg;
+					else {
 						const span = el("span", "material-icons");
 						span.textContent = meta.icon;
 						link.appendChild(span);
@@ -900,12 +988,23 @@
 						required.every((tag) => card.tagKeys.includes(tag)),
 					);
 				}
+				if (activeLinks.size) {
+					const required = Array.from(activeLinks);
+					filtered = filtered.filter((card) =>
+						required.every((key) => card.linkKeys.includes(key)),
+					);
+				}
 				if (normalizedSearch) {
 					filtered = filtered.filter((card) =>
 						card.searchText.includes(normalizedSearch),
 					);
 				}
-				if (!activeType && !activeTags.size && !normalizedSearch) {
+				if (
+					!activeType &&
+					!activeTags.size &&
+					!activeLinks.size &&
+					!normalizedSearch
+				) {
 					const limit =
 						Number.isFinite(data.maxVisible) && data.maxVisible > 0
 							? data.maxVisible
@@ -935,8 +1034,20 @@
 
 			const buildFilters = () => {
 				filtersWrap.innerHTML = "";
-				if (!data.showTypeFilters && !data.showTagFilters) return;
-				if (data.showTypeFilters && allTypes.length) {
+				const showTypes = data.showTypeFilters && allTypes.length;
+				const showTags = data.showTagFilters && allTags.length;
+				const showLinks = data.showLinkFilters && allLinkKeys.length;
+				if (!showTypes && !showTags && !showLinks) return;
+
+				const title = el("div", "portfolio-grid__filters-title");
+				title.textContent = "Filters";
+				filtersWrap.appendChild(title);
+
+				if (showTypes) {
+					const row = el("div", "portfolio-grid__filter-row");
+					row.dataset.filterRow = "type";
+					const label = el("div", "portfolio-grid__filter-label");
+					label.textContent = "Categories";
 					const group = el("div", "portfolio-grid__filter-group");
 					group.dataset.filter = "type";
 					const allBtn = el("button", "portfolio-filter-pill");
@@ -960,9 +1071,16 @@
 						});
 						group.appendChild(btn);
 					});
-					filtersWrap.appendChild(group);
+					row.appendChild(label);
+					row.appendChild(group);
+					filtersWrap.appendChild(row);
 				}
-				if (data.showTagFilters && allTags.length) {
+
+				if (showTags) {
+					const row = el("div", "portfolio-grid__filter-row");
+					row.dataset.filterRow = "tag";
+					const label = el("div", "portfolio-grid__filter-label");
+					label.textContent = "Skills";
 					const group = el("div", "portfolio-grid__filter-group");
 					group.dataset.filter = "tag";
 					allTags.forEach((tag) => {
@@ -978,7 +1096,45 @@
 						});
 						group.appendChild(btn);
 					});
-					filtersWrap.appendChild(group);
+					row.appendChild(label);
+					row.appendChild(group);
+					filtersWrap.appendChild(row);
+				}
+
+				if (showLinks) {
+					const row = el("div", "portfolio-grid__filter-row");
+					row.dataset.filterRow = "link";
+					const label = el("div", "portfolio-grid__filter-label");
+					label.textContent = "Links";
+					const group = el("div", "portfolio-grid__filter-group");
+					group.dataset.filter = "link";
+					allLinkKeys.forEach((key) => {
+						const meta = linkIconMap[key];
+						if (!meta) return;
+						const btn = el(
+							"button",
+							`portfolio-filter-icon portfolio-filter-icon--${key}`,
+						);
+						btn.type = "button";
+						btn.dataset.link = key;
+						btn.dataset.tooltip = meta.label;
+						btn.setAttribute("aria-label", meta.label);
+						if (meta.icon === "github") btn.innerHTML = githubSvg;
+						else {
+							const span = el("span", "material-icons");
+							span.textContent = meta.icon;
+							btn.appendChild(span);
+						}
+						btn.addEventListener("click", () => {
+							if (activeLinks.has(key)) activeLinks.delete(key);
+							else activeLinks.add(key);
+							applyFilters();
+						});
+						group.appendChild(btn);
+					});
+					row.appendChild(label);
+					row.appendChild(group);
+					filtersWrap.appendChild(row);
 				}
 			};
 

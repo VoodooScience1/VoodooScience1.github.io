@@ -1,6 +1,9 @@
 (() => {
 	let items = [];
 	let index = 0;
+	let scrollY = 0;
+	let scrollLocked = false;
+	let savedBodyStyles = null;
 
 	// signature of current gallery ordering
 	let itemsSig = "";
@@ -22,6 +25,50 @@
 		// If duplicates ever happen, take the LAST one (most recently injected)
 		const all = document.querySelectorAll("#myModal");
 		return all.length ? all[all.length - 1] : null;
+	}
+
+	function getScrollTop() {
+		return document.scrollingElement
+			? document.scrollingElement.scrollTop
+			: window.scrollY || 0;
+	}
+
+	function restoreScrollTop() {
+		if (!Number.isFinite(scrollY)) return;
+		const scroller = document.scrollingElement;
+		if (scroller) scroller.scrollTop = scrollY;
+		else window.scrollTo({ top: scrollY, left: 0, behavior: "auto" });
+	}
+
+	function lockScroll() {
+		if (scrollLocked) return;
+		scrollY = getScrollTop();
+		const body = document.body;
+		savedBodyStyles = body
+			? {
+					position: body.style.position || "",
+					top: body.style.top || "",
+					width: body.style.width || "",
+				}
+			: null;
+		if (body) {
+			body.style.position = "fixed";
+			body.style.top = `-${scrollY}px`;
+			body.style.width = "100%";
+		}
+		scrollLocked = true;
+	}
+
+	function unlockScroll() {
+		const body = document.body;
+		if (body && savedBodyStyles) {
+			body.style.position = savedBodyStyles.position;
+			body.style.top = savedBodyStyles.top;
+			body.style.width = savedBodyStyles.width;
+		}
+		savedBodyStyles = null;
+		requestAnimationFrame(() => restoreScrollTop());
+		scrollLocked = false;
 	}
 
 	function rebuildItems() {
@@ -66,6 +113,7 @@
 		if (!items.length) return;
 
 		index = Math.max(0, Math.min(i, items.length - 1));
+		lockScroll();
 		modal.classList.add("is-open");
 		document.documentElement.classList.add("lb-lock");
 		document.body.classList.add("lb-lock");
@@ -82,6 +130,7 @@
 		document.documentElement.classList.remove("lb-lock");
 		document.body.classList.remove("lb-lock");
 		modal.setAttribute("aria-hidden", "true");
+		unlockScroll();
 	}
 
 	function next(n = 1) {
