@@ -369,6 +369,30 @@
 		return s || e;
 	}
 
+	function isPortfolioCardEmpty(card) {
+		const safe = card && typeof card === "object" ? card : {};
+		const hasLinks =
+			safe.links && typeof safe.links === "object"
+				? Object.values(safe.links).some((value) => String(value || "").trim())
+				: false;
+		const hasTags = Array.isArray(safe.tags)
+			? safe.tags.filter(Boolean).length > 0
+			: false;
+		const hasGallery = Array.isArray(safe.gallery)
+			? safe.gallery.filter(Boolean).length > 0
+			: false;
+		return (
+			!safe.title &&
+			!safe.type &&
+			!safe.start &&
+			!safe.end &&
+			!safe.summary &&
+			!hasTags &&
+			!hasLinks &&
+			!hasGallery
+		);
+	}
+
 	function parsePortfolioGridData(grid) {
 		const maxAttr = Number(grid.getAttribute("data-max-visible"));
 		const attrs = {
@@ -424,6 +448,9 @@
 				}),
 			);
 		}
+		cards = Array.isArray(cards)
+			? cards.filter((card) => !isPortfolioCardEmpty(card))
+			: [];
 
 		const maxVisible = Number(raw.maxVisible);
 		return {

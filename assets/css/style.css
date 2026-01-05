@@ -518,6 +518,7 @@ h3 {
 	grid-template-columns: repeat(3, minmax(0, 1fr));
 	gap: 45px;
 	padding: 0 45px;
+	align-items: start;
 }
 
 .portfolio-grid__empty {
@@ -540,7 +541,7 @@ h3 {
 	flex-direction: column;
 	gap: 10px;
 	box-shadow: 0 10px 18px rgba(0, 0, 0, 0.08);
-	min-height: 100%;
+	max-height: 100%;
 	--portfolio-type-bg: #1e1f24;
 }
 
@@ -2177,6 +2178,58 @@ footer a {
 	background: rgba(255, 255, 255, 0.12);
 	color: #fff;
 	transform: translateY(-1px);
+}
+
+.cms-align-toggle__btn[data-tooltip] {
+	position: relative;
+}
+
+.cms-align-toggle__btn[data-tooltip]::after {
+	content: attr(data-tooltip);
+	position: absolute;
+	left: 50%;
+	bottom: calc(100% + 8px);
+	transform: translate(-50%, -4px);
+	background: #0f1726;
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	color: #f5f7ff;
+	padding: 4px 8px;
+	border-radius: 6px;
+	font-size: 10px;
+	letter-spacing: 0.04em;
+	white-space: nowrap;
+	opacity: 0;
+	pointer-events: none;
+	box-shadow: 0 6px 14px rgba(4, 8, 16, 0.35);
+	transition:
+		opacity 120ms ease,
+		transform 120ms ease;
+	z-index: 5;
+}
+
+.cms-align-toggle__btn[data-tooltip]::before {
+	content: "";
+	position: absolute;
+	left: 50%;
+	bottom: calc(100% + 2px);
+	transform: translateX(-50%);
+	border: 5px solid transparent;
+	border-top-color: rgba(255, 255, 255, 0.2);
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 120ms ease;
+	z-index: 4;
+}
+
+.cms-align-toggle__btn[data-tooltip]:hover::after,
+.cms-align-toggle__btn[data-tooltip]:focus-visible::after {
+	opacity: 1;
+	transform: translate(-50%, 0);
+}
+
+.cms-align-toggle__btn[data-tooltip]:hover::before,
+.cms-align-toggle__btn[data-tooltip]:focus-visible::before {
+	opacity: 1;
 }
 
 .cms-image-preview {
