@@ -470,28 +470,33 @@ h3 {
 
 .portfolio-grid__header {
 	text-align: center;
+	padding: 20px;
 }
 
 .portfolio-grid__header h2 {
 	margin: 0;
 	letter-spacing: 0.08em;
+	padding: 20px;
 }
 
 .portfolio-grid__intro {
 	color: rgba(0, 0, 0, 0.75);
 	line-height: 1.6;
+	padding: 20px;
 }
 
 .portfolio-grid__divider {
 	height: 1px;
 	background: rgba(0, 0, 0, 0.1);
 	width: 100%;
+	padding: 20px;
 }
 
 .portfolio-grid__controls {
 	display: flex;
 	justify-content: flex-start;
 	width: 100%;
+	padding: 20px;
 }
 
 .portfolio-grid__search {
@@ -512,6 +517,7 @@ h3 {
 	flex-direction: column;
 	gap: 10px;
 	width: 100%;
+	padding: 20px;
 }
 
 .portfolio-grid__filters-title {
@@ -595,7 +601,7 @@ h3 {
 	display: grid;
 	grid-template-columns: repeat(3, minmax(0, 1fr));
 	gap: 45px;
-	padding: 0 45px;
+	padding: 20px 45px 20px 45px;
 	align-items: start;
 }
 
@@ -811,6 +817,7 @@ h3 {
 	height: 1px;
 	width: 100%;
 	background: rgba(0, 0, 0, 0.08);
+	margin: 15px 0px 15px 0px;
 }
 
 .portfolio-card__summary {
@@ -860,7 +867,7 @@ h3 {
 	.portfolio-grid__cards {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 		gap: 32px;
-		padding: 0 24px;
+		padding: 20px;
 	}
 }
 
@@ -1348,7 +1355,7 @@ footer a {
 }
 
 .cms-modal__panel {
-	width: min(1100px, 96vw);
+	width: min(1150px, 96vw);
 	max-height: 92vh;
 	overflow: hidden;
 	display: flex;
@@ -1676,7 +1683,7 @@ footer a {
 }
 
 .cms-rte__icon {
-	font-size: 15px;
+	font-size: 22px;
 	line-height: 1;
 }
 
@@ -1988,6 +1995,10 @@ footer a {
 .cms-rte blockquote,
 .default-div-wrapper blockquote,
 .section blockquote,
+.img-text-div-text blockquote,
+.lrg-img-text-div-text blockquote,
+.two-text-columns-text-left blockquote,
+.two-text-columns-text-right blockquote,
 .tab-content blockquote,
 .cms-block blockquote {
 	margin: 10px 0;
@@ -2000,6 +2011,10 @@ footer a {
 .cms-rte table,
 .default-div-wrapper table,
 .section table,
+.img-text-div-text table,
+.lrg-img-text-div-text table,
+.two-text-columns-text-left table,
+.two-text-columns-text-right table,
 .tab-content table,
 .cms-block table {
 	width: 100%;
@@ -2010,6 +2025,10 @@ footer a {
 
 .default-div-wrapper table.table-borderless,
 .section table.table-borderless,
+.img-text-div-text table.table-borderless,
+.lrg-img-text-div-text table.table-borderless,
+.two-text-columns-text-left table.table-borderless,
+.two-text-columns-text-right table.table-borderless,
 .tab-content table.table-borderless,
 .cms-block table.table-borderless {
 	background: transparent;
@@ -2021,6 +2040,14 @@ footer a {
 .default-div-wrapper td,
 .section th,
 .section td,
+.img-text-div-text th,
+.img-text-div-text td,
+.lrg-img-text-div-text th,
+.lrg-img-text-div-text td,
+.two-text-columns-text-left th,
+.two-text-columns-text-left td,
+.two-text-columns-text-right th,
+.two-text-columns-text-right td,
 .tab-content th,
 .tab-content td,
 .cms-block th,
@@ -2034,6 +2061,14 @@ footer a {
 .default-div-wrapper table.table-borderless td,
 .section table.table-borderless th,
 .section table.table-borderless td,
+.img-text-div-text table.table-borderless th,
+.img-text-div-text table.table-borderless td,
+.lrg-img-text-div-text table.table-borderless th,
+.lrg-img-text-div-text table.table-borderless td,
+.two-text-columns-text-left table.table-borderless th,
+.two-text-columns-text-left table.table-borderless td,
+.two-text-columns-text-right table.table-borderless th,
+.two-text-columns-text-right table.table-borderless td,
 .tab-content table.table-borderless th,
 .tab-content table.table-borderless td,
 .cms-block table.table-borderless th,
@@ -2044,6 +2079,10 @@ footer a {
 .cms-rte th,
 .default-div-wrapper th,
 .section th,
+.img-text-div-text th,
+.lrg-img-text-div-text th,
+.two-text-columns-text-left th,
+.two-text-columns-text-right th,
 .tab-content th,
 .cms-block th {
 	background: #0b1220;
@@ -2056,6 +2095,10 @@ footer a {
 .cms-rte pre,
 .default-div-wrapper pre,
 .section pre,
+.img-text-div-text pre,
+.lrg-img-text-div-text pre,
+.two-text-columns-text-left pre,
+.two-text-columns-text-right pre,
 .tab-content pre,
 .cms-block pre {
 	position: relative;
@@ -2073,6 +2116,10 @@ footer a {
 .cms-rte pre code,
 .default-div-wrapper pre code,
 .section pre code,
+.img-text-div-text pre code,
+.lrg-img-text-div-text pre code,
+.two-text-columns-text-left pre code,
+.two-text-columns-text-right pre code,
 .tab-content pre code,
 .cms-block pre code {
 	display: block;
@@ -2088,6 +2135,10 @@ footer a {
 .cms-rte pre code.hljs,
 .default-div-wrapper pre code.hljs,
 .section pre code.hljs,
+.img-text-div-text pre code.hljs,
+.lrg-img-text-div-text pre code.hljs,
+.two-text-columns-text-left pre code.hljs,
+.two-text-columns-text-right pre code.hljs,
 .tab-content pre code.hljs,
 .cms-block pre code.hljs {
 	position: relative;
@@ -2101,6 +2152,10 @@ footer a {
 .cms-rte pre code.hljs[data-lang]::after,
 .default-div-wrapper pre code.hljs[data-lang]::after,
 .section pre code.hljs[data-lang]::after,
+.img-text-div-text pre code.hljs[data-lang]::after,
+.lrg-img-text-div-text pre code.hljs[data-lang]::after,
+.two-text-columns-text-left pre code.hljs[data-lang]::after,
+.two-text-columns-text-right pre code.hljs[data-lang]::after,
 .tab-content pre code.hljs[data-lang]::after,
 .cms-block pre code.hljs[data-lang]::after {
 	content: attr(data-lang);
@@ -2120,6 +2175,10 @@ footer a {
 .cms-rte code,
 .default-div-wrapper code,
 .section code,
+.img-text-div-text code,
+.lrg-img-text-div-text code,
+.two-text-columns-text-left code,
+.two-text-columns-text-right code,
 .tab-content code,
 .cms-block code {
 	background: #e7ecf4;
