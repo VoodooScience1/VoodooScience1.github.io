@@ -29,6 +29,7 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	box-sizing: border-box;
 }
 
 .doc-modal .modal-content {
@@ -55,6 +56,23 @@
 	border: 0;
 	border-radius: 8px;
 	background: #0b0f1a;
+}
+
+@media (max-width: 720px) {
+	.doc-modal {
+		padding: 0;
+	}
+
+	.doc-modal .modal-content {
+		width: 100vw;
+		height: 100vh;
+		border-radius: 0;
+		padding: 12px;
+	}
+
+	.doc-modal__frame {
+		border-radius: 6px;
+	}
 }
 
 /***********************************************************************

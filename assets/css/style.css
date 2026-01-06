@@ -190,6 +190,16 @@ h3 {
 	box-sizing: border-box;
 }
 
+@media (max-width: 1124.98px) {
+	.img-text-div-img,
+	.lrg-img-text-div-img {
+		width: 100%;
+		max-width: 100%;
+		margin-left: 0;
+		margin-right: 0;
+	}
+}
+
 .img-text-div-img.img-scale-sm,
 .lrg-img-text-div-img.img-scale-sm {
 	max-width: min(100%, 360px);
@@ -291,6 +301,7 @@ h3 {
 		padding: 20px;
 		margin: 20px;
 		margin-bottom: 0;
+		border-bottom: 2px solid var(--accent);
 	}
 
 	.two-text-columns-text-right {
