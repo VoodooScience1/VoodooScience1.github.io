@@ -104,6 +104,7 @@
 	justify-content: space-between;
 	align-items: baseline;
 	gap: 12px;
+	padding-right: 44px;
 }
 
 .portfolio-modal__title {
@@ -130,6 +131,8 @@
 	display: flex;
 	align-items: center;
 	gap: 10px;
+	min-width: 0;
+	width: 100%;
 }
 
 .portfolio-modal__main {
@@ -138,6 +141,9 @@
 	object-fit: contain;
 	border-radius: 8px;
 	background: #0b0f1a;
+	flex: 1 1 0;
+	min-width: 0;
+	max-width: 100%;
 }
 
 .portfolio-modal__nav {
@@ -152,6 +158,7 @@
 	align-items: center;
 	justify-content: center;
 	font-size: 18px;
+	flex: 0 0 auto;
 }
 
 .portfolio-modal__nav:disabled {
@@ -178,6 +185,36 @@
 .portfolio-modal__thumbs img.is-active,
 .portfolio-modal__thumbs img:hover {
 	opacity: 1;
+}
+
+@media (max-width: 900px) {
+	.portfolio-modal .modal-content {
+		padding: 14px;
+	}
+
+	.portfolio-modal__close {
+		top: 8px;
+		right: 12px;
+		font-size: 28px;
+	}
+
+	.portfolio-modal__header {
+		padding-right: 40px;
+	}
+
+	.portfolio-modal__main {
+		max-height: 55vh;
+	}
+
+	.portfolio-modal__nav {
+		width: 32px;
+		height: 32px;
+		font-size: 16px;
+	}
+
+	.portfolio-modal__thumbs img {
+		height: 56px;
+	}
 }
 
 #lb-main-img {

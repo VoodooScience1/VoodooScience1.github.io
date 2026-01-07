@@ -520,7 +520,7 @@ h3 {
 }
 
 .portfolio-grid__filters-title {
-	font-size: 11px;
+	font-size: 12px;
 	letter-spacing: 0.18em;
 	text-transform: uppercase;
 	color: rgba(0, 0, 0, 0.6);
@@ -534,7 +534,7 @@ h3 {
 }
 
 .portfolio-grid__filter-label {
-	font-size: 11px;
+	font-size: 12px;
 	letter-spacing: 0.12em;
 	text-transform: uppercase;
 	color: rgba(0, 0, 0, 0.6);
@@ -551,8 +551,8 @@ h3 {
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	background: rgba(0, 0, 0, 0.04);
 	border-radius: 999px;
-	padding: 6px 12px;
-	font-size: 11px;
+	padding: 7px 14px;
+	font-size: 12px;
 	letter-spacing: 0.12em;
 	text-transform: uppercase;
 	cursor: pointer;
@@ -566,8 +566,8 @@ h3 {
 }
 
 .portfolio-filter-icon {
-	width: 30px;
-	height: 30px;
+	width: 32px;
+	height: 32px;
 	border-radius: 999px;
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	background: rgba(0, 0, 0, 0.04);
@@ -584,7 +584,7 @@ h3 {
 }
 
 .portfolio-filter-icon .material-icons {
-	font-size: 18px;
+	font-size: 20px;
 }
 
 .portfolio-filter-icon:hover {
@@ -612,7 +612,7 @@ h3 {
 	color: rgba(0, 0, 0, 0.6);
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .portfolio-card {
@@ -645,7 +645,7 @@ h3 {
 }
 
 .portfolio-card__date {
-	font-size: 11px;
+	font-size: 12px;
 	letter-spacing: 0.15em;
 	text-transform: uppercase;
 	color: rgba(0, 0, 0, 0.6);
@@ -662,8 +662,8 @@ h3 {
 }
 
 .portfolio-card__icon {
-	width: 30px;
-	height: 30px;
+	width: 32px;
+	height: 32px;
 	border-radius: 999px;
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	background: #f4f4f4;
@@ -680,12 +680,12 @@ h3 {
 }
 
 .portfolio-card__icon .material-icons {
-	font-size: 18px;
+	font-size: 20px;
 }
 
 .portfolio-icon {
-	width: 18px;
-	height: 18px;
+	width: 20px;
+	height: 20px;
 	fill: currentColor;
 	display: block;
 }
@@ -787,11 +787,11 @@ h3 {
 .portfolio-card__type {
 	display: inline-flex;
 	align-self: flex-start;
-	padding: 4px 10px;
+	padding: 5px 11px;
 	border-radius: 999px;
 	background: var(--portfolio-type-bg);
 	color: #fff;
-	font-size: 10px;
+	font-size: 11px;
 	letter-spacing: 0.15em;
 	text-transform: uppercase;
 }
@@ -820,7 +820,7 @@ h3 {
 }
 
 .portfolio-card__summary {
-	font-size: 13px;
+	font-size: 14px;
 	letter-spacing: 0.05em;
 	line-height: 1.6;
 	color: rgba(0, 0, 0, 0.75);
@@ -850,8 +850,8 @@ h3 {
 	background: #1e1f24;
 	color: #fff;
 	border-radius: 999px;
-	padding: 4px 10px;
-	font-size: 10px;
+	padding: 5px 11px;
+	font-size: 11px;
 	letter-spacing: 0.12em;
 	text-transform: uppercase;
 	cursor: pointer;
@@ -3051,7 +3051,7 @@ footer a {
 }
 
 .doc-card__type-icon {
-	font-size: 28px;
+	font-size: 30px;
 	color: rgba(17, 17, 17, 0.75);
 	flex: 0 0 auto;
 }
@@ -3101,7 +3101,7 @@ footer a {
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
 	margin: 0;
-	font-size: 11px;
+	font-size: 12px;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -3111,7 +3111,7 @@ footer a {
 	margin: 0;
 	letter-spacing: 0.06em;
 	opacity: 0.9;
-	font-size: 11px;
+	font-size: 12px;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -3140,7 +3140,7 @@ footer a {
 	color: #fff;
 	letter-spacing: 0.12em;
 	text-transform: uppercase;
-	font-size: 11px;
+	font-size: 12px;
 }
 
 .doc-card__link:hover .doc-card__overlay {
