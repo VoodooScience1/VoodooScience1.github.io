@@ -34,19 +34,19 @@ Only content inside those markers is editable by the CMS. Everything else is rea
 ## Content model
 
 - Section stubs: `data-type="imgText"`, `data-type="split50"`, `data-type="twoCol"`.
-- Inline stubs: `div.img-stub` (images) and `div.video-stub` (video).
+- Inline stubs: `div.img-stub` (images), `div.video-stub` (video), and `div.doc-embed` (document embeds).
 - Rich blocks (accordions, doc cards, portfolio grids) are HTML fragments that the CMS can insert and re-serialize safely.
 - The portfolio grid includes an embedded JSON payload for round-trip editing.
 
 ## CMS constraints and parity
 
-- RTE output is sanitized (no inline styles/scripts/iframes); rich content is inserted via tools to keep diffs deterministic.
+- RTE output is sanitized (no inline styles/scripts, no arbitrary iframes); rich content is inserted via tools to keep diffs deterministic.
 - Admin preview loads the same partials and scripts as production to keep layout parity.
 
 ## Runtime composition
 
 - `assets/script/dom-loader.js` injects shared partials (nav, footer, etc).
-- `assets/script/sections.js` expands `.section` stubs and `.img-stub`.
+- `assets/script/sections.js` expands `.section`, `.img-stub`, `.video-stub`, and `.doc-embed` stubs.
 - `assets/script/lightbox.js` initializes `js-lightbox` behavior.
 
 ## Editing workflow

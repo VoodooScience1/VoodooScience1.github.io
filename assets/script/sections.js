@@ -27,6 +27,12 @@
 //        data-caption="..."
 //        data-scale="sm|md|lg|full"></div>
 //
+// Inline doc embed stubs:
+//  - <div class="doc-embed"
+//        data-doc="/assets/docs/..."
+//        data-title="..."
+//        data-desc="..."></div>
+//
 // Notes:
 // - We intentionally DO NOT support `data-class` anymore (keeps authoring deterministic).
 // - If lightbox is enabled, we add `js-lightbox` to the generated <img>.
@@ -204,6 +210,19 @@
 		return videoWrap;
 	}
 
+	function buildDocEmbedWrap(docSrc, title, desc) {
+		const docWrap = el("div", "doc-embed");
+		if (!docSrc) return docWrap;
+		const iframe = document.createElement("iframe");
+		iframe.src = docSrc;
+		iframe.className = "doc-embed__frame";
+		iframe.loading = "lazy";
+		iframe.title = title ? `Document: ${title}` : "Embedded document";
+		iframe.setAttribute("aria-label", desc || iframe.title);
+		docWrap.appendChild(iframe);
+		return docWrap;
+	}
+
 	// Expand inline .img-stub elements anywhere in the document.
 	function expandInlineImgStubs(root = document) {
 		root.querySelectorAll(".img-stub[data-img]").forEach((stub) => {
@@ -243,6 +262,16 @@
 			const scale = stub.dataset.scale || "";
 
 			const built = buildVideoWrap("img-text-div-img", videoSrc, caption, scale);
+			stub.replaceWith(built);
+		});
+	}
+
+	function expandInlineDocEmbeds(root = document) {
+		root.querySelectorAll(".doc-embed[data-doc]").forEach((stub) => {
+			const docSrc = stub.dataset.doc || "";
+			const title = stub.dataset.title || "";
+			const desc = stub.dataset.desc || "";
+			const built = buildDocEmbedWrap(docSrc, title, desc);
 			stub.replaceWith(built);
 		});
 	}
@@ -1283,6 +1312,7 @@
 		// Then expand inline image stubs anywhere (including inside twoCol)
 		expandInlineImgStubs(document);
 		expandInlineVideoStubs(document);
+		expandInlineDocEmbeds(document);
 		initPortfolioGrids(document);
 
 		// Finally, normalize any raw js-lightbox <img> (used by square grids etc.)
