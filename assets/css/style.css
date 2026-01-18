@@ -107,6 +107,7 @@ h3 {
 	grid-template-columns: 1fr;
 	gap: 1px;
 	text-align: left;
+	padding: var(--card-pad);
 }
 
 .default-div-wrapper > p {
@@ -170,7 +171,8 @@ h3 {
 *  Text columns (inner padding)
 **********************************************************************/
 .img-text-div-text,
-.lrg-img-text-div-text {
+.lrg-img-text-div-text,
+.std-container-text {
 	padding: 20px;
 	margin: 20px;
 	text-align: left;
