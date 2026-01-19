@@ -1176,10 +1176,11 @@
 	// Small image / big text.
 	function sectionImgText(stub) {
 		const imgSrc = stub.dataset.img || "";
+		const videoSrc = stub.dataset.video || "";
 		const caption = stub.dataset.caption || "";
 		const useLightbox = isTrue(stub.dataset.lightbox);
 		const pos = (stub.dataset.imgPos || "left").toLowerCase();
-		const overlayEnabled = stub.dataset.overlay !== "false";
+		const overlayEnabled = !videoSrc && stub.dataset.overlay !== "false";
 
 		const overlayTitle = stub.dataset.overlayTitle || "";
 		const overlayText = stub.dataset.overlayText || "";
@@ -1188,25 +1189,27 @@
 		const grid = el("div", "img-text-div-wrapper");
 		if (pos === "right") grid.classList.add("reverse");
 
-		const imgCol = buildImgWrap(
-			"img-text-div-img",
-			imgSrc,
-			caption,
-			useLightbox,
-			overlayEnabled,
-			overlayTitle,
-			overlayText,
-			scale,
-		);
+		const mediaCol = videoSrc
+			? buildVideoWrap("img-text-div-img", videoSrc, caption, scale)
+			: buildImgWrap(
+					"img-text-div-img",
+					imgSrc,
+					caption,
+					useLightbox,
+					overlayEnabled,
+					overlayTitle,
+					overlayText,
+					scale,
+				);
 
 		const textCol = el("div", "img-text-div-text");
 		moveAllChildren(stub, textCol);
 
 		if (pos === "right") {
 			grid.appendChild(textCol);
-			if (imgSrc) grid.appendChild(imgCol);
+			if (videoSrc || imgSrc) grid.appendChild(mediaCol);
 		} else {
-			if (imgSrc) grid.appendChild(imgCol);
+			if (videoSrc || imgSrc) grid.appendChild(mediaCol);
 			grid.appendChild(textCol);
 		}
 
@@ -1216,9 +1219,10 @@
 	// 50/50 split.
 	function sectionSplit50(stub) {
 		const imgSrc = stub.dataset.img || "";
+		const videoSrc = stub.dataset.video || "";
 		const caption = stub.dataset.caption || "";
 		const useLightbox = isTrue(stub.dataset.lightbox);
-		const overlayEnabled = stub.dataset.overlay !== "false";
+		const overlayEnabled = !videoSrc && stub.dataset.overlay !== "false";
 
 		// DEFAULT = LEFT
 		const pos = (stub.dataset.imgPos || "left").toLowerCase();
@@ -1232,25 +1236,27 @@
 		// Keeps your CSS hooks working for mobile separators.
 		if (pos === "left") grid.classList.add("img-left");
 
-		const imgCol = buildImgWrap(
-			"lrg-img-text-div-img",
-			imgSrc,
-			caption,
-			useLightbox,
-			overlayEnabled,
-			overlayTitle,
-			overlayText,
-			scale,
-		);
+		const mediaCol = videoSrc
+			? buildVideoWrap("lrg-img-text-div-img", videoSrc, caption, scale)
+			: buildImgWrap(
+					"lrg-img-text-div-img",
+					imgSrc,
+					caption,
+					useLightbox,
+					overlayEnabled,
+					overlayTitle,
+					overlayText,
+					scale,
+				);
 
 		const textCol = el("div", "lrg-img-text-div-text");
 		moveAllChildren(stub, textCol);
 
 		if (pos === "right") {
 			grid.appendChild(textCol);
-			if (imgSrc) grid.appendChild(imgCol);
+			if (videoSrc || imgSrc) grid.appendChild(mediaCol);
 		} else {
-			if (imgSrc) grid.appendChild(imgCol);
+			if (videoSrc || imgSrc) grid.appendChild(mediaCol);
 			grid.appendChild(textCol);
 		}
 
