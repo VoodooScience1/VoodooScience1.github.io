@@ -703,6 +703,8 @@
 	function initPortfolioGrids(root = document) {
 		root.querySelectorAll(".portfolio-grid").forEach((grid) => {
 			const data = parsePortfolioGridData(grid);
+			const contentRoot =
+				grid.querySelector(".std-container-text") || grid;
 			const cards = (data.cards || []).map((card) => {
 				const title = String(card.title || "").trim();
 				const type = String(card.type || "").trim();
@@ -744,26 +746,26 @@
 				};
 			});
 			const cardsWrap =
-				grid.querySelector(".portfolio-grid__cards") ||
-				grid.appendChild(el("div", "portfolio-grid__cards"));
+				contentRoot.querySelector(".portfolio-grid__cards") ||
+				contentRoot.appendChild(el("div", "portfolio-grid__cards"));
 			const controlsWrap =
-				grid.querySelector(".portfolio-grid__controls") ||
-				grid.insertBefore(el("div", "portfolio-grid__controls"), cardsWrap);
+				contentRoot.querySelector(".portfolio-grid__controls") ||
+				contentRoot.insertBefore(el("div", "portfolio-grid__controls"), cardsWrap);
 			const filtersWrap =
-				grid.querySelector(".portfolio-grid__filters") ||
-				grid.insertBefore(el("div", "portfolio-grid__filters"), cardsWrap);
+				contentRoot.querySelector(".portfolio-grid__filters") ||
+				contentRoot.insertBefore(el("div", "portfolio-grid__filters"), cardsWrap);
 			const anchor = controlsWrap || filtersWrap || cardsWrap;
 
 			const renderHeader = () => {
 				const title = String(data.title || "").trim();
-				let header = grid.querySelector(".portfolio-grid__header");
+				let header = contentRoot.querySelector(".portfolio-grid__header");
 				if (!title) {
 					if (header) header.remove();
 					return;
 				}
 				if (!header) {
 					header = el("div", "portfolio-grid__header");
-					grid.insertBefore(header, anchor);
+					contentRoot.insertBefore(header, anchor);
 				}
 				header.innerHTML = "";
 				const h2 = document.createElement("h2");
@@ -777,14 +779,14 @@
 
 			const renderIntro = () => {
 				const introRaw = String(data.intro || "").trim();
-				let intro = grid.querySelector(".portfolio-grid__intro");
+				let intro = contentRoot.querySelector(".portfolio-grid__intro");
 				if (!introRaw) {
 					if (intro) intro.remove();
 					return;
 				}
 				if (!intro) {
 					intro = el("div", "portfolio-grid__intro");
-					grid.insertBefore(intro, anchor);
+					contentRoot.insertBefore(intro, anchor);
 				}
 				if (/<[a-z][\s\S]*>/i.test(introRaw)) {
 					intro.innerHTML = introRaw;
@@ -800,14 +802,14 @@
 				const needsDivider = Boolean(
 					String(data.title || "").trim() || String(data.intro || "").trim(),
 				);
-				let divider = grid.querySelector(".portfolio-grid__divider");
+				let divider = contentRoot.querySelector(".portfolio-grid__divider");
 				if (!needsDivider) {
 					if (divider) divider.remove();
 					return;
 				}
 				if (!divider) {
 					divider = el("div", "portfolio-grid__divider");
-					grid.insertBefore(divider, anchor);
+					contentRoot.insertBefore(divider, anchor);
 				}
 			};
 
