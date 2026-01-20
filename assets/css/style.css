@@ -475,19 +475,19 @@ h3 {
 
 .portfolio-grid__header {
 	text-align: center;
-	padding: 20px;
+	padding: 0;
 }
 
 .portfolio-grid__header h2 {
 	margin: 0;
 	letter-spacing: 0.08em;
-	padding: 20px;
+	padding: 0;
 }
 
 .portfolio-grid__intro {
 	color: rgba(0, 0, 0, 0.75);
 	line-height: 1.6;
-	padding: 20px;
+	padding: 0;
 }
 
 .portfolio-grid__divider {
@@ -556,8 +556,8 @@ h3 {
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	background: rgba(0, 0, 0, 0.04);
 	border-radius: 999px;
-	padding: 7px 14px;
-	font-size: 12px;
+	padding: 5px 11px;
+	font-size: 11px;
 	letter-spacing: 0.12em;
 	text-transform: uppercase;
 	cursor: pointer;
@@ -663,7 +663,9 @@ h3 {
 .portfolio-card__icons {
 	display: flex;
 	gap: 6px;
-	flex-wrap: wrap;
+	flex-wrap: nowrap;
+	align-items: center;
+	flex-shrink: 0;
 }
 
 .portfolio-card__icon {
