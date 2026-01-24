@@ -93,6 +93,9 @@
 			),
 		);
 		codeBlocks.forEach((code) => {
+			code.classList.add("nohighlight");
+		});
+		codeBlocks.forEach((code) => {
 			if (code.closest(".cms-rte")) return;
 			const pre = code.closest("pre");
 			if (!pre) return;

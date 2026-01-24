@@ -1,0 +1,25 @@
+name: Sync dev with master
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  sync-dev:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Fast-forward dev to master (if safe)
+        run: |
+          git fetch origin master dev
+          if git merge-base --is-ancestor origin/dev origin/master; then
+            git push origin origin/master:dev
+          else
+            echo "Dev has commits not in master; skipping fast-forward."
+            exit 1
+          fi
