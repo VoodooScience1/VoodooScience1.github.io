@@ -1375,7 +1375,7 @@ footer a {
 }
 
 .cms-modal__panel {
-	width: min(1250px, 96vw);
+	width: min(1400px, 96vw);
 	max-height: 92vh;
 	overflow: hidden;
 	display: flex;
