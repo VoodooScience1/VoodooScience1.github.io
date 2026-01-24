@@ -463,6 +463,37 @@ h3 {
 /***********************************************************************
 *  Mermaid diagrams
 **********************************************************************/
+.mermaid-wrap {
+	position: relative;
+	min-height: 140px;
+}
+
+.mermaid-wrap.is-loading::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: rgba(255, 255, 255, 0.75);
+}
+
+.mermaid-wrap.is-loading::before {
+	content: "";
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 36px;
+	height: 36px;
+	margin: -18px 0 0 -18px;
+	border-radius: 50%;
+	border: 3px solid rgba(20, 20, 20, 0.2);
+	border-top-color: rgba(20, 20, 20, 0.6);
+	animation: mermaid-spin 0.8s linear infinite;
+	z-index: 1;
+}
+
+.mermaid-wrap.is-loading .mermaid {
+	visibility: hidden;
+}
+
 .mermaid {
 	display: flex;
 	justify-content: center;
@@ -472,6 +503,15 @@ h3 {
 .mermaid svg {
 	max-width: 100%;
 	height: auto;
+}
+
+@keyframes mermaid-spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
 }
 
 /***********************************************************************

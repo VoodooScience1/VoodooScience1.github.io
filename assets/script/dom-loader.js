@@ -99,10 +99,13 @@
 			if (code.closest(".cms-rte")) return;
 			const pre = code.closest("pre");
 			if (!pre) return;
+			const wrapper = document.createElement("div");
+			wrapper.className = "mermaid-wrap is-loading";
 			const container = document.createElement("div");
 			container.className = "mermaid";
 			container.textContent = code.textContent || "";
-			pre.replaceWith(container);
+			wrapper.appendChild(container);
+			pre.replaceWith(wrapper);
 		});
 
 		const blocks = Array.from(document.querySelectorAll(".mermaid"));
@@ -120,14 +123,23 @@
 			startOnLoad: false,
 			theme: "neutral",
 		});
+		const clearLoading = () => {
+			blocks.forEach((block) => {
+				const wrap = block.closest(".mermaid-wrap");
+				if (wrap) wrap.classList.remove("is-loading");
+			});
+		};
+
 		try {
 			if (typeof window.mermaid.run === "function") {
 				await window.mermaid.run({ nodes: blocks });
 			} else if (typeof window.mermaid.init === "function") {
 				window.mermaid.init(undefined, blocks);
 			}
+			clearLoading();
 		} catch (err) {
 			console.error(err);
+			clearLoading();
 		}
 	}
 
