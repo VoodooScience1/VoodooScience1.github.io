@@ -86,48 +86,6 @@
 		);
 	}
 
-	async function renderMermaidDiagrams() {
-		const codeBlocks = Array.from(
-			document.querySelectorAll(
-				"pre code.language-mermaid, pre code[data-lang='mermaid']",
-			),
-		);
-		codeBlocks.forEach((code) => {
-			if (code.closest(".cms-rte")) return;
-			const pre = code.closest("pre");
-			if (!pre) return;
-			const container = document.createElement("div");
-			container.className = "mermaid";
-			container.textContent = code.textContent || "";
-			pre.replaceWith(container);
-		});
-
-		const blocks = Array.from(document.querySelectorAll(".mermaid"));
-		if (!blocks.length) return;
-
-		try {
-			await loadScript(`${ASSETS_BASE}/script/vendor/mermaid.min.js`);
-		} catch (err) {
-			console.error(err);
-			return;
-		}
-
-		if (!window.mermaid) return;
-		window.mermaid.initialize({
-			startOnLoad: false,
-			theme: "neutral",
-		});
-		try {
-			if (typeof window.mermaid.run === "function") {
-				await window.mermaid.run({ nodes: blocks });
-			} else if (typeof window.mermaid.init === "function") {
-				window.mermaid.init(undefined, blocks);
-			}
-		} catch (err) {
-			console.error(err);
-		}
-	}
-
 	function copyTextToClipboard(text) {
 		const value = String(text ?? "");
 		if (!value) return Promise.resolve();
@@ -286,8 +244,6 @@
 
 		await loadScript(`${ASSETS_BASE}/script/sections.js`);
 		document.documentElement.classList.add("sections-ready");
-
-		await renderMermaidDiagrams();
 
 		// Show the page once CSS + sections expansion are done; nav scripts can finish after.
 		document.documentElement.classList.add("dom-ready");
