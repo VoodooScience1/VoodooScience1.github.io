@@ -491,6 +491,42 @@ h3 {
 	overflow-x: auto;
 }
 
+.cms-admin pre.cms-mermaid-source {
+	display: none;
+}
+
+.cms-admin pre.cms-mermaid-source.is-show-source {
+	display: block;
+	margin: 12px 0;
+}
+
+.cms-admin .mermaid-admin-preview {
+	position: relative;
+}
+
+.cms-admin .cms-mermaid-toggle {
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	border-radius: 999px;
+	border: 1px solid rgba(18, 22, 32, 0.2);
+	background: rgba(255, 255, 255, 0.9);
+	color: #1d2433;
+	font:
+		600 10px/1 system-ui,
+		-apple-system,
+		Segoe UI,
+		Roboto,
+		Arial;
+	padding: 4px 10px;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.cms-admin .cms-mermaid-toggle:hover {
+	background: #ffffff;
+}
+
 .mermaid svg,
 .mermaid-wrap svg {
 	max-width: 100%;
@@ -2312,6 +2348,78 @@ footer a {
 		Roboto,
 		Arial;
 	overflow: auto;
+}
+
+.cms-admin .cms-rte__editor-row {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	gap: 16px;
+	align-items: start;
+}
+
+.cms-admin .cms-rte__editor-row.is-solo {
+	grid-template-columns: minmax(0, 1fr);
+}
+
+.cms-admin .cms-mermaid-preview {
+	min-height: 140px;
+	padding: 10px 12px;
+	border-radius: 10px;
+	border: 1px solid rgba(18, 22, 32, 0.18);
+	background: #f7f8fb;
+	color: #1d2433;
+}
+
+.cms-admin .cms-mermaid-preview__header {
+	margin-bottom: 8px;
+	font:
+		700 11px/1.2 system-ui,
+		-apple-system,
+		Segoe UI,
+		Roboto,
+		Arial;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	opacity: 0.7;
+}
+
+.cms-admin .cms-mermaid-preview__body {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.cms-admin .cms-mermaid-preview__diagram {
+	padding: 10px;
+	border-radius: 10px;
+	border: 1px solid rgba(18, 22, 32, 0.12);
+	background: #ffffff;
+	overflow: auto;
+}
+
+.cms-admin .cms-mermaid-preview__diagram svg {
+	max-width: 100%;
+	height: auto;
+}
+
+.cms-admin .cms-mermaid-preview__empty,
+.cms-admin .cms-mermaid-preview__error {
+	padding: 8px 10px;
+	border-radius: 8px;
+	background: rgba(18, 22, 32, 0.08);
+	font:
+		500 12px/1.4 system-ui,
+		-apple-system,
+		Segoe UI,
+		Roboto,
+		Arial;
+	color: #5b6270;
+}
+
+@media (max-width: 1100px) {
+	.cms-admin .cms-rte__editor-row {
+		grid-template-columns: minmax(0, 1fr);
+	}
 }
 
 .cms-rte:focus {
