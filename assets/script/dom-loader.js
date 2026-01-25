@@ -124,10 +124,9 @@
 			theme: "neutral",
 		});
 		const clearLoading = () => {
-			blocks.forEach((block) => {
-				const wrap = block.closest(".mermaid-wrap");
-				if (wrap) wrap.classList.remove("is-loading");
-			});
+			document
+				.querySelectorAll(".mermaid-wrap.is-loading")
+				.forEach((wrap) => wrap.classList.remove("is-loading"));
 		};
 
 		try {
