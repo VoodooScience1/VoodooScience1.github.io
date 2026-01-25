@@ -500,7 +500,8 @@ h3 {
 	overflow-x: auto;
 }
 
-.mermaid svg {
+.mermaid svg,
+.mermaid-wrap svg {
 	max-width: 100%;
 	height: auto;
 }
