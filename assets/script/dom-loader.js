@@ -87,6 +87,7 @@
 	}
 
 	async function renderMermaidDiagrams() {
+		const isAdmin = document.documentElement.classList.contains("cms-admin");
 		const codeBlocks = Array.from(
 			document.querySelectorAll(
 				"pre code.language-mermaid, pre code[data-lang='mermaid']",
@@ -95,10 +96,21 @@
 		codeBlocks.forEach((code) => {
 			code.classList.add("nohighlight");
 		});
+		const adminPreviews = [];
 		codeBlocks.forEach((code) => {
 			if (code.closest(".cms-rte")) return;
 			const pre = code.closest("pre");
 			if (!pre) return;
+			if (isAdmin) {
+				if (pre.nextElementSibling?.classList?.contains("mermaid-preview"))
+					return;
+				const wrapper = document.createElement("div");
+				wrapper.className = "mermaid-wrap mermaid-preview is-loading";
+				wrapper.setAttribute("data-cms-preview", "true");
+				pre.insertAdjacentElement("afterend", wrapper);
+				adminPreviews.push({ wrapper, text: code.textContent || "" });
+				return;
+			}
 			const wrapper = document.createElement("div");
 			wrapper.className = "mermaid-wrap is-loading";
 			const container = document.createElement("div");
@@ -109,7 +121,7 @@
 		});
 
 		const blocks = Array.from(document.querySelectorAll(".mermaid"));
-		if (!blocks.length) return;
+		if (!blocks.length && !adminPreviews.length) return;
 
 		const isRendered = (block) =>
 			block.getAttribute("data-processed") === "true" ||
@@ -177,10 +189,27 @@
 		};
 
 		try {
-			if (typeof window.mermaid.run === "function") {
-				await window.mermaid.run({ nodes: blocks });
-			} else if (typeof window.mermaid.init === "function") {
-				window.mermaid.init(undefined, blocks);
+			if (blocks.length) {
+				if (typeof window.mermaid.run === "function") {
+					await window.mermaid.run({ nodes: blocks });
+				} else if (typeof window.mermaid.init === "function") {
+					window.mermaid.init(undefined, blocks);
+				}
+			}
+			if (adminPreviews.length && typeof window.mermaid.render === "function") {
+				let counter = 0;
+				for (const preview of adminPreviews) {
+					const id = `mermaid-admin-${counter++}`;
+					try {
+						const result = await window.mermaid.render(id, preview.text);
+						preview.wrapper.innerHTML = result?.svg || "";
+					} catch (err) {
+						console.error(err);
+						preview.wrapper.textContent = "Mermaid render failed.";
+					} finally {
+						preview.wrapper.classList.remove("is-loading");
+					}
+				}
 			}
 			clearLoading();
 		} catch (err) {
