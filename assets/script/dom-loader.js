@@ -111,6 +111,35 @@
 		const blocks = Array.from(document.querySelectorAll(".mermaid"));
 		if (!blocks.length) return;
 
+		const isRendered = (block) =>
+			block.getAttribute("data-processed") === "true" ||
+			Boolean(block.querySelector("svg"));
+		const watchBlock = (block) => {
+			const wrap = block.closest(".mermaid-wrap");
+			if (!wrap || !wrap.classList.contains("is-loading")) return;
+			let observer = null;
+			const stop = () => {
+				if (!wrap.classList.contains("is-loading")) return;
+				wrap.classList.remove("is-loading");
+				if (observer) observer.disconnect();
+			};
+			if (isRendered(block)) {
+				stop();
+				return;
+			}
+			observer = new MutationObserver(() => {
+				if (isRendered(block)) stop();
+			});
+			observer.observe(block, {
+				attributes: true,
+				attributeFilter: ["data-processed"],
+				childList: true,
+				subtree: true,
+			});
+			setTimeout(stop, 5000);
+		};
+		blocks.forEach((block) => watchBlock(block));
+
 		try {
 			await loadScript(`${ASSETS_BASE}/script/vendor/mermaid.min.js`);
 		} catch (err) {
@@ -123,11 +152,28 @@
 			startOnLoad: false,
 			theme: "neutral",
 		});
+		if (typeof window.mermaid.registerIconPacks === "function") {
+			try {
+				const result = window.mermaid.registerIconPacks([
+					{
+						name: "logos",
+						icons: () =>
+							fetch(`${ASSETS_BASE}/icon-packs/logos.json`).then((res) =>
+								res.json(),
+							),
+					},
+				]);
+				if (result && typeof result.then === "function") {
+					await result;
+				}
+			} catch (err) {
+				console.warn("Mermaid icon pack load failed:", err);
+			}
+		}
 		const clearLoading = () => {
-			blocks.forEach((block) => {
-				const wrap = block.closest(".mermaid-wrap");
-				if (wrap) wrap.classList.remove("is-loading");
-			});
+			document
+				.querySelectorAll(".mermaid-wrap.is-loading")
+				.forEach((wrap) => wrap.classList.remove("is-loading"));
 		};
 
 		try {
