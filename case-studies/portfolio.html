@@ -41,19 +41,15 @@
 <!-- CMS:END hero -->
 
 		<!-- CMS:START main -->
-		<div class="div-wrapper" data-cms-id="cms-portfolio-architecture-0">
-			<div class="default-div-wrapper">
-				<div class="std-container-text">
-					<h2 style="text-align: center">Portfolio Architecture (Dev/Prod)</h2>
-					<p>
-						This diagram summarises the PR-only publishing flow, Cloudflare
-						security gates, and the rebuild triggers used to keep dev and prod
-						in sync.
-					</p>
-					<pre><code class="language-mermaid">flowchart LR
+<div class="div-wrapper" data-cms-id="cms-portfolio-architecture-0">
+	<div class="default-div-wrapper">
+		<div class="std-container-text">
+			<h2 style="text-align: center;">Portfolio Architecture (Dev/Prod)</h2>
+			<p> This diagram summarises the PR-only publishing flow, Cloudflare security gates, and the rebuild triggers used to keep dev and prod in sync. </p>
+			<pre><code class="language-mermaid">flowchart LR
   subgraph Access["Security (ADR-006)"]
-    AccessCF["Cloudflare Access<br/>GitHub OAuth + Org/Team + MFA"]
-    Jwt["CMS Worker JWT verify<br/>+ shared keys"]
+    AccessCF["Cloudflare AccessGitHub OAuth + Org/Team + MFA"]
+    Jwt["CMS Worker JWT verify+ shared keys"]
   end
 
   subgraph Admin["Admin UI (Cloudflare Pages)"]
@@ -62,7 +58,7 @@
   end
 
   subgraph CMS["CMS API Layer"]
-    Proxy["Pages Function /api/*<br/>adds x-cms-read-key / x-cms-key"]
+    Proxy["Pages Function /api/*adds x-cms-read-key / x-cms-key"]
     Worker["CMS Worker (PR-only writes)"]
   end
 
@@ -83,26 +79,26 @@
     HookProd["Deploy Hook (prod)"]
   end
 
-  AccessCF --> AdminDev
-  AccessCF --> AdminProd
-  AdminDev --> Proxy --> Worker --> DevBranch
-  AdminProd --> Proxy --> Worker --> DevBranch
-  Worker --> PR --> MainBranch
+  AccessCF --&gt; AdminDev
+  AccessCF --&gt; AdminProd
+  AdminDev --&gt; Proxy --&gt; Worker --&gt; DevBranch
+  AdminProd --&gt; Proxy --&gt; Worker --&gt; DevBranch
+  Worker --&gt; PR --&gt; MainBranch
 
-  DevBranch --> DevSite
-  MainBranch --> ProdSite
+  DevBranch --&gt; DevSite
+  MainBranch --&gt; ProdSite
 
-  Action --> HookDev --> DevSite
-  Action --> HookProd --> ProdSite</code></pre>
-					<ul>
-						<li>PR-only writes via the CMS Worker (ADR-004).</li>
-						<li>Cloudflare Access + JWT verification + shared keys (ADR-006).</li>
-						<li>Deploy hooks trigger rebuilds from supporting repos (ADR-010).</li>
-						<li>Branch-to-environment mapping for dev/prod (ADR-012).</li>
-					</ul>
-				</div>
-			</div>
+  Action --&gt; HookDev --&gt; DevSite
+  Action --&gt; HookProd --&gt; ProdSite</code></pre>
+			<ul><li>PR-only writes via the CMS Worker (ADR-004).</li>
+			<li>Cloudflare Access + JWT verification + shared keys (ADR-006).</li>
+			<li>Deploy hooks trigger rebuilds from supporting repos (ADR-010).</li>
+			<li>Branch-to-environment mapping for dev/prod (ADR-012).</li></ul>
+			<div><br /></div>
+			<div>Test fix for loading icon</div>
 		</div>
+	</div>
+</div>
 <!-- CMS:END main -->
 
 		<footer>
