@@ -86,16 +86,25 @@
 		);
 	}
 
-	async function renderMermaidDiagrams() {
-		const isAdmin = document.documentElement.classList.contains("cms-admin");
-		const codeBlocks = Array.from(
-			document.querySelectorAll(
-				"pre code.language-mermaid, pre code[data-lang='mermaid']",
-			),
+async function renderMermaidDiagrams() {
+	const isAdmin = document.documentElement.classList.contains("cms-admin");
+	const isMermaidText = (text) =>
+		/(^|\n)\s*(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram|journey|architecture-beta|architecture)\b/i.test(
+			String(text || ""),
 		);
-		codeBlocks.forEach((code) => {
-			code.classList.add("nohighlight");
-		});
+	const allCodes = Array.from(document.querySelectorAll("pre code"));
+	const codeBlocks = allCodes.filter((code) => {
+		const cls = code.getAttribute("class") || "";
+		const lang =
+			(cls.match(/language-([a-z0-9_-]+)/i) || [])[1] ||
+			code.getAttribute("data-lang") ||
+			"";
+		if (String(lang).toLowerCase() === "mermaid") return true;
+		return isMermaidText(code.textContent || "");
+	});
+	codeBlocks.forEach((code) => {
+		code.classList.add("nohighlight");
+	});
 		const adminPreviews = [];
 		codeBlocks.forEach((code) => {
 			if (code.closest(".cms-rte")) return;
@@ -170,9 +179,9 @@
 					{
 						name: "logos",
 						icons: () =>
-							fetch(`${ASSETS_BASE}/icon-packs/logos.json`).then((res) =>
-								res.json(),
-							),
+							fetch(
+								`${ASSETS_BASE}/icon-packs/logos.json?v=${Date.now()}`,
+							).then((res) => res.json()),
 					},
 				]);
 				if (result && typeof result.then === "function") {
