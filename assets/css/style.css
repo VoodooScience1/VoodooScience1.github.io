@@ -491,13 +491,12 @@ h3 {
 	overflow-x: auto;
 }
 
-.cms-admin pre.cms-mermaid-source {
+.cms-admin pre.cms-mermaid-source code {
 	display: none;
 }
 
-.cms-admin pre.cms-mermaid-source.is-show-source {
+.cms-admin pre.cms-mermaid-source.is-show-source code {
 	display: block;
-	margin: 12px 0;
 }
 
 .cms-admin .mermaid-admin-preview {
@@ -513,27 +512,8 @@ h3 {
 	pointer-events: none;
 }
 
-.cms-admin .cms-mermaid-toggle {
-	position: absolute;
-	top: 8px;
-	left: 8px;
-	border-radius: 999px;
-	border: 1px solid rgba(18, 22, 32, 0.2);
-	background: rgba(255, 255, 255, 0.9);
-	color: #1d2433;
-	font:
-		600 10px/1 system-ui,
-		-apple-system,
-		Segoe UI,
-		Roboto,
-		Arial;
-	padding: 4px 10px;
-	letter-spacing: 0.08em;
-	text-transform: uppercase;
-}
-
-.cms-admin .cms-mermaid-toggle:hover {
-	background: #ffffff;
+.cms-admin .mermaid-admin-preview.is-show-source {
+	display: none;
 }
 
 .mermaid svg,
@@ -2381,6 +2361,10 @@ footer a {
 
 .cms-admin .cms-mermaid-preview__header {
 	margin-bottom: 8px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
 	font:
 		700 11px/1.2 system-ui,
 		-apple-system,
@@ -2390,6 +2374,26 @@ footer a {
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
 	opacity: 0.7;
+}
+
+.cms-admin .cms-mermaid-preview__toggle {
+	border-radius: 999px;
+	border: 1px solid rgba(18, 22, 32, 0.2);
+	background: rgba(255, 255, 255, 0.9);
+	color: #1d2433;
+	font:
+		600 10px/1 system-ui,
+		-apple-system,
+		Segoe UI,
+		Roboto,
+		Arial;
+	padding: 4px 10px;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.cms-admin .cms-mermaid-preview__toggle:hover {
+	background: #ffffff;
 }
 
 .cms-admin .cms-mermaid-preview__body {
