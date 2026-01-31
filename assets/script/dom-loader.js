@@ -189,7 +189,10 @@
 			return;
 		}
 
-		if (!window.mermaid) return;
+		if (!window.mermaid) {
+			clearLoading();
+			return;
+		}
 		window.mermaid.initialize({
 			startOnLoad: false,
 			theme: "neutral",
@@ -197,17 +200,19 @@
 		if (typeof window.mermaid.registerIconPacks === "function") {
 			try {
 				const iconUrl = `${ASSETS_BASE}/icon-packs/logos.json?v=${Date.now()}`;
-				let iconsJson = null;
-				try {
-					const res = await fetch(iconUrl);
-					if (res.ok) iconsJson = await res.json();
-				} catch {
-					iconsJson = null;
-				}
+				const loadIcons = async () => {
+					try {
+						const res = await fetch(iconUrl);
+						if (res.ok) return await res.json();
+					} catch {
+						return fallbackIcons;
+					}
+					return fallbackIcons;
+				};
 				const result = window.mermaid.registerIconPacks([
 					{
 						name: "logos",
-						icons: () => Promise.resolve(iconsJson || fallbackIcons),
+						loader: loadIcons,
 					},
 				]);
 				if (result && typeof result.then === "function") {
@@ -216,7 +221,7 @@
 			} catch (err) {
 				try {
 					window.mermaid.registerIconPacks([
-						{ name: "logos", icons: () => Promise.resolve(fallbackIcons) },
+						{ name: "logos", loader: async () => fallbackIcons },
 					]);
 				} catch {
 					console.warn("Mermaid icon pack load failed:", err);
