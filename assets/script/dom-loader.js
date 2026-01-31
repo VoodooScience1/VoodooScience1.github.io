@@ -285,6 +285,7 @@
 			console.error(err);
 		} finally {
 			clearLoading();
+			document.documentElement.classList.add("mermaid-ready");
 		}
 	}
 

@@ -485,6 +485,15 @@ h3 {
 	visibility: hidden;
 }
 
+html.mermaid-ready .mermaid-wrap.is-loading::before,
+html.mermaid-ready .mermaid-wrap.is-loading::after {
+	display: none;
+}
+
+html.mermaid-ready .mermaid-wrap.is-loading .mermaid {
+	visibility: visible;
+}
+
 .mermaid {
 	display: flex;
 	justify-content: center;
