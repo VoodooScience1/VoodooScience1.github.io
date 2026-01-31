@@ -494,6 +494,12 @@ html.mermaid-ready .mermaid-wrap.is-loading .mermaid {
 	visibility: visible;
 }
 
+.mermaid-wrap:not(.is-loading)::before,
+.mermaid-wrap:not(.is-loading)::after {
+	content: none;
+	display: none;
+}
+
 .mermaid {
 	display: flex;
 	justify-content: center;
@@ -560,20 +566,41 @@ html.mermaid-ready .mermaid-wrap.is-loading .mermaid {
 .cms-admin .mermaid-admin-preview .code-preview-btn[data-tooltip]::after {
 	content: attr(data-tooltip);
 	position: absolute;
-	right: 0;
-	top: -26px;
-	transform: translateY(-4px);
-	background: rgba(15, 23, 42, 0.92);
-	color: #e2e8f0;
-	font-size: 11px;
-	line-height: 1;
-	padding: 4px 6px;
+	left: 50%;
+	bottom: calc(100% + 8px);
+	transform: translate(-50%, -4px);
+	background: #0f1726;
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	color: #f5f7ff;
+	padding: 4px 8px;
 	border-radius: 6px;
+	font-size: 10px;
+	letter-spacing: 0.04em;
 	white-space: nowrap;
 	opacity: 0;
 	pointer-events: none;
-	transition: opacity 0.12s ease, transform 0.12s ease;
-	box-shadow: 0 6px 14px rgba(15, 23, 42, 0.35);
+	box-shadow: 0 6px 14px rgba(4, 8, 16, 0.35);
+	transition:
+		opacity 120ms ease,
+		transform 120ms ease;
+	z-index: 5;
+}
+
+.cms-admin pre .code-copy-btn[data-tooltip]::before,
+.cms-admin pre .code-preview-btn[data-tooltip]::before,
+.cms-admin .mermaid-admin-preview .code-copy-btn[data-tooltip]::before,
+.cms-admin .mermaid-admin-preview .code-preview-btn[data-tooltip]::before {
+	content: "";
+	position: absolute;
+	left: 50%;
+	bottom: calc(100% + 2px);
+	transform: translateX(-50%);
+	border: 5px solid transparent;
+	border-top-color: rgba(255, 255, 255, 0.2);
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 120ms ease;
+	z-index: 4;
 }
 
 .cms-admin pre .code-copy-btn[data-tooltip]:hover::after,
@@ -585,7 +612,18 @@ html.mermaid-ready .mermaid-wrap.is-loading .mermaid {
 .cms-admin .mermaid-admin-preview .code-copy-btn[data-tooltip]:focus-visible::after,
 .cms-admin .mermaid-admin-preview .code-preview-btn[data-tooltip]:focus-visible::after {
 	opacity: 1;
-	transform: translateY(-8px);
+	transform: translate(-50%, 0);
+}
+
+.cms-admin pre .code-copy-btn[data-tooltip]:hover::before,
+.cms-admin pre .code-preview-btn[data-tooltip]:hover::before,
+.cms-admin pre .code-copy-btn[data-tooltip]:focus-visible::before,
+.cms-admin pre .code-preview-btn[data-tooltip]:focus-visible::before,
+.cms-admin .mermaid-admin-preview .code-copy-btn[data-tooltip]:hover::before,
+.cms-admin .mermaid-admin-preview .code-preview-btn[data-tooltip]:hover::before,
+.cms-admin .mermaid-admin-preview .code-copy-btn[data-tooltip]:focus-visible::before,
+.cms-admin .mermaid-admin-preview .code-preview-btn[data-tooltip]:focus-visible::before {
+	opacity: 1;
 }
 
 .cms-admin .mermaid-admin-preview {
