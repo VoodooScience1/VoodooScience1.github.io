@@ -151,6 +151,19 @@
 				.querySelectorAll(".mermaid-wrap.is-loading")
 				.forEach((wrap) => wrap.classList.remove("is-loading"));
 		};
+		const finalizeLoading = () => {
+			document
+				.querySelectorAll(".mermaid-wrap.is-loading")
+				.forEach((wrap) => {
+					if (
+						wrap.querySelector("svg") ||
+						wrap.querySelector(".mermaid[data-processed='true']") ||
+						wrap.querySelector(".cms-mermaid-preview__diagram")
+					) {
+						wrap.classList.remove("is-loading");
+					}
+				});
+		};
 		const blocks = Array.from(document.querySelectorAll(".mermaid"));
 		if (!blocks.length && !adminPreviews.length) {
 			clearLoading();
@@ -240,6 +253,9 @@
 				} else if (typeof window.mermaid.init === "function") {
 					window.mermaid.init(undefined, blocks);
 				}
+				finalizeLoading();
+				setTimeout(finalizeLoading, 200);
+				setTimeout(finalizeLoading, 1000);
 			}
 			if (adminPreviews.length && typeof window.mermaid.render === "function") {
 				let counter = 0;
@@ -255,6 +271,9 @@
 						preview.wrapper.classList.remove("is-loading");
 					}
 				}
+				finalizeLoading();
+				setTimeout(finalizeLoading, 200);
+				setTimeout(finalizeLoading, 1000);
 			}
 		} catch (err) {
 			console.error(err);
