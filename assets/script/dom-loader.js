@@ -106,7 +106,10 @@
 		/(^|\n)\s*(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram|journey|architecture-beta|architecture)\b/i.test(
 			String(text || ""),
 		);
-	const allCodes = Array.from(document.querySelectorAll("pre code"));
+	const portalRoot = isAdmin ? document.querySelector("#cms-portal") : null;
+	const allCodes = Array.from(document.querySelectorAll("pre code")).filter(
+		(code) => !(portalRoot && code.closest("#cms-portal")),
+	);
 	const codeBlocks = allCodes.filter((code) => {
 		const cls = code.getAttribute("class") || "";
 		const lang =
