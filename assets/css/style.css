@@ -572,9 +572,13 @@ html.mermaid-ready .mermaid-wrap.is-loading .mermaid {
 	background: #0f1726;
 	border: 1px solid rgba(255, 255, 255, 0.2);
 	color: #f5f7ff;
+	font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+		"Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
+		"Liberation Sans", sans-serif;
 	padding: 4px 8px;
 	border-radius: 6px;
 	font-size: 10px;
+	line-height: 1.2;
 	letter-spacing: 0.04em;
 	white-space: nowrap;
 	opacity: 0;
