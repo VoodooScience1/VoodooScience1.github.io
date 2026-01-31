@@ -86,8 +86,22 @@
 		);
 	}
 
-async function renderMermaidDiagrams() {
-	const isAdmin = document.documentElement.classList.contains("cms-admin");
+	async function renderMermaidDiagrams() {
+		const isAdmin = document.documentElement.classList.contains("cms-admin");
+		const fallbackIcons = {
+			prefix: "logos",
+			icons: {
+				cloud: {
+					body: "<defs><linearGradient id=\"SVGZDBLty2B\" x1=\"0%\" x2=\"100%\" y1=\"100%\" y2=\"0%\"><stop offset=\"0%\" stop-color=\"#4D27A8\"/><stop offset=\"100%\" stop-color=\"#A166FF\"/></linearGradient></defs><path fill=\"url(#SVGZDBLty2B)\" d=\"M0 0h256v256H0z\"/><path fill=\"#FFF\" d=\"M176.39 166.794c0-5.293-4.307-9.6-9.6-9.6s-9.6 4.307-9.6 9.6s4.308 9.6 9.6 9.6c5.293 0 9.6-4.308 9.6-9.6m6.4 0c0 8.822-7.177 16-16 16c-8.822 0-16-7.178-16-16c0-8.823 7.178-16 16-16c8.823 0 16 7.177 16 16m-85.536-46.18c0-5.292-4.307-9.6-9.6-9.6c-5.296 0-9.6 4.308-9.6 9.6c0 5.293 4.304 9.6 9.6 9.6c5.293 0 9.6-4.307 9.6-9.6m6.4 0c0 8.823-7.18 16-16 16c-8.822 0-16-7.177-16-16c0-8.822 7.178-16 16-16c8.82 0 16 7.178 16 16m23.482-50.192c0 5.293 4.307 9.6 9.6 9.6c5.296 0 9.6-4.307 9.6-9.6c0-5.296-4.304-9.6-9.6-9.6c-5.293 0-9.6 4.304-9.6 9.6m-6.4 0c0-8.822 7.18-16 16-16c8.822 0 16 7.178 16 16c0 8.823-7.178 16-16 16c-8.82 0-16-7.177-16-16M211.2 128c0-29.674-15.91-57.126-41.562-71.971c-4.598.928-9.046 2.198-14.595 4.205l-2.176-6.02a131 131 0 0 1 7.984-2.61A83 83 0 0 0 128 44.8c-5.405 0-10.723.56-15.92 1.574c3.763 2.202 7.1 4.397 10.342 6.855l-3.868 5.097c-4.57-3.462-9.306-6.396-15.524-9.654c-31.42 9.882-54.05 37.594-57.644 70.138c6.588-1.335 12.915-2.061 19.939-2.234l.157 6.397c-7.36.182-13.684.963-20.596 2.483c-.028.848-.086 1.706-.086 2.544c0 27.706 13.706 53.235 36.246 68.63c-4.01-11.939-6.006-23.222-6.006-34.243c0-6.285 1.082-11.446 2.224-16.909c.266-1.264.534-2.55.797-3.884l6.281 1.238c-.268 1.357-.544 2.672-.812 3.962c-1.12 5.35-2.09 9.97-2.09 15.593c0 12.506 2.746 25.437 8.333 39.479c11.9 6.179 24.752 9.334 38.227 9.334c8.82 0 17.427-1.408 25.638-4.115c3.223-6.359 5.613-12.359 7.61-19.248l6.147 1.782a114 114 0 0 1-5.126 14.147c5.165-2.323 10.051-5.196 14.637-8.55c-1.104-2.707-2.288-5.398-3.597-8.02l5.725-2.863c1.113 2.227 2.134 4.505 3.11 6.797C200.656 175.28 211.2 152.512 211.2 128m6.4 0c0 27.926-12.691 53.757-34.813 70.877c-5.478 4.256-11.42 7.789-17.702 10.633c-2.666 1.21-5.38 2.33-8.17 3.27c-9.216 3.198-18.953 4.82-28.915 4.82c-14.72 0-29.338-3.667-42.278-10.605C56.534 191.38 38.4 161.11 38.4 128c0-2.195.058-3.866.189-5.411c2.179-37.389 27.83-69.75 63.814-80.458C110.598 39.658 119.216 38.4 128 38.4c15.386 0 30.525 3.962 43.789 11.453C200.042 65.68 217.6 95.629 217.6 128m-98.195-46.518l-4.205-4.823c-7.174 6.26-12.755 12.906-19.274 22.944l5.37 3.485c6.17-9.507 11.418-15.766 18.109-21.606m-9.725 41.484l-2.08 6.052c14.698 5.046 27.52 13.097 40.349 25.337l4.419-4.63c-13.523-12.9-27.088-21.402-42.688-26.759m42.787-37.628c12.007 18.31 18.768 38.41 20.093 59.744l-6.387.396c-1.258-20.21-7.667-39.264-19.053-56.63z\"/>",
+				},
+				user: {
+					body: "<defs><linearGradient id=\"SVGhE6sJcGC\" x1=\"0%\" x2=\"100%\" y1=\"100%\" y2=\"0%\"><stop offset=\"0%\" stop-color=\"#BD0816\"/><stop offset=\"100%\" stop-color=\"#FF5252\"/></linearGradient></defs><path fill=\"url(#SVGhE6sJcGC)\" d=\"M0 0h256v256H0z\"/><path fill=\"#FFF\" d=\"M44.8 188.8h166.4V67.2H44.8zM217.6 64v128a3.2 3.2 0 0 1-3.2 3.2H41.6a3.2 3.2 0 0 1-3.2-3.2V64a3.2 3.2 0 0 1 3.2-3.2h172.8a3.2 3.2 0 0 1 3.2 3.2m-76.8 89.6h48v-6.4h-48zm41.6-19.2h16V128h-16zm-41.6 0h25.6V128h-25.6zm-48 12.8c0-1.763-1.434-3.2-3.2-3.2a3.203 3.203 0 0 0-3.2 3.2c0 1.763 1.434 3.2 3.2 3.2s3.2-1.437 3.2-3.2m6.4 0c0 4.166-2.685 7.683-6.4 9.011v6.989h-6.4v-6.992c-3.715-1.325-6.4-4.842-6.4-9.008c0-5.293 4.307-9.6 9.6-9.6s9.6 4.307 9.6 9.6m-38.4 25.578l57.58.022l.007-12.8H105.6v-6.4h12.787l.007-9.6H105.6v-6.4h12.797l.003-9.578L60.82 128zm9.6-51.175l38.4.016V99.2c.003-7.37-8.97-13.834-19.2-13.84h-.013c-10.214 0-19.174 6.467-19.18 13.84zm-16 54.371l.02-51.174a3.2 3.2 0 0 1 3.2-3.2l6.38.003l.006-22.403c.007-11.162 11.482-20.24 25.581-20.24h.013c14.118.006 25.603 9.088 25.6 20.24v22.422l6.4.004a3.2 3.2 0 0 1 3.2 3.2L124.78 176a3.2 3.2 0 0 1-3.2 3.2l-63.98-.026a3.2 3.2 0 0 1-3.2-3.2M192 115.2h6.4v-6.4H192zm-51.2 0H176v-6.4h-35.2z\"/>",
+				},
+				users: {
+					body: "<defs><linearGradient id=\"SVGhE6sJcGC\" x1=\"0%\" x2=\"100%\" y1=\"100%\" y2=\"0%\"><stop offset=\"0%\" stop-color=\"#BD0816\"/><stop offset=\"100%\" stop-color=\"#FF5252\"/></linearGradient></defs><path fill=\"url(#SVGhE6sJcGC)\" d=\"M0 0h256v256H0z\"/><path fill=\"#FFF\" d=\"M44.8 188.8h166.4V67.2H44.8zM217.6 64v128a3.2 3.2 0 0 1-3.2 3.2H41.6a3.2 3.2 0 0 1-3.2-3.2V64a3.2 3.2 0 0 1 3.2-3.2h172.8a3.2 3.2 0 0 1 3.2 3.2m-76.8 89.6h48v-6.4h-48zm41.6-19.2h16V128h-16zm-41.6 0h25.6V128h-25.6zm-48 12.8c0-1.763-1.434-3.2-3.2-3.2a3.203 3.203 0 0 0-3.2 3.2c0 1.763 1.434 3.2 3.2 3.2s3.2-1.437 3.2-3.2m6.4 0c0 4.166-2.685 7.683-6.4 9.011v6.989h-6.4v-6.992c-3.715-1.325-6.4-4.842-6.4-9.008c0-5.293 4.307-9.6 9.6-9.6s9.6 4.307 9.6 9.6m-38.4 25.578l57.58.022l.007-12.8H105.6v-6.4h12.787l.007-9.6H105.6v-6.4h12.797l.003-9.578L60.82 128zm9.6-51.175l38.4.016V99.2c.003-7.37-8.97-13.834-19.2-13.84h-.013c-10.214 0-19.174 6.467-19.18 13.84zm-16 54.371l.02-51.174a3.2 3.2 0 0 1 3.2-3.2l6.38.003l.006-22.403c.007-11.162 11.482-20.24 25.581-20.24h.013c14.118.006 25.603 9.088 25.6 20.24v22.422l6.4.004a3.2 3.2 0 0 1 3.2 3.2L124.78 176a3.2 3.2 0 0 1-3.2 3.2l-63.98-.026a3.2 3.2 0 0 1-3.2-3.2M192 115.2h6.4v-6.4H192zm-51.2 0H176v-6.4h-35.2z\"/>",
+				},
+			},
+		};
 	const isMermaidText = (text) =>
 		/(^|\n)\s*(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram|journey|architecture-beta|architecture)\b/i.test(
 			String(text || ""),
@@ -161,42 +175,59 @@ async function renderMermaidDiagrams() {
 		};
 		blocks.forEach((block) => watchBlock(block));
 
-		try {
-			await loadScript(`${ASSETS_BASE}/script/vendor/mermaid.min.js`);
-		} catch (err) {
-			console.error(err);
-			return;
-		}
-
-		if (!window.mermaid) return;
-		window.mermaid.initialize({
-			startOnLoad: false,
-			theme: "neutral",
-		});
-		if (typeof window.mermaid.registerIconPacks === "function") {
-			try {
-				const result = window.mermaid.registerIconPacks([
-					{
-						name: "logos",
-						icons: () =>
-							fetch(
-								`${ASSETS_BASE}/icon-packs/logos.json?v=${Date.now()}`,
-							).then((res) => res.json()),
-					},
-				]);
-				if (result && typeof result.then === "function") {
-					await result;
-				}
-			} catch (err) {
-				console.warn("Mermaid icon pack load failed:", err);
-			}
-		}
 		const clearLoading = () => {
 			document
 				.querySelectorAll(".mermaid-wrap.is-loading")
 				.forEach((wrap) => wrap.classList.remove("is-loading"));
 		};
 
+		try {
+			await loadScript(`${ASSETS_BASE}/script/vendor/mermaid.min.js`);
+		} catch (err) {
+			console.error(err);
+			clearLoading();
+			return;
+		}
+
+		if (!window.mermaid) {
+			clearLoading();
+			return;
+		}
+		window.mermaid.initialize({
+			startOnLoad: false,
+			theme: "neutral",
+		});
+		if (typeof window.mermaid.registerIconPacks === "function") {
+			try {
+				const iconUrl = `${ASSETS_BASE}/icon-packs/logos.json?v=${Date.now()}`;
+				const loadIcons = async () => {
+					try {
+						const res = await fetch(iconUrl);
+						if (res.ok) return await res.json();
+					} catch {
+						return fallbackIcons;
+					}
+					return fallbackIcons;
+				};
+				const result = window.mermaid.registerIconPacks([
+					{
+						name: "logos",
+						loader: loadIcons,
+					},
+				]);
+				if (result && typeof result.then === "function") {
+					await result;
+				}
+			} catch (err) {
+				try {
+					window.mermaid.registerIconPacks([
+						{ name: "logos", loader: async () => fallbackIcons },
+					]);
+				} catch {
+					console.warn("Mermaid icon pack load failed:", err);
+				}
+			}
+		}
 		try {
 			if (blocks.length) {
 				if (typeof window.mermaid.run === "function") {
@@ -220,9 +251,9 @@ async function renderMermaidDiagrams() {
 					}
 				}
 			}
-			clearLoading();
 		} catch (err) {
 			console.error(err);
+		} finally {
 			clearLoading();
 		}
 	}
