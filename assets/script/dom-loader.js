@@ -146,8 +146,16 @@
 			pre.replaceWith(wrapper);
 		});
 
+		const clearLoading = () => {
+			document
+				.querySelectorAll(".mermaid-wrap.is-loading")
+				.forEach((wrap) => wrap.classList.remove("is-loading"));
+		};
 		const blocks = Array.from(document.querySelectorAll(".mermaid"));
-		if (!blocks.length && !adminPreviews.length) return;
+		if (!blocks.length && !adminPreviews.length) {
+			clearLoading();
+			return;
+		}
 
 		const isRendered = (block) =>
 			block.getAttribute("data-processed") === "true" ||
@@ -177,12 +185,6 @@
 			setTimeout(stop, 5000);
 		};
 		blocks.forEach((block) => watchBlock(block));
-
-		const clearLoading = () => {
-			document
-				.querySelectorAll(".mermaid-wrap.is-loading")
-				.forEach((wrap) => wrap.classList.remove("is-loading"));
-		};
 
 		try {
 			await loadScript(`${ASSETS_BASE}/script/vendor/mermaid.min.js`);
