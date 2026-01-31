@@ -164,6 +164,11 @@
 					}
 				});
 		};
+		const scheduleLoadingClear = () => {
+			setTimeout(clearLoading, 200);
+			setTimeout(clearLoading, 1200);
+			setTimeout(clearLoading, 3000);
+		};
 		const blocks = Array.from(document.querySelectorAll(".mermaid"));
 		if (!blocks.length && !adminPreviews.length) {
 			clearLoading();
@@ -198,6 +203,7 @@
 			setTimeout(stop, 5000);
 		};
 		blocks.forEach((block) => watchBlock(block));
+		scheduleLoadingClear();
 
 		try {
 			await loadScript(`${ASSETS_BASE}/script/vendor/mermaid.min.js`);
