@@ -41,66 +41,6 @@
 <!-- CMS:END hero -->
 
 		<!-- CMS:START main -->
-<div class="div-wrapper" data-cms-id="cms-1558223068-0">
-	<div class="default-div-wrapper">
-		<div class="std-container-text">
-			<h1 style="text-align: center;">Portfolio Architecture (Dev/Prod)</h1>
-			<p>This diagram summarises the PR-only publishing flow, Cloudflare security gates, and the rebuild triggers used to keep dev and prod in sync.</p>
-			<div><pre><code class="language-mermaid">flowchart LR
-  subgraph Access["Security (ADR-006)"]
-    AccessCF["Cloudflare AccessGitHub OAuth + Org/Team + MFA"]
-    Jwt["CMS Worker JWT verify+ shared keys"]
-  end
-
-  subgraph Admin["Admin UI (Cloudflare Pages)"]
-    AdminDev["dev.admin.portfolio.tacsa.co.uk"]
-    AdminProd["admin.portfolio.tacsa.co.uk"]
-  end
-
-  subgraph CMS["CMS API Layer"]
-    Proxy["Pages Function /api/*adds x-cms-read-key / x-cms-key"]
-    Worker["CMS Worker (PR-only writes)"]
-  end
-
-  subgraph GitHub["GitHub (Source of Truth)"]
-    DevBranch["dev branch"]
-    MainBranch["main/master branch"]
-    PR["Pull Request"]
-  end
-
-  subgraph Pages["Cloudflare Pages (Deploys)"]
-    DevSite["dev.portfolio.tacsa.co.uk"]
-    ProdSite["portfolio.tacsa.co.uk"]
-  end
-
-  subgraph Hooks["Rebuild Triggers (ADR-010)"]
-    Action["GitHub Actions (supporting repo)"]
-    HookDev["Deploy Hook (dev)"]
-    HookProd["Deploy Hook (prod)"]
-  end
-
-  AccessCF --&gt; AdminDev
-  AccessCF --&gt; AdminProd
-  AdminDev --&gt; Proxy --&gt; Worker --&gt; DevBranch
-  AdminProd --&gt; Proxy --&gt; Worker --&gt; DevBranch
-  Worker --&gt; PR --&gt; MainBranch
-
-  DevBranch --&gt; DevSite
-  MainBranch --&gt; ProdSite
-
-  Action --&gt; HookDev --&gt; DevSite
-  Action --&gt; HookProd --&gt; ProdSite</code></pre></div>
-			<div><br /></div>
-			<div><ul><li>PR-only writes via the CMS Worker (ADR-004).</li>
-			<li>Cloudflare Access + JWT verification + shared keys (ADR-006).</li>
-			<li>Deploy hooks trigger rebuilds from supporting repos (ADR-010).</li>
-			<li>Branch-to-environment mapping for dev/prod (ADR-012).</li></ul>
-			<p><br /></p>
-			<p>Test fix for loading icon</p></div>
-		</div>
-	</div>
-</div>
-
 <div class="div-wrapper" data-cms-id="cms-1558223068-0-2">
 	<div class="default-div-wrapper">
 		<div class="std-container-text">
@@ -365,43 +305,6 @@ gitGraph
   merge dev id: "PR merged"
   commit id: "release"</code></pre>
 			<p>words</p>
-		</div>
-	</div>
-</div>
-
-<div class="div-wrapper" data-cms-id="cms-1558223068-0-1">
-	<div class="default-div-wrapper">
-		<div class="std-container-text">
-			<h1 style="text-align: center;">Plain, Wide, Container</h1>
-			<h2>Header for a block</h2>
-			<p>This is some words</p>
-			<pre><code class="language-mermaid">---
-config:
-    layout: dagre
-    look: classic
-    theme: default
----
-architecture-beta
-  group tacsa(logos:cloud)[Tacsa Portfolio Site]
-  service user(logos:user)[User]
-  service admin(logos:user)[Admin]
-
-    group GitHub(logos:cloud)[GitHub] in tacsa
-        service portfolio(logos:server)[Portfolio] in GitHub
-        service adminSite(logos:server)[Admin] in GitHub
-        service setinel(logos:server)[Sentinel] in GitHub
-
-        user:R -[Access Portfolio]-&gt; L:portfolio
-        admin:R -[Update Website]-&gt; L:adminSite
-
-    group CloudFlare(logos:cloud)[CloudFlare] in tacsa
-        service VoodooDev(logos:server)[Dev Portfolio Preview] in CloudFlare
-        service AdminDev(logos:server)[Dev Admin Preview] in CloudFlare
-        service AdminProd(logos:server)[Prod Admin Preview] in CloudFlare
-        service Worker(logos:server)[Worker] in CloudFlare
-
-    group API(logos:cloud)[API] in tacsa</code></pre>
-			<p>Words later</p>
 		</div>
 	</div>
 </div>
