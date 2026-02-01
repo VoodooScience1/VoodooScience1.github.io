@@ -220,6 +220,7 @@
 		window.mermaid.initialize({
 			startOnLoad: false,
 			theme: "neutral",
+			suppressErrorRendering: true,
 		});
 		if (typeof window.mermaid.registerIconPacks === "function") {
 			try {
