@@ -41,6 +41,32 @@
 <!-- CMS:END hero -->
 
 		<!-- CMS:START main -->
+<div class="section" data-cms-id="cms-4287090771-0" data-type="imgText" data-video="https://youtu.be/xGObyUNPqbg" data-caption="Frontend / Backend Overview">
+	<h2>Intro</h2>
+	<p>On this page you will find an overview of my Portfolio.</p>
+	<p>I decided to utilise a front-end that I made a few years ago, with the express intent on developing a backend later (I made everything into re-usable "blocks"). I decided to use my SA development as an opportunity to make this backend this. I wanted to make this as efficiently as possible, noting my core build is to be done in Python; and learning is otherwise mainly around networking and cloud infrastructure. Doing this now, however, would make developing my portfolio "hassle free", so I could populate it as I went along.</p>
+	<p>An overview of a few of the key/core features/design decisions:</p>
+	<p></p>
+	<ul><li>Frontend is entirely custom (HTML, CSS, JavaScript)</li>
+	<li>The navigation bar and Lightbox were open source, but I've done some refactoring</li>
+	<li>I underpinned the backend with a set of 20 ADRs (~10 pre starting, ~5 midway through, and ~5 retrospective)</li>
+	<ul><li>I then utilised ChatGPT to develop the backend over Christmas Break (part experiment, part I've got a lot more to do aside from this)</li></ul>
+	<li>GitHub pages hosts the front end; which I use a subdomain CNAME from Amazon AWS R53</li>
+	<ul><li>All my other sub-domains are also routed/managed from here</li></ul>
+	<li>The backend (and dev branch preview of the front end) are on Cloudflare Pages (free, scalable and reliable)</li>
+	<ul><li>The backend repository is also o GitHub; and it uses the front end Master as the source of truth (pulls in)</li></ul>
+	<li>The Rich Text Editor (RTE) is entirely custom, and utilises custom tools insertions (such as using my image styles, accordions, etc)</li>
+	<ul><li>All formats, colours, etc are restricted in RTE to limit jarring clashes</li></ul>
+	<li>highlight.js manages the code block highlighting utilising the ATOM style - I have added a select number of languages</li>
+	<li>mermaid.js handles the chart renderings, and has a custom logo set that is pulled from the repo (covering some core AWS assets, and other network/web-dev biased logos)</li>
+	<li>The Worker is on Cloudflare Workers and is the only way to use the admin portal to make pull requests to merge updates</li>
+	<li>Multiple pages can be edited/added/moved and committed. It's effectively an SPA that loads the relevant content from each page</li>
+	<li>Image uploads are stored in local memory whilst waiting for PR</li>
+	<li>Videos are hosted in YouTube (due to limitations with GitHub storage) - may use S3/R3 later</li></ul>
+	<div>The video to the left shows you an example of the frontend and backend. <strong>Please note:</strong> It is a long video (12 minutes), and was recorded before I finished - so there are a couple new features, and there's one bug in the video. These are no longer present - but the value for re-recording whilst I have a lot to do is limited. You'll just have to trust me for now until I update it!</div>
+	<p></p>
+</div>
+
 <div class="div-wrapper" data-cms-id="cms-1558223068-0-2">
 	<div class="default-div-wrapper">
 		<div class="std-container-text">
