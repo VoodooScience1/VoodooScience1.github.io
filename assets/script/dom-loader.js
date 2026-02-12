@@ -122,6 +122,48 @@
 				"$1$2flowchart-elk",
 			);
 		};
+		const installMermaidElkCompat = () => {
+			const mermaid = window.mermaid;
+			if (!mermaid || mermaid.__elkLayoutCompatInstalled) return;
+			mermaid.__elkLayoutCompatInstalled = true;
+			const wrapTextArg = (fn, textIndex = 0) => {
+				if (typeof fn !== "function") return fn;
+				return function (...args) {
+					if (args.length > textIndex) {
+						args[textIndex] = normalizeMermaidText(args[textIndex]);
+					}
+					return fn.apply(this, args);
+				};
+			};
+			mermaid.render = wrapTextArg(
+				typeof mermaid.render === "function" ? mermaid.render.bind(mermaid) : null,
+				1,
+			);
+			mermaid.parse = wrapTextArg(
+				typeof mermaid.parse === "function" ? mermaid.parse.bind(mermaid) : null,
+				0,
+			);
+			if (mermaid.mermaidAPI) {
+				mermaid.mermaidAPI.render = wrapTextArg(
+					typeof mermaid.mermaidAPI.render === "function"
+						? mermaid.mermaidAPI.render.bind(mermaid.mermaidAPI)
+						: null,
+					1,
+				);
+				mermaid.mermaidAPI.parse = wrapTextArg(
+					typeof mermaid.mermaidAPI.parse === "function"
+						? mermaid.mermaidAPI.parse.bind(mermaid.mermaidAPI)
+						: null,
+					0,
+				);
+				mermaid.mermaidAPI.getDiagramFromText = wrapTextArg(
+					typeof mermaid.mermaidAPI.getDiagramFromText === "function"
+						? mermaid.mermaidAPI.getDiagramFromText.bind(mermaid.mermaidAPI)
+						: null,
+					0,
+				);
+			}
+		};
 		const portalRoot = isAdmin ? document.querySelector("#cms-portal") : null;
 		const allCodes = Array.from(document.querySelectorAll("pre code")).filter(
 			(code) => !(portalRoot && code.closest("#cms-portal")),
@@ -239,6 +281,7 @@
 			theme: "neutral",
 			suppressErrorRendering: true,
 		});
+		installMermaidElkCompat();
 		if (typeof window.mermaid.registerIconPacks === "function") {
 			try {
 				const iconUrl = `${ASSETS_BASE}/icon-packs/logos.json?v=${Date.now()}`;
