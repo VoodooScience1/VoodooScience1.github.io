@@ -74,102 +74,85 @@
 			<p>Space for words</p>
 			<p><br /></p>
 			<pre><code class="language-mermaid">
-flowchart LR
-  %% ========= Security / Access =========
-  subgraph Sec["Security + Access (ADR-006)"]
-    AccessCF["`Cloudflare Access
-(GitHub OAuth + Org/Team checks + MFA)`"]
-    Jwt["`Session/JWT verification
-(shared secrets / keys)`"]
+---
+config:
+  layout: elk
+  elk:
+    mergeEdges: true
+    nodePlacementStrategy: LINEAR_SEGMENTS
+---
+
+flowchart TB
+ subgraph Sec["Security + Access (ADR-006)"]
+        AccessCF["Cloudflare Access (GitHub OAuth + Org/Team checks + MFA)"]
+        Jwt["Session/JWT verification
+(shared secrets / keys)"]
   end
-
-  %% ========= DNS =========
-  subgraph DNS["DNS Entry"]
-    R53["`Route53
-portfolio.tacsa.co.uk + subdomains`"]
+ subgraph DNS["DNS Entry"]
+        R53["Route53
+portfolio.tacsa.co.uk + subdomains"]
   end
-
-  %% ========= Admin UI =========
-  subgraph Admin["Admin UI (Cloudflare Pages)"]
-    AdminDev["`Admin (dev)
-dev.admin.portfolio.tacsa.co.uk`"]
-    AdminProd["`Admin (prod)
-admin.portfolio.tacsa.co.uk`"]
+ subgraph Admin["Admin UI (Cloudflare Pages)"]
+        AdminDev["Admin (dev)
+dev.admin.portfolio.tacsa.co.uk"]
+        AdminProd["Admin (prod)
+admin.portfolio.tacsa.co.uk"]
   end
-
-  %% ========= CMS API layer =========
-  subgraph CMS["CMS API Layer"]
-    Proxy["`Pages Function: /api/*
-(adds x-cms-read-key / x-cms-write-key / branch header)`"]
-    Worker["`CMS Worker
-(PR-only writes)`"]
+ subgraph CMS["CMS API Layer"]
+        Proxy["Pages Function: /api/*
+(adds x-cms-read-key / x-cms-write-key / branch header)"]
+        Worker["CMS Worker
+(PR-only writes)"]
   end
-
-  %% ========= GitHub =========
-  subgraph GH["GitHub (Source of Truth)"]
-    Repo["`Portfolio Repo
-(VoodooScience1.github.io)`"]
-    DevBranch["`dev branch
-(preview source)`"]
-    MainBranch["`main/master
-(prod source)`"]
-    PR["`Pull Request
-(review + audit trail)`"]
-    Actions["`GitHub Actions
-(build + orchestration)`"]
+ subgraph GH["GitHub (Source of Truth)"]
+        Repo["Portfolio Repo
+(VoodooScience1.github.io)"]
+        DevBranch["dev branch
+(preview source)"]
+        MainBranch["main/master
+(prod source)"]
+        PR["Pull Request
+(review + audit trail)"]
+        Actions["GitHub Actions
+(build + orchestration)"]
   end
-
-  %% ========= Hosting / Deploys =========
-  subgraph Hosting["Hosting"]
-    subgraph CF["Cloudflare Pages (previews)"]
-      DevSite["`Portfolio preview (dev)
-dev.portfolio.tacsa.co.uk`"]
-    end
-    subgraph GHP["GitHub Pages (production)"]
-      ProdSite["`Portfolio (prod)
-portfolio.tacsa.co.uk`"]
-    end
+ subgraph CF["Cloudflare Pages (previews)"]
+        DevSite["Portfolio preview (dev)
+dev.portfolio.tacsa.co.uk"]
   end
-
-  %% ========= Rebuild triggers =========
-  subgraph Hooks["Rebuild Triggers (ADR-010)"]
-    HookDev["`Deploy Hook (dev)
-Cloudflare Pages`"]
-    HookProd["`Publish (prod)
-GitHub Pages`"]
-    Webhook["`Webhook / event trigger
-(repo → deploy pipeline)`"]
+ subgraph GHP["GitHub Pages (production)"]
+        ProdSite["Portfolio (prod)
+portfolio.tacsa.co.uk"]
   end
-
-  %% --- Access paths ---
-  AdminUser["Admin"] --&gt; AccessCF
-  AccessCF --&gt; Jwt
-  Jwt --&gt; AdminDev
-  Jwt --&gt; AdminProd
-
-  %% --- Admin → CMS writes ---
-  AdminDev --&gt; Proxy --&gt; Worker
-  AdminProd --&gt; Proxy --&gt; Worker
-
-  %% --- Worker → GitHub PR flow ---
-  Worker --&gt; Repo
-  Repo --&gt; PR --&gt; MainBranch
-
-  %% --- Branching / previews ---
-  Repo --&gt; DevBranch
-  DevBranch --&gt; DevSite
-  MainBranch --&gt; ProdSite
-
-  %% --- Rebuild flow ---
-  Repo --&gt; Actions
-  Actions --&gt; Webhook --&gt; HookDev --&gt; DevSite
-  Actions --&gt; HookProd --&gt; ProdSite
-
-  %% --- Browsing path (users) ---
-  User["User"] --&gt; R53
-  R53 --&gt; DevSite
-  R53 --&gt; ProdSite</code></pre>
-			<p><br /></p>
+ subgraph Hosting["Hosting"]
+        CF
+        GHP
+  end
+ subgraph Hooks["Rebuild Triggers (ADR-010)"]
+        HookDev["Deploy Hook (dev)
+Cloudflare Pages"]
+        HookProd["Publish (prod)
+GitHub Pages"]
+        Webhook["Webhook / event trigger
+(repo → deploy pipeline)"]
+  end
+    AdminUser["Admin"] --&gt; AccessCF
+    AccessCF --&gt; Jwt
+    Jwt --&gt; AdminDev &amp; AdminProd
+    AdminDev --&gt; Proxy
+    Proxy --&gt; Worker &amp; Worker
+    AdminProd --&gt; Proxy
+    Worker --&gt; Repo
+    Repo --&gt; PR &amp; DevBranch &amp; Actions
+    PR --&gt; MainBranch
+    DevBranch --&gt; DevSite
+    MainBranch --&gt; ProdSite
+    Actions --&gt; Webhook &amp; HookProd
+    Webhook --&gt; HookDev
+    HookDev --&gt; DevSite
+    HookProd --&gt; ProdSite
+    User["User"] --&gt; R53
+    R53 --&gt; DevSite &amp; ProdSite</code></pre>
 			<p>More space for words</p>
 		</div>
 	</div>
