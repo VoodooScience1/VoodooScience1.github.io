@@ -102,28 +102,45 @@
 				},
 			},
 		};
-	const isMermaidText = (text) =>
-		/(^|\n)\s*(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram|journey|architecture-beta|architecture)\b/i.test(
-			String(text || ""),
+		const isMermaidText = (text) =>
+			/(^|\n)\s*(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram|journey|architecture-beta|architecture)\b/i.test(
+				String(text || ""),
+			);
+		const normalizeMermaidText = (text) => {
+			const raw = String(text || "");
+			if (!raw) return "";
+			// Mermaid live accepts `layout: elk` in the preamble, but this bundle
+			// selects ELK flowcharts through `flowchart-elk` detection.
+			const decl = /(^|\n)(\s*)(flowchart|graph)\b(?!-elk)/i.exec(raw);
+			if (!decl) return raw;
+			const declStart = decl.index + decl[1].length;
+			const preamble = raw.slice(0, declStart);
+			if (!/["']?layout["']?\s*:\s*["']?elk["']?/i.test(preamble))
+				return raw;
+			return raw.replace(
+				/(^|\n)(\s*)(flowchart|graph)\b(?!-elk)/i,
+				"$1$2flowchart-elk",
+			);
+		};
+		const portalRoot = isAdmin ? document.querySelector("#cms-portal") : null;
+		const allCodes = Array.from(document.querySelectorAll("pre code")).filter(
+			(code) => !(portalRoot && code.closest("#cms-portal")),
 		);
-	const portalRoot = isAdmin ? document.querySelector("#cms-portal") : null;
-	const allCodes = Array.from(document.querySelectorAll("pre code")).filter(
-		(code) => !(portalRoot && code.closest("#cms-portal")),
-	);
-	const codeBlocks = allCodes.filter((code) => {
-		const cls = code.getAttribute("class") || "";
-		const lang =
-			(cls.match(/language-([a-z0-9_-]+)/i) || [])[1] ||
-			code.getAttribute("data-lang") ||
-			"";
-		if (String(lang).toLowerCase() === "mermaid") return true;
-		return isMermaidText(code.textContent || "");
-	});
-	codeBlocks.forEach((code) => {
-		code.classList.add("nohighlight");
-	});
+		const codeBlocks = allCodes.filter((code) => {
+			const cls = code.getAttribute("class") || "";
+			const lang =
+				(cls.match(/language-([a-z0-9_-]+)/i) || [])[1] ||
+				code.getAttribute("data-lang") ||
+				"";
+			if (String(lang).toLowerCase() === "mermaid") return true;
+			return isMermaidText(code.textContent || "");
+		});
+		codeBlocks.forEach((code) => {
+			code.classList.add("nohighlight");
+		});
 		const adminPreviews = [];
 		codeBlocks.forEach((code) => {
+			const diagramText = normalizeMermaidText(code.textContent || "");
 			if (code.closest(".cms-rte")) return;
 			const pre = code.closest("pre");
 			if (!pre) return;
@@ -134,14 +151,14 @@
 				wrapper.className = "mermaid-wrap mermaid-preview is-loading";
 				wrapper.setAttribute("data-cms-preview", "true");
 				pre.insertAdjacentElement("afterend", wrapper);
-				adminPreviews.push({ wrapper, text: code.textContent || "" });
+				adminPreviews.push({ wrapper, text: diagramText });
 				return;
 			}
 			const wrapper = document.createElement("div");
 			wrapper.className = "mermaid-wrap is-loading";
 			const container = document.createElement("div");
 			container.className = "mermaid";
-			container.textContent = code.textContent || "";
+			container.textContent = diagramText;
 			wrapper.appendChild(container);
 			pre.replaceWith(wrapper);
 		});
