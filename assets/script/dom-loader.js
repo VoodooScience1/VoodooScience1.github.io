@@ -87,6 +87,24 @@
 		);
 	}
 
+	function installMermaidWarningFilter() {
+		if (window.__CMS_MERMAID_WARN_FILTER_INSTALLED) return;
+		const originalWarn = console.warn;
+		if (typeof originalWarn !== "function") return;
+		window.__CMS_MERMAID_WARN_FILTER_INSTALLED = true;
+		console.warn = function (...args) {
+			const joined = args.map((v) => String(v || "")).join(" ");
+			if (
+				joined.includes(
+					"Do not assign mappings to elements without corresponding data",
+				)
+			) {
+				return;
+			}
+			return originalWarn.apply(this, args);
+		};
+	}
+
 	async function renderMermaidDiagrams() {
 		const isAdmin = document.documentElement.classList.contains("cms-admin");
 		const fallbackIcons = {
@@ -327,7 +345,16 @@
 			startOnLoad: false,
 			theme: "neutral",
 			suppressErrorRendering: true,
+			flowchart: {
+				defaultRenderer: "elk",
+			},
+			elk: {
+				mergeEdges: true,
+				nodePlacementStrategy: "LINEAR_SEGMENTS",
+				considerModelOrder: "NODES_AND_EDGES",
+			},
 		});
+		installMermaidWarningFilter();
 		installMermaidElkCompat();
 		if (typeof window.mermaid.registerIconPacks === "function") {
 			try {
