@@ -2,7 +2,7 @@
 (() => {
 	const PARTIALS_BASE = "/assets/partials";
 	const ASSETS_BASE = "/assets"; // keep everything under /assets/...
-	const MERMAID_BUNDLE_VERSION = "2026-02-15-elkfix1";
+	const MERMAID_BUNDLE_VERSION = "2026-02-15-elkfix2";
 
 	const qs = (sel) => document.querySelector(sel);
 
@@ -189,12 +189,24 @@
 			const mermaid = window.mermaid;
 			if (!mermaid || mermaid.__elkLayoutCompatInstalled) return;
 			mermaid.__elkLayoutCompatInstalled = true;
+			const ensureElkFlowchartDefaults = () => {
+				const api = mermaid.mermaidAPI;
+				if (!api || typeof api.getConfig !== "function") return;
+				const cfg = api.getConfig() || {};
+				if (cfg?.flowchart?.defaultRenderer === "elk") return;
+				if (typeof api.updateSiteConfig === "function") {
+					api.updateSiteConfig({
+						flowchart: { defaultRenderer: "elk" },
+					});
+				}
+			};
 			const wrapTextArg = (fn, textIndex = 0) => {
 				if (typeof fn !== "function") return fn;
 				return function (...args) {
 					if (args.length > textIndex) {
 						args[textIndex] = normalizeMermaidText(args[textIndex]);
 					}
+					ensureElkFlowchartDefaults();
 					return fn.apply(this, args);
 				};
 			};
@@ -347,11 +359,6 @@
 			suppressErrorRendering: true,
 			flowchart: {
 				defaultRenderer: "elk",
-			},
-			elk: {
-				mergeEdges: true,
-				nodePlacementStrategy: "LINEAR_SEGMENTS",
-				considerModelOrder: "NODES_AND_EDGES",
 			},
 		});
 		installMermaidWarningFilter();
