@@ -2,6 +2,7 @@
 (() => {
 	const PARTIALS_BASE = "/assets/partials";
 	const ASSETS_BASE = "/assets"; // keep everything under /assets/...
+	const MERMAID_BUNDLE_VERSION = "2026-02-15-elkfix1";
 
 	const qs = (sel) => document.querySelector(sel);
 
@@ -107,7 +108,7 @@
 				String(text || ""),
 			);
 		const normalizeMermaidText = (text) => {
-			const raw = String(text || "");
+			const raw = String(text || "").trim();
 			if (!raw) return "";
 			const decl = /(^|\n)(\s*)(flowchart|graph)(?:-elk)?\b/i.exec(raw);
 			if (!decl) return raw;
@@ -273,7 +274,9 @@
 		scheduleLoadingClear();
 
 		try {
-			await loadScript(`${ASSETS_BASE}/script/vendor/mermaid.min.js`);
+			await loadScript(
+				`${ASSETS_BASE}/script/vendor/mermaid.min.js?v=${MERMAID_BUNDLE_VERSION}`,
+			);
 		} catch (err) {
 			console.error(err);
 			clearLoading();
