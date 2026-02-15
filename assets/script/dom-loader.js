@@ -117,13 +117,49 @@
 			if (!/["']?layout["']?\s*:\s*["']?elk["']?/i.test(preamble))
 				return raw;
 			let normalized = raw;
-			if (
-				!/(^|\n)\s*%%\{init:\s*\{[\s\S]*?defaultRenderer\s*:\s*["']?elk["']?/i.test(
+			const readBool = (key) => {
+				const m = new RegExp(
+					`["']?${key}["']?\\s*:\\s*(true|false)\\b`,
+					"i",
+				).exec(preamble);
+				if (!m) return undefined;
+				return m[1].toLowerCase() === "true";
+			};
+			const readWord = (key) => {
+				const m = new RegExp(
+					`["']?${key}["']?\\s*:\\s*["']?([A-Z0-9_]+)["']?\\b`,
+					"i",
+				).exec(preamble);
+				return m ? m[1] : undefined;
+			};
+			const elkConfig = {};
+			const mergeEdges = readBool("mergeEdges");
+			const forceNodeModelOrder = readBool("forceNodeModelOrder");
+			const nodePlacementStrategy = readWord("nodePlacementStrategy");
+			const considerModelOrder = readWord("considerModelOrder");
+			if (typeof mergeEdges === "boolean") elkConfig.mergeEdges = mergeEdges;
+			if (typeof forceNodeModelOrder === "boolean")
+				elkConfig.forceNodeModelOrder = forceNodeModelOrder;
+			if (nodePlacementStrategy)
+				elkConfig.nodePlacementStrategy = nodePlacementStrategy;
+			if (considerModelOrder) elkConfig.considerModelOrder = considerModelOrder;
+			const initConfig = { flowchart: { defaultRenderer: "elk" } };
+			if (Object.keys(elkConfig).length) initConfig.elk = elkConfig;
+			const initDirective = `%%{init: ${JSON.stringify(initConfig)}}%%`;
+			const hasElkRendererInit =
+				/(^|\n)\s*%%\{init:\s*\{[\s\S]*?defaultRenderer\s*:\s*["']?elk["']?/i.test(
 					normalized,
-				)
+				);
+			const hasElkOptionsInit =
+				/(^|\n)\s*%%\{init:\s*\{[\s\S]*?["']?elk["']?\s*:\s*\{[\s\S]*?(mergeEdges|nodePlacementStrategy|forceNodeModelOrder|considerModelOrder)\b/i.test(
+					normalized,
+				);
+			if (
+				!hasElkRendererInit ||
+				(Object.keys(elkConfig).length && !hasElkOptionsInit)
 			) {
 				normalized =
-					`${normalized.slice(0, declStart)}%%{init: {"flowchart":{"defaultRenderer":"elk"}}}%%\n` +
+					`${normalized.slice(0, declStart)}${initDirective}\n` +
 					normalized.slice(declStart);
 			}
 			return normalized.replace(
