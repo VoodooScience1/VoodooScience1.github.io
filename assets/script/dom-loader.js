@@ -2,7 +2,7 @@
 (() => {
 	const PARTIALS_BASE = "/assets/partials";
 	const ASSETS_BASE = "/assets"; // keep everything under /assets/...
-	const MERMAID_BUNDLE_VERSION = "2026-02-15-elkfix2";
+	const MERMAID_BUNDLE_VERSION = "2026-02-15-elkfix3";
 
 	const qs = (sel) => document.querySelector(sel);
 
@@ -132,9 +132,28 @@
 			if (!decl) return raw;
 			const declStart = decl.index + decl[1].length;
 			const preamble = raw.slice(0, declStart);
-			if (!/["']?layout["']?\s*:\s*["']?elk["']?/i.test(preamble))
-				return raw;
-			let normalized = raw;
+			const hasRendererInit =
+				/(^|\n)\s*%%\{init:\s*\{[\s\S]*?["']?flowchart["']?\s*:\s*\{[\s\S]*?defaultRenderer\s*:/i.test(
+					raw,
+				);
+			const readWord = (key) => {
+				const m = new RegExp(
+					`["']?${key}["']?\\s*:\\s*["']?([A-Z0-9_-]+)["']?\\b`,
+					"i",
+				).exec(preamble);
+				return m ? m[1] : undefined;
+			};
+			const layoutWord = (readWord("layout") || "").toLowerCase();
+			let desiredRenderer = null;
+			if (layoutWord === "elk") desiredRenderer = "elk";
+			else if (
+				layoutWord === "dagre" ||
+				layoutWord === "dagre-wrapper" ||
+				layoutWord === "dagre-d3"
+			)
+				desiredRenderer = "dagre-wrapper";
+			else if (!hasRendererInit) desiredRenderer = "dagre-wrapper";
+			if (!desiredRenderer) return raw;
 			const readBool = (key) => {
 				const m = new RegExp(
 					`["']?${key}["']?\\s*:\\s*(true|false)\\b`,
@@ -143,70 +162,54 @@
 				if (!m) return undefined;
 				return m[1].toLowerCase() === "true";
 			};
-			const readWord = (key) => {
-				const m = new RegExp(
-					`["']?${key}["']?\\s*:\\s*["']?([A-Z0-9_]+)["']?\\b`,
-					"i",
-				).exec(preamble);
-				return m ? m[1] : undefined;
-			};
 			const elkConfig = {};
-			const mergeEdges = readBool("mergeEdges");
-			const forceNodeModelOrder = readBool("forceNodeModelOrder");
-			const nodePlacementStrategy = readWord("nodePlacementStrategy");
-			const considerModelOrder = readWord("considerModelOrder");
-			if (typeof mergeEdges === "boolean") elkConfig.mergeEdges = mergeEdges;
-			if (typeof forceNodeModelOrder === "boolean")
-				elkConfig.forceNodeModelOrder = forceNodeModelOrder;
-			if (nodePlacementStrategy)
-				elkConfig.nodePlacementStrategy = nodePlacementStrategy;
-			if (considerModelOrder) elkConfig.considerModelOrder = considerModelOrder;
-			const initConfig = { flowchart: { defaultRenderer: "elk" } };
-			if (Object.keys(elkConfig).length) initConfig.elk = elkConfig;
-			const initDirective = `%%{init: ${JSON.stringify(initConfig)}}%%`;
-			const hasElkRendererInit =
-				/(^|\n)\s*%%\{init:\s*\{[\s\S]*?defaultRenderer\s*:\s*["']?elk["']?/i.test(
-					normalized,
-				);
-			const hasElkOptionsInit =
-				/(^|\n)\s*%%\{init:\s*\{[\s\S]*?["']?elk["']?\s*:\s*\{[\s\S]*?(mergeEdges|nodePlacementStrategy|forceNodeModelOrder|considerModelOrder)\b/i.test(
-					normalized,
-				);
-			if (
-				!hasElkRendererInit ||
-				(Object.keys(elkConfig).length && !hasElkOptionsInit)
-			) {
-				normalized =
-					`${normalized.slice(0, declStart)}${initDirective}\n` +
-					normalized.slice(declStart);
+			if (desiredRenderer === "elk") {
+				const mergeEdges = readBool("mergeEdges");
+				const forceNodeModelOrder = readBool("forceNodeModelOrder");
+				const nodePlacementStrategy = readWord("nodePlacementStrategy");
+				const considerModelOrder = readWord("considerModelOrder");
+				if (typeof mergeEdges === "boolean") elkConfig.mergeEdges = mergeEdges;
+				if (typeof forceNodeModelOrder === "boolean")
+					elkConfig.forceNodeModelOrder = forceNodeModelOrder;
+				if (nodePlacementStrategy)
+					elkConfig.nodePlacementStrategy = nodePlacementStrategy;
+				if (considerModelOrder) elkConfig.considerModelOrder = considerModelOrder;
 			}
-			return normalized.replace(
-				/(^|\n)(\s*)(flowchart|graph)\b(?!-elk)/i,
-				"$1$2flowchart-elk",
-			);
+			const initConfig = {
+				flowchart: { defaultRenderer: desiredRenderer },
+			};
+			if (desiredRenderer === "elk" && Object.keys(elkConfig).length) {
+				initConfig.elk = elkConfig;
+			}
+			const initDirective = `%%{init: ${JSON.stringify(initConfig)}}%%`;
+			const hasDesiredRendererInit = new RegExp(
+				`(^|\\n)\\s*%%\\{init:\\s*\\{[\\s\\S]*?defaultRenderer\\s*:\\s*["']?${desiredRenderer.replace(
+					/[-/\\^$*+?.()|[\]{}]/g,
+					"\\$&",
+				)}["']?`,
+				"i",
+			).test(raw);
+			const hasElkOptionsInit =
+				desiredRenderer !== "elk"
+					? true
+					: /(^|\n)\s*%%\{init:\s*\{[\s\S]*?["']?elk["']?\s*:\s*\{[\s\S]*?(mergeEdges|nodePlacementStrategy|forceNodeModelOrder|considerModelOrder)\b/i.test(
+							raw,
+						);
+			if (!hasDesiredRendererInit || !hasElkOptionsInit) {
+				return `${raw.slice(0, declStart)}${initDirective}\n${raw.slice(declStart)}`;
+			}
+			return raw;
 		};
 		const installMermaidElkCompat = () => {
 			const mermaid = window.mermaid;
 			if (!mermaid || mermaid.__elkLayoutCompatInstalled) return;
 			mermaid.__elkLayoutCompatInstalled = true;
-			const ensureElkFlowchartDefaults = () => {
-				const api = mermaid.mermaidAPI;
-				if (!api || typeof api.getConfig !== "function") return;
-				const cfg = api.getConfig() || {};
-				if (cfg?.flowchart?.defaultRenderer === "elk") return;
-				if (typeof api.updateSiteConfig === "function") {
-					api.updateSiteConfig({
-						flowchart: { defaultRenderer: "elk" },
-					});
-				}
-			};
 			const wrapTextArg = (fn, textIndex = 0) => {
 				if (typeof fn !== "function") return fn;
 				return function (...args) {
 					if (args.length > textIndex) {
 						args[textIndex] = normalizeMermaidText(args[textIndex]);
 					}
-					ensureElkFlowchartDefaults();
 					return fn.apply(this, args);
 				};
 			};
@@ -337,7 +340,7 @@
 			setTimeout(stop, 5000);
 		};
 		blocks.forEach((block) => watchBlock(block));
-		scheduleLoadingClear();
+		setTimeout(clearLoading, 7000);
 
 		try {
 			await loadScript(
@@ -357,9 +360,6 @@
 			startOnLoad: false,
 			theme: "neutral",
 			suppressErrorRendering: true,
-			flowchart: {
-				defaultRenderer: "elk",
-			},
 		});
 		installMermaidWarningFilter();
 		installMermaidElkCompat();
@@ -394,17 +394,34 @@
 				}
 			}
 		}
-		try {
-			if (blocks.length) {
-				if (typeof window.mermaid.run === "function") {
-					await window.mermaid.run({ nodes: blocks });
-				} else if (typeof window.mermaid.init === "function") {
-					window.mermaid.init(undefined, blocks);
+			try {
+				if (blocks.length) {
+					if (typeof window.mermaid.render === "function") {
+						let counter = 0;
+						for (const block of blocks) {
+							const id = `mermaid-live-${counter++}`;
+							const text = normalizeMermaidText(block.textContent || "");
+							try {
+								const result = await window.mermaid.render(id, text);
+								const svg =
+									typeof result === "string" ? result : result?.svg || "";
+								block.innerHTML = svg;
+								block.setAttribute("data-processed", "true");
+								result?.bindFunctions?.(block);
+							} catch (err) {
+								console.error(err);
+								block.textContent = "Mermaid render failed.";
+							}
+						}
+					} else if (typeof window.mermaid.run === "function") {
+						await window.mermaid.run({ nodes: blocks });
+					} else if (typeof window.mermaid.init === "function") {
+						window.mermaid.init(undefined, blocks);
+					}
+					finalizeLoading();
+					setTimeout(finalizeLoading, 200);
+					setTimeout(finalizeLoading, 1000);
 				}
-				finalizeLoading();
-				setTimeout(finalizeLoading, 200);
-				setTimeout(finalizeLoading, 1000);
-			}
 			if (adminPreviews.length && typeof window.mermaid.render === "function") {
 				let counter = 0;
 				for (const preview of adminPreviews) {
