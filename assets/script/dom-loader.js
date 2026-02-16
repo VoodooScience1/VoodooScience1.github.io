@@ -2,7 +2,7 @@
 (() => {
 	const PARTIALS_BASE = "/assets/partials";
 	const ASSETS_BASE = "/assets"; // keep everything under /assets/...
-	const MERMAID_BUNDLE_VERSION = "2026-02-15-elkfix3";
+	const MERMAID_BUNDLE_VERSION = "2026-02-16-elkfix4";
 
 	const qs = (sel) => document.querySelector(sel);
 
@@ -125,81 +125,7 @@
 			/(^|\n)\s*(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram|journey|architecture-beta|architecture)\b/i.test(
 				String(text || ""),
 			);
-		const normalizeMermaidText = (text) => {
-			const raw = String(text || "").trim();
-			if (!raw) return "";
-			const decl = /(^|\n)(\s*)(flowchart|graph)(?:-elk)?\b/i.exec(raw);
-			if (!decl) return raw;
-			const declStart = decl.index + decl[1].length;
-			const preamble = raw.slice(0, declStart);
-			const hasRendererInit =
-				/(^|\n)\s*%%\{init:\s*\{[\s\S]*?["']?flowchart["']?\s*:\s*\{[\s\S]*?defaultRenderer\s*:/i.test(
-					raw,
-				);
-			const readWord = (key) => {
-				const m = new RegExp(
-					`["']?${key}["']?\\s*:\\s*["']?([A-Z0-9_-]+)["']?\\b`,
-					"i",
-				).exec(preamble);
-				return m ? m[1] : undefined;
-			};
-			const layoutWord = (readWord("layout") || "").toLowerCase();
-			let desiredRenderer = null;
-			if (layoutWord === "elk") desiredRenderer = "elk";
-			else if (
-				layoutWord === "dagre" ||
-				layoutWord === "dagre-wrapper" ||
-				layoutWord === "dagre-d3"
-			)
-				desiredRenderer = "dagre-wrapper";
-			else if (!hasRendererInit) desiredRenderer = "dagre-wrapper";
-			if (!desiredRenderer) return raw;
-			const readBool = (key) => {
-				const m = new RegExp(
-					`["']?${key}["']?\\s*:\\s*(true|false)\\b`,
-					"i",
-				).exec(preamble);
-				if (!m) return undefined;
-				return m[1].toLowerCase() === "true";
-			};
-			const elkConfig = {};
-			if (desiredRenderer === "elk") {
-				const mergeEdges = readBool("mergeEdges");
-				const forceNodeModelOrder = readBool("forceNodeModelOrder");
-				const nodePlacementStrategy = readWord("nodePlacementStrategy");
-				const considerModelOrder = readWord("considerModelOrder");
-				if (typeof mergeEdges === "boolean") elkConfig.mergeEdges = mergeEdges;
-				if (typeof forceNodeModelOrder === "boolean")
-					elkConfig.forceNodeModelOrder = forceNodeModelOrder;
-				if (nodePlacementStrategy)
-					elkConfig.nodePlacementStrategy = nodePlacementStrategy;
-				if (considerModelOrder) elkConfig.considerModelOrder = considerModelOrder;
-			}
-			const initConfig = {
-				flowchart: { defaultRenderer: desiredRenderer },
-			};
-			if (desiredRenderer === "elk" && Object.keys(elkConfig).length) {
-				initConfig.elk = elkConfig;
-			}
-			const initDirective = `%%{init: ${JSON.stringify(initConfig)}}%%`;
-			const hasDesiredRendererInit = new RegExp(
-				`(^|\\n)\\s*%%\\{init:\\s*\\{[\\s\\S]*?defaultRenderer\\s*:\\s*["']?${desiredRenderer.replace(
-					/[-/\\^$*+?.()|[\]{}]/g,
-					"\\$&",
-				)}["']?`,
-				"i",
-			).test(raw);
-			const hasElkOptionsInit =
-				desiredRenderer !== "elk"
-					? true
-					: /(^|\n)\s*%%\{init:\s*\{[\s\S]*?["']?elk["']?\s*:\s*\{[\s\S]*?(mergeEdges|nodePlacementStrategy|forceNodeModelOrder|considerModelOrder)\b/i.test(
-							raw,
-						);
-			if (!hasDesiredRendererInit || !hasElkOptionsInit) {
-				return `${raw.slice(0, declStart)}${initDirective}\n${raw.slice(declStart)}`;
-			}
-			return raw;
-		};
+		const normalizeMermaidText = (text) => String(text || "").trim();
 		const installMermaidElkCompat = () => {
 			const mermaid = window.mermaid;
 			if (!mermaid || mermaid.__elkLayoutCompatInstalled) return;
