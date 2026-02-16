@@ -2,7 +2,7 @@
 (() => {
 	const PARTIALS_BASE = "/assets/partials";
 	const ASSETS_BASE = "/assets"; // keep everything under /assets/...
-	const MERMAID_BUNDLE_VERSION = "2026-02-16-elkfix5";
+	const MERMAID_BUNDLE_VERSION = "2026-02-16-elkfix6";
 
 	const qs = (sel) => document.querySelector(sel);
 
@@ -131,8 +131,8 @@
 			if (/(^|\n)\s*flowchart-elk\b/i.test(raw)) return raw;
 			const decl = /(^|\n)(\s*)(flowchart|graph)\b/i.exec(raw);
 			if (!decl) return raw;
-			const frontmatter =
-				/^\s*---\s*\n([\s\S]*?)\n---\s*(?:\n|$)/.exec(raw)?.[1] || "";
+			const fmMatch = /^\s*---\s*\n([\s\S]*?)\n---\s*(?:\n|$)/.exec(raw);
+			const frontmatter = fmMatch?.[1] || "";
 			const layoutWord =
 				(/\blayout\s*:\s*([A-Z0-9_-]+)\b/i.exec(frontmatter)?.[1] || "").toLowerCase();
 			const initRenderer =
@@ -149,7 +149,8 @@
 				rendererWord === "dagre-wrapper" ||
 				rendererWord === "dagre-d3";
 			if (!wantsElk || wantsDagre) return raw;
-			return raw.replace(/(^|\n)(\s*)(flowchart|graph)\b/i, "$1$2flowchart-elk");
+			const source = fmMatch ? raw.slice(fmMatch[0].length).trimStart() : raw;
+			return source.replace(/(^|\n)(\s*)(flowchart|graph)\b/i, "$1$2flowchart-elk");
 		};
 		const installMermaidElkCompat = () => {
 			const mermaid = window.mermaid;
