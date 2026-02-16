@@ -2,7 +2,7 @@
 (() => {
 	const PARTIALS_BASE = "/assets/partials";
 	const ASSETS_BASE = "/assets"; // keep everything under /assets/...
-	const MERMAID_BUNDLE_VERSION = "2026-02-16-elkfix6";
+	const MERMAID_BUNDLE_VERSION = "2026-02-16-elkfix7";
 
 	const qs = (sel) => document.querySelector(sel);
 
@@ -129,7 +129,7 @@
 			const raw = String(text || "").trim();
 			if (!raw) return "";
 			if (/(^|\n)\s*flowchart-elk\b/i.test(raw)) return raw;
-			const decl = /(^|\n)(\s*)(flowchart|graph)\b/i.exec(raw);
+			const decl = /(^|\n)(\s*)(flowchart|flowchart-v2|graph)\b/i.exec(raw);
 			if (!decl) return raw;
 			const fmMatch = /^\s*---\s*\n([\s\S]*?)\n---\s*(?:\n|$)/.exec(raw);
 			const frontmatter = fmMatch?.[1] || "";
@@ -149,8 +149,10 @@
 				rendererWord === "dagre-wrapper" ||
 				rendererWord === "dagre-d3";
 			if (!wantsElk || wantsDagre) return raw;
-			const source = fmMatch ? raw.slice(fmMatch[0].length).trimStart() : raw;
-			return source.replace(/(^|\n)(\s*)(flowchart|graph)\b/i, "$1$2flowchart-elk");
+			return raw.replace(
+				/(^|\n)(\s*)(flowchart|flowchart-v2|graph)\b/i,
+				"$1$2flowchart-elk",
+			);
 		};
 		const installMermaidElkCompat = () => {
 			const mermaid = window.mermaid;
@@ -348,13 +350,14 @@
 		}
 			try {
 				if (blocks.length) {
-					if (typeof window.mermaid.render === "function") {
-						let counter = 0;
-						for (const block of blocks) {
-							const id = `mermaid-live-${counter++}`;
-							const text = normalizeMermaidText(block.textContent || "");
-							try {
-								const result = await window.mermaid.render(id, text);
+						if (typeof window.mermaid.render === "function") {
+							let counter = 0;
+							for (const block of blocks) {
+								const id = `mermaid-live-${counter++}`;
+								const text = normalizeMermaidText(block.textContent || "");
+								if (block.textContent !== text) block.textContent = text;
+								try {
+									const result = await window.mermaid.render(id, text);
 								const svg =
 									typeof result === "string" ? result : result?.svg || "";
 								block.innerHTML = svg;
