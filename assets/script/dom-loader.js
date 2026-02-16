@@ -2,7 +2,7 @@
 (() => {
 	const PARTIALS_BASE = "/assets/partials";
 	const ASSETS_BASE = "/assets"; // keep everything under /assets/...
-	const MERMAID_BUNDLE_VERSION = "2026-02-16-elkfix7";
+	const MERMAID_BUNDLE_VERSION = "2026-02-16-elkfix8";
 
 	const qs = (sel) => document.querySelector(sel);
 
@@ -196,6 +196,30 @@
 				);
 			}
 		};
+		const ensureMermaidElkLayouts = async () => {
+			if (window.__MERMAID_ELK_LAYOUTS_READY) return true;
+			if (window.__MERMAID_ELK_LAYOUTS_PROMISE)
+				return window.__MERMAID_ELK_LAYOUTS_PROMISE;
+			window.__MERMAID_ELK_LAYOUTS_PROMISE = (async () => {
+				const mermaid = window.mermaid;
+				if (!mermaid || typeof mermaid.registerLayoutLoaders !== "function")
+					return false;
+				try {
+					const mod = await import(
+						`${ASSETS_BASE}/script/vendor/mermaid-layout-elk/mermaid-layout-elk.esm.min.js?v=${MERMAID_BUNDLE_VERSION}`
+					);
+					const layouts = Array.isArray(mod?.default) ? mod.default : [];
+					if (!layouts.length) return false;
+					mermaid.registerLayoutLoaders(layouts);
+					window.__MERMAID_ELK_LAYOUTS_READY = true;
+					return true;
+				} catch (err) {
+					console.warn("Mermaid ELK layout loader unavailable:", err);
+					return false;
+				}
+			})();
+			return window.__MERMAID_ELK_LAYOUTS_PROMISE;
+		};
 		const portalRoot = isAdmin ? document.querySelector("#cms-portal") : null;
 		const allCodes = Array.from(document.querySelectorAll("pre code")).filter(
 			(code) => !(portalRoot && code.closest("#cms-portal")),
@@ -317,6 +341,7 @@
 		});
 		installMermaidWarningFilter();
 		installMermaidElkCompat();
+		await ensureMermaidElkLayouts();
 		if (typeof window.mermaid.registerIconPacks === "function") {
 			try {
 				const iconUrl = `${ASSETS_BASE}/icon-packs/logos.json?v=${Date.now()}`;
